@@ -1,0 +1,8 @@
+#ctrllr-employments
+  #employments-index
+    %table#employments-index-table{data: {source: employments_path(format: :json)}}
+      %thead
+        %tr
+          %th{width: "90%"}= t('labels.name')
+          %th
+      %tbody

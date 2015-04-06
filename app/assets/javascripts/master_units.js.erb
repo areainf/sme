@@ -1,0 +1,16 @@
+jQuery(document).ready(function() {
+  if ($("#ctrllr-master_units").length > 0){
+    if ($("#master_units-index").length > 0){
+      var table = $('#master_units-index-table').dataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": $('#master_units-index-table').data('source'),
+        "pagingType": "full_numbers",
+        columnDefs: [ { orderable: false, targets: [1] }],
+        language: {
+            url: "/datatables/spanish.txt",
+        }
+      });
+    }    
+  }
+});

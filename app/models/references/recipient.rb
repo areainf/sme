@@ -1,0 +1,2 @@
+class  Recipient < Reference
+end

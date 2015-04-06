@@ -1,0 +1,67 @@
+jQuery(document).ready(function() {
+  if ($("#ctrllr-dependencies").length > 0){
+    if ($("#dependencies-index").length > 0){
+      var table = $('#dependencies-index-table').dataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": $('#dependencies-index-table').data('source'),
+        "pagingType": "full_numbers",
+        columnDefs: [ { orderable: false, targets: [4] }],
+        language: {
+            url: "/datatables/spanish.txt",
+        }
+      });
+    }
+    if ($("#dependencies_form").length > 0){
+      //var data = [{id: 25, name: "Claudio", description: "JOSE"}];
+      var data_dep  = $("#dependency_id").data("prepopulate");
+      $("#dependency_id").tokenInput('/dependencies.json', {
+        theme: 'facebook',
+        tokenLimit: "1",
+        minChars: "3",
+        prePopulate: data_dep,
+        resultsFormatter: function(dependency){
+          var compleName = dependency.name + " (" + dependency.description + ")";
+          return "<li> <p style='color: black' >" + compleName + " </p> </li>"; 
+        },
+        tokenFormatter: function(dependency) {
+          if (dependency == null) return "";
+          return "<li><p>" + dependency.name + " (" + dependency.description.substring(0,20) + ") </p> </li>" 
+        },
+        noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
+        hintText: "<%= I18n.t('token_input.hintText')%>",
+        searchigText: "<%= I18n.t('token_input.searching_text')%>",
+        onAdd: function(data){
+          //el.draw(new CustomerJson(data));
+        },
+        onDelete: function(data){
+          // el.clear();
+        }
+      });
+      var data_mu  = $("#master_unit_id").data("prepopulate");
+      $("#master_unit_id").tokenInput('/master_units.json', {
+        theme: 'facebook',
+        tokenLimit: "1",
+        minChars: "3",
+        prePopulate: data_mu,
+        resultsFormatter: function(master_unit){
+          var compleName = master_unit.name;
+          return "<li> <p style='color: black' >" + compleName + " </p> </li>"; 
+        },
+        tokenFormatter: function(master_unit) {
+          if (master_unit == null) return "";
+          return "<li><p>" + master_unit.name+ " </p> </li>" 
+        },
+        noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
+        hintText: "<%= I18n.t('token_input.hintText')%>",
+        searchigText: "<%= I18n.t('token_input.searching_text')%>",
+        onAdd: function(data){
+          //el.draw(new CustomerJson(data));
+        },
+        onDelete: function(data){
+          // el.clear();
+        }
+      });
+    }
+  }
+});

@@ -1,0 +1,21 @@
+= form_for(@person) do |f|
+  - if @person.errors.any? 
+    #error_explanation
+      %h2
+        = pluralize(@person.errors.count, "error")
+        prohibited this person from being saved:
+
+      %ul
+      - @person.errors.full_messages.each do |message|
+        %li= message
+
+  .field
+    = f.label :firstname, t("labels.firstname")
+    = f.text_field :firstname
+  .field
+    = f.label :lastname, t("labels.lastname")
+    = f.text_field :lastname
+
+  .action_container
+    = f.submit t('buttons.accept'), {:class=>"btn-confirm"}
+

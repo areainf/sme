@@ -1,0 +1,2 @@
+class DocumentsProvisoriesController < ApplicationController
+end

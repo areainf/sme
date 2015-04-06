@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  people_id: 
+  positions_id: 
+  dependencies_id: 
+  active: 
+  user_id: 
+
+two:
+  people_id: 
+  positions_id: 
+  dependencies_id: 
+  active: 
+  user_id: 

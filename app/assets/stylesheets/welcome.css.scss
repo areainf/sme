@@ -1,0 +1,30 @@
+@import "bootstrap";
+body {
+  background-image: url("sme3.jpg");
+  background-position: top center;
+  background-repeat: no-repeat;
+
+  background-size: 100% 100%;
+  margin: 0;
+  padding: 0;
+  background-attachment: fixed;
+}
+
+.main-message-error{
+  margin: 0 auto;
+}
+.alert, .notice, .error{
+    padding: 5px;
+    font-size: 14px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+}
+.alert{
+    background-color: #729AB3;
+}
+.notice{
+    background-color: #6AA35F;
+}
+.error{
+    background-color: #EE2630;
+}

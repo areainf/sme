@@ -1,0 +1,18 @@
+#dependencies_form
+  = form_for(@master_unit) do |f|
+    - if @master_unit.errors.any? 
+      #error_explanation
+        %h2
+          = pluralize(@master_unit.errors.count, "error")
+          prohibited this master_unit from being saved:
+
+        %ul
+        - @master_unit.errors.full_messages.each do |message|
+          %li= message
+
+    .field
+      = f.label :name, t("labels.name")
+      = f.text_field :name
+    .action_container
+      = f.submit t('buttons.accept'), {:class=>"btn-confirm"}
+

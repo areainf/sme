@@ -1,0 +1,105 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *= stub welcome.css.scss
+ *= require dataTables/jquery.dataTables
+ *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+ *= require token-input.css
+ *= require token-input-facebook.css
+ *= require parsley
+ *= require_tree .
+ *= require_self
+ */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+body{
+  background-color: #ededed;
+}
+#page-header{
+  background-color: #eee;
+  padding-bottom: 10px;
+  border-bottom: 2px #999 solid;
+}
+#page-content{
+  background-color: #fff;
+  padding-bottom: 20px;
+}
+
+.field{
+  @extend .form-group;
+  label{    
+    color: #222;
+  }
+  input, select{
+    @extend .form-control;
+  }
+}
+.btn-confirm{
+  @extend .btn, .btn-info;
+}
+
+/* SUB HEADER*/
+.sub_header{
+  margin-top: 20px;  
+  h1{
+    margin: 0;
+    font-size: 16pt;
+    color: #9E1414;
+  }
+  h2{
+    margin: 0;
+    font-size: 14pt;
+    color: #7B5A2C;
+  }
+  .col-title{
+    @extend .col-md-8;
+    border-bottom: 2px solid #ddd;
+  }
+  .col-buttons{
+    @extend .col-md-4;
+    text-align: right;
+  }
+}
+/*Espacio entre filas*/
+.space-1{
+  margin-bottom: 15px;
+}
+
+/*Estilo de los enlaces new, edit, etc dentro de cada row en un datatable
+ * Este estilo debe agregarse a mano cuando se crean los botones en datatables/.....
+*/
+.datatable-actions{
+  background-color: #dfFFFa;
+  text-align: right;
+}
+.datatable-actions a{
+  padding: 2px 5px 2px 5px; 
+}
+
+.field_value{
+  font-weight: normal;
+}
+
+/*ESTILO APLICADO A LOS TABS*/
+.tabs{
+  @extend .nav, .nav-tabs;
+}
+
+/*ESTILO APLICADO A COLUMNAS SECUNDARIAS LATERALES*/
+.side-right{
+  h2{
+    font-size: 14pt;
+    color: #999;
+  }
+}
+.side-form{
+}

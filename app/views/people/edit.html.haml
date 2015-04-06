@@ -1,0 +1,14 @@
+#ctrllr-people
+  %ul.tabs
+    %li.active
+      %a{"data-toggle" => "tab", href: "#people-edit"}
+        = t('.profile')
+    %li
+      %a{"data-toggle" => "tab", href: "#people-employments"}
+        = t('.employments')
+  .tab-content
+    .tab-pane.active#people-edit
+      = render 'form' 
+    .tab-pane#people-employments
+      = render 'form_employments' 
+

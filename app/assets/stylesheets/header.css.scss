@@ -1,0 +1,48 @@
+@import "bootstrap";
+#header {
+  .menu-head {
+    @extend .nav, .nav-justified;
+  }
+
+  .menu-head li > a {
+    @extend .btn, .btn-primary;
+    padding: 0px;
+    border-radius: 0px;
+  }
+
+  .menu-head a.last  {
+    @extend .btn-danger;
+  }
+
+  ul.menu-head {
+    a {
+      &:hover{
+        color: #418AE2;
+        background-color: #6BC9F8;
+      }
+      &.active{
+        color: #418AE2;
+        background-color: #6BC9F8;
+      }
+    }
+  }
+  .dropdown-menu{
+    @extend .dropdown-menu;
+  }
+  .dropdown-menu li a{
+    @extend .btn, .btn-info;
+    border: none !important;
+    margin: 3px;
+    padding: 3px;
+    background-color: #fff !important;
+      &:hover{
+        color: #418AE2;
+        background-color: #ffffff;
+      }
+      &.active{
+        color: #418AE2;
+        background-color: #6BC9F8;
+      }
+  }  
+
+}

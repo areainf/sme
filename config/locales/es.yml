@@ -1,0 +1,154 @@
+es:
+  activerecord:
+    errors:
+      models:
+        note:
+          attributes:
+            senders:
+              blank: Debe ingresar un Remitente
+    models:
+      errors:
+        message_empty_people_names: Debe igresar el Apellido o Nombre de la Persona
+    attributes:
+      user:
+        username: Usuario
+        remember_me: Recordarme
+  buttons:  
+    accept: Aceptar
+  documents:
+    directions:
+      input: Entrada
+      output: Salida
+    system_status:
+      archived: Archivada
+      circulation: Circulación
+  dependencies:
+    buttons:
+      edit: Editar
+      new: Nueva
+      index: Volver al Listado  
+    sub_header:
+      title: Dependencias
+      sub_title:
+        edit: Editar
+        index: Listado de Dependencias
+        new: Nueva
+        show: Detalle
+      password: Contraseña
+      people: Personas
+  employments:
+    buttons:
+      edit: Editar
+      new: Nuevo
+      index: Volver al Listado   
+    sub_header:    
+      title: Cargos      
+      sub_title:
+        edit: Modificar
+        index: Listado
+        new: Nuevo
+        show: Detalle
+  flash:
+    created: Creado
+    deleted: Eliminado
+    entity: "Se ha %{message} exitosamente la Entidad"
+  labels:    
+    active: Activo
+    dependency: Dependencia
+    description: Descripción
+    emission_date: Fecha de Emisión
+    employment: Cargo
+    entities_from_ids: Remitentes
+    entities_to_ids: Destinatarios
+    entry_at: Fecha de Ingreso
+    firstname: Nombre
+    lastname: Apellido
+    master_unit: Organización
+    name: Nombre
+    note_input: Nota de Entrada
+    note_output: Nota de Salida
+    observation: Observación
+    reference_people: Personas mencionadas
+    senders: Remitentes
+    system_status: Estado en el Sistema
+    recipients: Destinatarios
+  layouts:
+    header:
+      confirm: Está seguro que desea Salir del Sistema?
+      dependencies:
+        new: Nueva Dependencia
+        list: Listado Dependencia
+      document:
+        all: Todos
+        input: Entrada
+        new_note_input: Nota de Entrada
+        new_note_output: Nota de Salida
+        output: Salida
+        pending: Pendiente
+      documents: Documentos
+      master_units:
+        new: Nueva Organización
+        list: Listado de Organizaciones
+      employments: Cargos
+      entities: Cargo / Persona
+      exit: Salir
+      organization: Organización
+  master_units:
+    buttons:
+      edit: Editar
+      index: Volver al Listado  
+    sub_header:
+      title: Unidad Organizacional
+      sub_title:
+        edit: Editar
+        index: Listado de Unidades
+        new: Nueva
+        show: Detalle
+  messages:
+    confirm_delete: "Eliminara %{message}\\n¿Desea continuar?"
+  notes:
+    buttons:
+      edit: Editar
+      index: Volver al Listado
+    sub_header:
+      title: Notas
+      sub_title:
+        edit_input: Editar Nota de Entrada
+        index: Listado de Notas
+        new_input: Nueva Nota de Entrada
+        new_output: Nueva Nota de Salida
+        show: Detalle de la Nota
+  people:
+    buttons:
+      new: Nueva
+      index: Volver al Listado
+    edit:
+      employments: Cargos
+      profile: Perfil
+    form_employments:
+      add_entity: Asignarle un nuevo cargo
+    sub_header:    
+      title: Personas
+      sub_title:
+        edit: Modificar
+        index: Listado
+        new: Nueva  
+        show: Detalle
+  token_input:
+    hintText: Ingrese el texto
+    noResultsText: Sin resultados
+    searching_text: Buscando Registro
+  system:
+    name: SME
+  users:
+    current_password: Contraseña actual
+    password: Contraseña
+    password_confirmation: Confirmar
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d/%m/%Y"
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M:%S"
+      short: "%d/%m/%Y"

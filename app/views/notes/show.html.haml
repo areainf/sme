@@ -1,0 +1,38 @@
+#ctrllr-notes
+  #notes-show
+    %h2
+      - if @note.is_input?
+        = t('labels.note_input')
+      - else
+        = t('labels.note_output')
+    %p
+      %strong= t('labels.senders')      
+      = @note.senders.map{|s| s.entity.fullname}.join("; ") unless @note.senders.nil?
+    %p
+      %strong= t('labels.recipients')
+      = @note.recipients.map{|s| s.entity.fullname}.join("; ") unless @note.recipients.nil?
+    %p
+      %strong= t('labels.code')
+      = @note.code
+    %p
+      %strong= t('labels.description')
+      = @note.description
+    %p
+      %strong= t('labels.observation')
+      = @note.observation
+    %p
+      %strong= t('labels.system_status')
+      = t("documents.system_status.#{@note.system_status}")
+    %p
+      %strong= t('labels.emission_date')
+      = l @note.emission_date, format: :short
+      
+    %p
+      %strong= t('labels.entry_at')
+      = l  @note.entry_at, format: :short
+    %p
+      %strong= t('labels.reference_people')
+      = @note.reference_people
+    / %p
+    /   %strong= t('labels.')
+    /   = @note.

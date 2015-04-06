@@ -1,0 +1,27 @@
+.row
+  .col-md-6
+    %table#entities_list.dataTable.no-footer
+      %thead
+        %tr
+          %th= t('labels.dependency')
+          %th= t('labels.employment')
+          %th= t('labels.active')
+          %th{width: "1%"}
+      %tbody
+        - @person.entities.each do |entity|
+          %tr{id: "row_entity_#{entity.id}"}
+            %td= entity.dependency.try(:name) || '---'
+            %td= entity.employment.try(:name) || '---'
+            %td 
+              - if entity.active
+                %input{type: "checkbox", id: "chkbox_entity_#{entity.id}", class:"ref_change_entity_active", value: "#{entity.id}",  checked: "checked"}
+              - else
+                %input{type: "checkbox", id: "chkbox_entity_#{entity.id}", class:"ref_change_entity_active", value: "#{entity.id}"}
+
+            %td
+              %a{href: "#", onClick: "return Entity.delete('#{entity.id}');"}
+                %span.glyphicon.glyphicon-remove
+  .col-md-3.col-md-offset-3
+    .side-right.side-form
+      %h2= t('.add_entity')
+      = render '/entities/remote_form', entity: @person.entities.build(), :options => {:person => {:hidden => true} }

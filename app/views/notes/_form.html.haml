@@ -1,0 +1,43 @@
+= form_for(@note, html: { "data-parsley-validate" => '', id: "document_form" }) do |f|
+  - if @note.errors.any? 
+    #error_explanation
+      %h2
+        = pluralize(@note.errors.count, "error")
+        prohibited this note from being saved:
+
+      %ul
+      - @note.errors.full_messages.each do |message|
+        %li= message
+
+  =hidden_field :note, :direction
+  %fieldset
+    .field
+      %label{for: "entities_from_ids"}= t("labels.entities_from_ids")
+      %input#entities_from_ids{type: "text", name: "entities_from_ids", data: {url: "#{entities_path(format: :json)}"}, 'data-select'=> entities_data_pre(@note.senders), 'data-parsley-group' => 'block_document', required: ''}
+    .field
+      %label{for: "entities_to_ids"}= t("labels.entities_to_ids")
+      %input#entities_to_ids{type: "text", name: "entities_to_ids", data: {url: "#{entities_path(format: :json)}"}, 'data-select'=> entities_data_pre(@note.recipients) ,'data-parsley-group' => 'block_document', required: ''}
+  %fieldset
+    .field
+      = f.label :description, t("labels.description")
+      = f.text_field :description,{'data-parsley-group' => 'block_document', required: ''}
+    .field
+      = f.label :observation, t("labels.observation")
+      = f.text_area :observation, {class: "form-control"}
+    .field
+      = f.label :reference_people, t("labels.reference_people")
+      = f.text_field :reference_people
+  .row
+    .col-md-4
+      .field
+        = f.label :emission_date, t("labels.emission_date")
+        = f.date_field :emission_date, {'data-parsley-group' => 'block_document', required: '', 'parsley-type' => 'dateIso'}
+    .col-md-4
+      .field
+        = f.label :system_status, t("labels.system_status")
+        = f.select :system_status, options_for_select(optSel_SystemStatus, @note.system_status)
+  %br
+  %br
+  .action_container.text-center
+    = f.submit t('buttons.accept'), {:class=>"btn-confirm"}
+

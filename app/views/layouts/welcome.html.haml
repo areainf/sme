@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %title= t("system.name")
+    = stylesheet_link_tag    "welcome", :media => "all", 'data-turbolinks-track' => true
+    = csrf_meta_tags
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+  %body
+    .container
+      .row
+        .col-md-4.col-md-offset-1.col-md-pull-1
+          = yield
+        .col-md-4
+          - flash.each do |key, value|
+            %div(class="alert alert-#{key}")
+              = value
+

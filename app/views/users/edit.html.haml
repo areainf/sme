@@ -1,0 +1,13 @@
+= form_for(@user, :url => { :action => "update_password" } ) do |f|
+  .field
+    = f.label :current_password, t('users.current_password')
+    = f.password_field :current_password
+  .field
+    = f.label :password, t('users.password')
+    = f.password_field :password, :autocomplete => "off"
+  
+  .field
+    = f.label :password_confirmation, t('users.password_confirmation') 
+    = f.password_field :password_confirmation 
+  .action_container
+    = f.submit t('buttons.accept'), {:class=>"btn-confirm"}

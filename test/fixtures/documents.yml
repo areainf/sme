@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyString
+  observation: MyText
+  code: MyString
+  direction: 1
+  system_status: MyString
+  emission_date: 2015-03-13
+  entry_at: 2015-03-13 17:57:22
+  reference_people: MyString
+  recipients_ids: MyText
+  senders_ids: MyText
+  recipients: MyString
+  senders: MyString
+  create_user_id_id: 
+  entry_user_id_id: 
+  type: 
+
+two:
+  description: MyString
+  observation: MyText
+  code: MyString
+  direction: 1
+  system_status: MyString
+  emission_date: 2015-03-13
+  entry_at: 2015-03-13 17:57:22
+  reference_people: MyString
+  recipients_ids: MyText
+  senders_ids: MyText
+  recipients: MyString
+  senders: MyString
+  create_user_id_id: 
+  entry_user_id_id: 
+  type: 

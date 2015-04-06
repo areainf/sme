@@ -1,0 +1,27 @@
+#dependencies_form
+  = form_for(@dependency) do |f|
+    - if @dependency.errors.any? 
+      #error_explanation
+        %h2
+          = pluralize(@dependency.errors.count, "error")
+          prohibited this dependency from being saved:
+
+        %ul
+        - @dependency.errors.full_messages.each do |message|
+          %li= message
+
+    .field
+      = f.label :name, t("labels.name")
+      = f.text_field :name
+    .field
+      = f.label :description, t("labels.description")
+      = f.text_field :description
+    .field
+      = f.label :parent_id, t("labels.dependencia")
+      = f.text_field :parent_id, :id => "parent_id", "data-prepopulate" => "[#{@dependency.parent.present? ? @dependency.parent.to_json : ''}]"
+    .field
+      = f.label :master_unit_id, t("labels.master_unit")
+      = f.text_field :master_unit_id, :id => "master_unit_id", "data-prepopulate" => "[#{@dependency.master_unit.present? ? @dependency.master_unit.to_json : ''}]"
+    .action_container
+      = f.submit t('buttons.accept'), {:class=>"btn-confirm"}
+

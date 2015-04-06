@@ -1,0 +1,26 @@
+!!!
+%html
+  %head
+    %title= t("system.name")
+    = stylesheet_link_tag    "application", :media => "all"
+    / , 'data-turbolinks-track' => true
+    = javascript_include_tag "application"
+    / = javascript_include_tag :defaults, "jquery.tokeninput"
+
+    / , 'data-turbolinks-track' => true 
+    = csrf_meta_tags
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+  %body    
+    = render 'layouts/header' if current_user       
+    #page-header
+      .container
+        .sub_header
+          = render 'sub_header'
+    #page-content
+      .container
+        .space-1
+        - flash.each do |key, value|
+          %div(class="alert alert-#{key}")
+            = value
+        = yield
+

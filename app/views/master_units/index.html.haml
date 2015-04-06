@@ -1,0 +1,8 @@
+#ctrllr-master_units
+  #master_units-index
+    %table#master_units-index-table{data: {source: master_units_path(format: :json)}}
+      %thead
+        %tr
+          %th{width: "20%"}= t('labels.name')
+          %th
+      %tbody

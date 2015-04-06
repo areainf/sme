@@ -1,0 +1,11 @@
+#ctrllr-dependencies
+  #dependencies-index
+    %table#dependencies-index-table{data: {source: dependencies_path(format: :json)}}
+      %thead
+        %tr
+          %th{width: "20%"}= t('labels.name')
+          %th{width: "20%"}= t('labels.description')
+          %th{width: "20%"}= t('labels.dependency')
+          %th{width: "20%"}= t('labels.master_unit')
+          %th
+      %tbody

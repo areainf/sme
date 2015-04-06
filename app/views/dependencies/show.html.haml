@@ -1,0 +1,14 @@
+#ctrllr-dependencies
+  #dependencies-show
+    .field
+      %label.field_key= t('labels.name')
+      %label.field_value= @dependency.name
+    .field
+      %label.field_key= t('labels.description')
+      %label.field_value= @dependency.description
+    .field
+      %label.field_key= t('labels.dependency')
+      %label.field_value= @dependency.parent.name if @dependency.parent.present?
+    .field
+      %label.field_key= t('labels.master_unit')
+      %label.field_value= @dependency.master_unit.name if @dependency.master_unit.present?

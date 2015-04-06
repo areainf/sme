@@ -1,0 +1,62 @@
+#header
+  %ul.menu-head
+    %li
+      %a.dropdown-toggle{data: {toggle: "dropdown"}, class: current_tag('documents')}
+        %i.icon-file.icon-3x
+        = t('.documents')
+        %span.caret
+      %ul.dropdown-menu{role: "menu"}
+        %li
+          %a{href: "#{new_note_path}"}
+            = t('.document.new_note_input')
+        %li
+          %a{href: new_note_path(:direction => ApplicationHelper::DIR_OUTPUT)}
+            = t('.document.new_note_output')
+        %li
+          %a{href: "#"}
+            = t('.document.pending')
+        %li
+          %a{href: "#"}
+            = t('.document.all')
+
+    %li
+      %a.dropdown-toggle{data: {toggle: "dropdown"}, class: current_tag('dependencies')}
+        %i.icon-file.icon-3x
+        = t('.organization')
+        %span.caret
+      %ul.dropdown-menu{role: "menu"}
+        %li
+          %a{href: "#{new_dependency_path}"}
+            = t('.dependencies.new')
+        %li
+          %a{href: "#{dependencies_path}"}
+            = t('.dependencies.list')
+        %li
+          %a{href: "#{new_master_unit_path}"}
+            = t('.master_units.new')
+        %li
+          %a{href: "#{master_units_path}"}
+            = t('.master_units.list')
+
+    %li
+      %a{href: "#{employments_path}", class: current_tag('employment')}
+        %i.icon-user.icon-3x
+        = t('.employments')
+    %li
+      %a{href: "#{people_path}", class: current_tag('people')}
+        %i.icon-shopping-cart.icon-3x
+        = t('.people')
+    %li
+      %a{href: "#", class: current_tag('entities')}
+        %i.icon-folder-open-alt.icon-3x
+        = t('.entities')
+    %li
+      %a{href: "#{edit_users_path}", class: current_tag('users')}
+        %i.icon-folder-open-alt.icon-3x
+        = t('.password')
+    %li
+      %a.last{href: "#{destroy_user_session_path}",
+               "data-confirm" => t('.confirm'),
+               "data-method" => "delete" }
+        %i.icon-remove-sign.icon-3x
+        = t('.exit')

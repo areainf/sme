@@ -1,0 +1,17 @@
+.row
+  .col-title
+    .row
+      .col-md-5
+        %h1= t('.title')      
+      .col-md-7
+        %h2= t(".sub_title.#{action_name}")
+  .col-buttons
+    - if edit_or_new_page?(@master_unit) 
+      = link_to t('master_units.buttons.index'), master_units_path, :class=>"btn btn-info"
+    - elsif index_page?
+      = link_to t('master_units.buttons.new'), new_master_unit_path, :class=>"btn btn-info"
+    -elsif show_page?(@master_unit)
+      = link_to t('master_units.buttons.edit'), edit_master_unit_path(@master_unit), :class=>"btn btn-info"
+      = link_to t('master_units.buttons.index'), master_units_path, :class=>"btn btn-info"
+      
+  

@@ -1,0 +1,77 @@
+jQuery(document).ready(function() {
+  if ($("#ctrllr-notes").length > 0){
+    if($("#notes-edit").length > 0){   
+      var url_find_receipt = $("#entities_to_ids").data("url");
+      $("#entities_to_ids").tokenInput(url_find_receipt, {
+        theme: 'facebook',
+        //prePopulate: $("#entities_to_ids").data("pre"),
+        preventDuplicates: true,
+        minChars: "3",
+        resultsFormatter: function(entity){
+          var e = new EntityJson(entity);          
+          return "<li> <p style='color: black' >" + e.fullEntityName() + " </p> </li>"; 
+        },
+        tokenFormatter: function(entity) {
+          var e = new EntityJson(entity);          
+          return "<li><p>" + e.fullEntityName().substring(0,40) + "</p> </li>" 
+        },
+        noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
+        hintText: "<%= I18n.t('token_input.hintText')%>",
+        searchigText: "<%= I18n.t('token_input.searching_text')%>",              
+      });
+      $("#token-input-entities_to_ids").on("keyup", function(e){
+        if(e.keyCode==9){
+          $("#token-input-entities_from_ids").focus();
+        }
+      });
+      var url_find_sender = $("#entities_from_ids").data("url");
+      $("#entities_from_ids").tokenInput(url_find_sender, {
+        theme: 'facebook',
+        //tokenLimit: "1",
+        preventDuplicates: true,
+        minChars: "3",
+        resultsFormatter: function(entity){
+          var e = new EntityJson(entity);          
+          return "<li> <p style='color: black' >" + e.fullEntityName() + " </p> </li>"; 
+        },
+        tokenFormatter: function(entity) {
+          var e = new EntityJson(entity);          
+          return "<li><p>" + e.fullEntityName().substring(0,40) + "</p> </li>" 
+        },
+        noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
+        hintText: "<%= I18n.t('token_input.hintText')%>",
+        searchigText: "<%= I18n.t('token_input.searching_text')%>",              
+      });
+      $("#token-input-entities_from_ids").on("keyup", function(e){
+        if(e.keyCode==9){
+          $("#note_description").focus();
+        }
+      });
+
+      //si es edit y tiene recipients mostrarlo
+      var d = $("#entities_to_ids").data("select");
+      if(d){
+        for(var i = 0; i < d.length; i++)
+          $("#entities_to_ids").tokenInput("add",new EntityJson(d[i]));
+      }
+      //si es edit y tiene senders mostrarlo      
+      d = $("#entities_from_ids").data("select");
+      if(d){
+        for(var i = 0; i < d.length; i++)
+          $("#entities_from_ids").tokenInput("add",new EntityJson(d[i]));
+      }
+    }
+    if ($("#note-index").length > 0){
+      var table = $('#note-index-table').dataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": $('#note-index-table').data('source'),
+        "pagingType": "full_numbers",
+         aoColumnDefs: [{ 'bSortable': false, 'aTargets': [  1, 2, 4, 5 ] }],
+        language: {
+            url: "/datatables/spanish.txt",
+        }
+      });
+    }
+  }
+});

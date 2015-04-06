@@ -1,0 +1,186 @@
+jQuery(document).ready(function() {
+  if ($("#ctrllr-people").length > 0){
+    if ($("#people-employments").length > 0){
+      /*Si esta en edit people*/
+      Entity = {
+        root: "#people-employments #entities_remote_form",
+        root_list: "#people-employments #entities_list",
+        fn: {person_id: '#person_id', dependency_id: '#dependency_id', employment_id: '#employment_id'},
+        token: {person: '#token_person', dependency: '#token_dependency', employment: '#token_employment'},
+        prefix_row: 'row_entity_',
+        init: function(){
+          this.tokenPerson();
+          this.tokenDependency();
+          this.tokenEmployment();
+          this.catchSubmit();
+          this.catchChangeActive();
+        },
+        tokenPerson: function(){
+          if(this.jqDom(this.token.person).length > 0){
+            this.jqDom(this.fn.person_id).tokenInput('/people.json', {
+              theme: 'facebook',
+              tokenLimit: "1",
+              minChars: "3",
+              //prePopulate: data_dep,
+              resultsFormatter: function(person){
+                var compleName = person.fullname;
+                return "<li> <p style='color: black' >" + compleName + " </p> </li>"; 
+              },
+              tokenFormatter: function(person) {
+                if (person == null) return "";
+                return "<li><p>" + person.fullname.substring(0,40) + "</p> </li>" 
+              },
+              noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
+              hintText: "<%= I18n.t('token_input.hintText')%>",
+              searchigText: "<%= I18n.t('token_input.searching_text')%>",              
+            });
+          }
+        },
+        tokenDependency: function(){
+          if(this.jqDom(this.token.dependency).length > 0){
+            var jqDep = this.jqDom(this.fn.dependency_id);
+            var data_dep  = jqDep.data("prepopulate");
+            jqDep.tokenInput('/dependencies.json', {
+              theme: 'facebook',
+              tokenLimit: "1",
+              minChars: "3",
+              prePopulate: data_dep,
+              resultsFormatter: function(dependency){
+                var compleName = dependency.name + " (" + dependency.description + ")";
+                return "<li> <p style='color: black' >" + compleName + " </p> </li>"; 
+              },
+              tokenFormatter: function(dependency) {
+                if (dependency == null) return "";
+                return "<li><p>" + dependency.name + " (" + dependency.description.substring(0,20) + ") </p> </li>" 
+              },
+              noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
+              hintText: "<%= I18n.t('token_input.hintText')%>",
+              searchigText: "<%= I18n.t('token_input.searching_text')%>",
+            });
+          }
+        },
+        tokenEmployment: function(){
+          if(this.jqDom(this.token.employment).length > 0){
+            var jqDep = this.jqDom(this.fn.employment_id);
+            var data_dep  = jqDep.data("prepopulate");
+            jqDep.tokenInput('/employments.json', {
+              theme: 'facebook',
+              tokenLimit: "1",
+              minChars: "3",
+              prePopulate: data_dep,
+              resultsFormatter: function(employment){
+                return "<li> <p style='color: black' >" + employment.name + " </p> </li>"; 
+              },
+              tokenFormatter: function(employment) {
+                if (employment == null) return "";
+                return "<li><p>" + employment.name.substring(0,20) + "</p> </li>" 
+              },
+              noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
+              hintText: "<%= I18n.t('token_input.hintText')%>",
+              searchigText: "<%= I18n.t('token_input.searching_text')%>",
+            });
+          }
+        },
+        catchSubmit: function(){
+          var el = this;
+          this.jqDom('form').on("submit",function(evt){
+            var serial = $(this).serialize();
+            var action = $(this).attr('action');
+            evt.preventDefault();
+            $.ajax({
+              type: "POST",
+              url: action,
+              data: serial,
+              dataType: "json",
+              success: function(data){
+                el.draw(new EntityJson(data));
+                return false;
+              },
+              error: function(xhr, event, status) {
+                var errors = jQuery.parseJSON(xhr.responseText);
+                //showError(eldoc.container.error, errors);
+                console.log(errors);
+                return false;
+              }
+            });
+          });
+          return false;
+        },
+        catchChangeActive: function(){
+          var el = this;
+          $(this.root_list+' .ref_change_entity_active').on("click",function(evt){
+            var active = $(this).is(":checked");
+            var id = $(this).val();
+            var elchk = this;
+            $.ajax({
+              type: "PUT",
+              url: '/entities/'+id+'/update_active',
+              data: {active: active},
+              dataType: "json",
+              success: function(data){
+                var e = new EntityJson(data);
+                $(elchk).prop('checked', e.active);
+              },
+              error: function(xhr, event, status) {
+                var errors = jQuery.parseJSON(xhr.responseText);
+                $(elchk).prop('checked', !active);
+                //showError(eldoc.container.error, errors);
+                console.log(errors);
+                return false;
+              }
+            });
+          });
+        },
+        draw: function(entity){
+          /* draw create item in list items */
+          var count = $(this.root_list).children('tr').length;
+          var row_class = "even";
+          if(count%2 == 0)
+            row_class = "odd";
+
+          var fields = '<input type="hidden" id="entity_' + entity.id+' value="' + entity.id + '">';
+          var tr = '<tr id="' + this.prefix_row + entity.id + '" class="'+row_class+'">';
+          tr += fields;
+          tr += '<td>' + entity.dependency.name + '</td>';
+          tr += '<td>' + entity.employment.name + '</td>';
+          var del = '<a href="#" onClick="return Entity.delete('+entity.id+');"><span class="glyphicon glyphicon-remove"></span></a>';
+          tr += '<td>' + del + '</td>';
+          tr += '</tr>';
+
+          $(this.root_list + " > tbody:last").append(tr); 
+          this.clear();
+        },
+        delete: function(id){
+          var el = this;
+          if(confirm("<%= I18n.t('messages.confirm_delete',message: 'Cargo Personal') %>")){
+            $.ajax({
+                type: "delete",
+                url: "/entities/"+id,
+                //data: {_method: 'delete', id: id},
+                dataType: "json",
+                success: function(data){
+                  $(el.root_list  + " #" + el.prefix_row + id).remove();
+                  return false;
+                },
+                error: function(xhr, event, status) {
+                  var errors = jQuery.parseJSON(xhr.responseText);
+                  //showError(eldoc.container.error, errors);
+                  console.log(errors);
+                  return false;
+                }
+            });
+          }
+          return false;
+        },
+        clear: function(){
+          this.jqDom(this.fn.dependency_id).tokenInput("clear");
+          this.jqDom(this.fn.employment_id).tokenInput("clear");
+        },
+        jqDom: function(field){
+          return $(this.root+" "+field);
+        },
+      };
+      Entity.init();
+    }    
+  }
+});
