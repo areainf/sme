@@ -29,8 +29,19 @@ class FoldersController < ApplicationController
 
   def create
     @folder = Folder.new(folder_params)
-    @folder.save
-    respond_with(@folder)
+    if @folder.save
+      # respond_to do |format|
+      #   format.html
+      #   format.json {render :json => @folder.to_json }
+      # end 
+      render :json => @folder.to_json
+    else 
+      # respond_to do |format|
+      #   format.html
+      #   format.json {render :json => @folder.errors.full_messages, :status => 422 }
+      # end 
+      render :json => @folder.errors.full_messages, :status => 422 
+    end
   end
 
   def update
@@ -43,6 +54,21 @@ class FoldersController < ApplicationController
     respond_with(@folder)
   end
 
+  def move_folder
+    @folder = Folder.find(params[:id_from])
+    if @folder.update_attribute(:parent_id, params[:id_to])
+      respond_to do |format|
+        format.html
+        format.json {render :json => @folder.to_json }
+      end 
+    else 
+      respond_to do |format|
+        format.html
+        format.json {render :json => @folder.errors.full_messages, :status => 422 }
+      end 
+    end
+
+  end
   private
     def set_folder
       @folder = Folder.find(params[:id])
@@ -89,7 +115,8 @@ class FoldersController < ApplicationController
     def folder_root
       root = {title: "/", key: "", folder: true, children: []}
       Folder.root.each do |f|
-        root[:children] << {title: f.name, key: f.id, folder: true, lazy: true}
+        a =f.name+ " "+  f.id.to_s
+        root[:children] << {title: a, key: f.id, folder: true, lazy: true}
       end
       Document.where("folder_id is NULL").each do |d|
         root[:children]  << {title: d.description, key: d.id}
@@ -102,7 +129,8 @@ class FoldersController < ApplicationController
       documents = f.documents
       result_json = []
       folders.each do |f|
-        result_json << {title: f.name, key: f.id, folder: true, lazy: true}
+        a =f.name+ " - "+  f.id.to_s
+        result_json << {title: a, key: f.id, folder: true, lazy: true}
       end
       documents.each do |d|
         result_json << {title: d.description, key: d.id}

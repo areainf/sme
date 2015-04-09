@@ -6,7 +6,7 @@ $(document).ready( function() {
 
       $("#tree").fancytree({
         lazy: true,
-        extensions: ["dnd"],
+        extensions: ["dnd", "edit"],
         
         //checkbox: true,
         selectMode: 1,
@@ -34,29 +34,82 @@ $(document).ready( function() {
           }
         },
         dnd: {
-            autoExpandMS: 400,
-            focusOnClick: true,
-            preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
-            preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
-            dragStart: function(node, data) {
-                // if false dnd is disabled
-                return true;
-            },
-            dragStop: function(node, data) {
-                return true;
-            },
-            dragEnter: function(node, data) {
-                if(node.parent !== data.otherNode.parent) return false;
-                return true;
-            },
-            dragDrop: function(node, data) {
-              // if dropped to another node insert it before!
-              data.otherNode.moveTo(node, "before");
+          autoExpandMS: 400,
+          focusOnClick: true,
+          preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+          preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+          dragStart: function(node, data) {
+            /** This function MUST be defined to enable dragging for the tree.
+             *  Return false to cancel dragging of node.
+             */
+            return true;
+          },
+          dragEnter: function(node, data) {
+            /** data.otherNode may be null for non-fancytree droppables.
+             *  Return false to disallow dropping on node. In this case
+             *  dragOver and dragLeave are not called.
+             *  Return 'over', 'before, or 'after' to force a hitMode.
+             *  Return ['before', 'after'] to restrict available hitModes.
+             *  Any other return value will calc the hitMode from the cursor position.
+             */
+            // Prevent dropping a parent below another parent (only sort
+            // nodes under the same parent)
+            /*if(node.parent !== data.otherNode.parent){
+              return false;
             }
+            // Don't allow dropping *over* a node (would create a child)
+            return ["before", "after"];
+            */
+             return true;
+          },
+          dragDrop: function(node, data) {
+            /** This function MUST be defined to enable dropping of items on
+             *  the tree.
+             * expand if lazy load
+              console.log("MOVER "+data.otherNode.key+ " a "+node.key);
+             */
+            node.setExpanded(true).always(function(){
+              // Wait until expand finished, then add the additional child
+              move(data,node);
+            });
+          }
         },
+        edit: {
+          triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"],
+          beforeEdit: function(event, data){
+            // Return false to prevent edit mode
+          },
+          edit: function(event, data){
+            // Editor was opened (available as data.input)
+          },
+          beforeClose: function(event, data){
+            // Return false to prevent cancel/save (data.input is available)
+          },
+          save: function(event, data){
+            // Save data.input.val() or return false to keep editor open
+            console.log("save...", this, data);
+            // Simulate to start a slow ajax request...
+            setTimeout(function(){
+              $(data.node.span).removeClass("pending");
+              // Let's pretend the server returned a slightly modified
+              // title:
+              data.node.setTitle(data.node.title + "!");
+            }, 2000);
+            // We return true, so ext-edit will set the current user input
+            // as title
+            return true;
+          },
+          close: function(event, data){
+            // Editor was removed
+            if( data.save ) {
+              // Since we started an async request, mark the node as preliminary
+              $(data.node.span).addClass("pending");
+            }
+          }
+        }
       });
 
-      $("#folders-index form_new").on("submit",function(evt){
+      $("#folders-index form_new").on("click",function(evt){
             var serial = $(this).serialize();
             var action = $(this).attr('action');
             evt.preventDefault();
@@ -85,7 +138,33 @@ $(document).ready( function() {
             });
             return false;
       });
-
+      
+      /*Mover carpeta y documento desde hasta*/
+      function move(_data, node){
+        //ok = mover_document(data.otherNode.key, node.key);
+                //data.otherNode.moveTo(node, data.hitMode);
+        var params = {id_from: _data.otherNode.key, id_to: node.key};
+        var url = "move_document";
+        if(_data.otherNode.folder)
+          url = "move_folder";
+        $.ajax({
+          type: "POST",
+          url: "folders/"+url,
+          data: params,
+          dataType: "json",
+          success: function(data){
+            _data.otherNode.moveTo(node, _data.hitMode);
+            return false;
+          },
+          error: function(xhr, event, status) {
+            var errors = jQuery.parseJSON(xhr.responseText);
+            //showError(eldoc.container.error, errors);
+            console.log(errors);
+            return false;
+          }
+        });
+        return false;
+      }
     }
   }
 

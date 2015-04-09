@@ -19,7 +19,10 @@
 //= require parsley
 //= require parsley.i18n.es
 //= require jquery-ui
-//= require fancytree
+//= require jquery.fancytree
+//= require jquery.fancytree.dnd
+//= require jquery.fancytree.edit
+//# require fancytree
 
 
 //#m+ 
