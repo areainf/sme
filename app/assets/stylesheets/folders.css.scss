@@ -1,3 +1,19 @@
-// Place all the styles related to the Folders controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+/*new partial folder*/
+#id-folder_new{
+  h1{
+    font-size: 12pt;
+    background-color: #cccccc;
+    -moz-box-shadow:5px 5px 5px #000000;
+    -webkit-box-shadow:5px 5px 5px #000000;
+    box-shadow:5px 5px 5px #000000;
+    padding: 10px;
+  }
+  .path{
+    label{
+      padding: 5px;
+      background-color: #ececec;
+      -webkit-border-radius: 5px 10px 10px 5px;
+border-radius: 5px 10px 10px 5px;
+    }
+  }
+}

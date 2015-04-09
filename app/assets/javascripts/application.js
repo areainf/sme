@@ -18,6 +18,9 @@
 //= require jquery.tokeninput.js
 //= require parsley
 //= require parsley.i18n.es
+//= require jquery-ui
+//= require fancytree
+
 
 //#m+ 
 //= require bootstrap-sprockets
