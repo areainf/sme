@@ -87,16 +87,7 @@ $(document).ready( function() {
           },
           save: function(event, data){
             // Save data.input.val() or return false to keep editor open
-            console.log("save...", this, data);
-            // Simulate to start a slow ajax request...
-            setTimeout(function(){
-              $(data.node.span).removeClass("pending");
-              // Let's pretend the server returned a slightly modified
-              // title:
-              data.node.setTitle(data.node.title + "!");
-            }, 2000);
-            // We return true, so ext-edit will set the current user input
-            // as title
+            rename(data);
             return true;
           },
           close: function(event, data){
@@ -164,6 +155,31 @@ $(document).ready( function() {
           }
         });
         return false;
+      }
+      /*Renombrar carpeta*/
+      function rename(node_data){
+        var id = node_data.node.key;
+        var name = node_data.input.val();
+        var nameOrig = node_data.node.title;
+        var params = {folder: {id: id, name: name}};
+        $.ajax({
+          type: "PATCH",
+          url: "folders/"+id,
+          data: params,
+          dataType: "json",
+          success: function(data){
+            $(node_data.node.span).removeClass("pending");
+            node_data.node.setTitle(node_data.node.title);
+          },
+          error: function(xhr, event, status) {
+            var errors = jQuery.parseJSON(xhr.responseText);
+            //showError(eldoc.container.error, errors);
+            $(node_data.node.span).removeClass("pending");
+            node_data.node.setTitle(nameOrig);
+            console.log(errors);
+            return false;
+          }
+        });
       }
     }
   }
