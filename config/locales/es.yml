@@ -9,12 +9,14 @@ es:
     models:
       errors:
         message_empty_people_names: Debe igresar el Apellido o Nombre de la Persona
+        message_non_empty_folder: La carpeta debe estar vacía
     attributes:
       user:
         username: Usuario
         remember_me: Recordarme
   buttons:  
     accept: Aceptar
+    delete: Eliminar
   documents:
     directions:
       input: Entrada
@@ -55,6 +57,9 @@ es:
   folders:
     new:
       title: Nueva Carpeta
+    remove:
+      title: Eliminar Carpeta
+      text: "Sólo se puede eliminar carpetas sin sub carpetas, los documentos contenidos seran movidos a la raiz"
     sub_header:
       title: Carpetas
       sub_title:

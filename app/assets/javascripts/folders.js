@@ -1,13 +1,13 @@
 $(document).ready( function() {
   if($("#ctrllr-folders").length >0 ){
     if($("#folders-index").length >0 ){
-      var parent_path = "#parent_path";
-      var parent_id = "#parent_id";
+      var parent_path = ["#parent_path", "#delete_parent_path"];
+      var parent_id = ["#parent_id", "#delete_parent_id"];
 
       $("#tree").fancytree({
         lazy: true,
         extensions: ["dnd", "edit"],
-        
+        expanded: true,
         //checkbox: true,
         selectMode: 1,
         source: $.ajax({
@@ -24,13 +24,15 @@ $(document).ready( function() {
         },
         activate: function(event, data) {
           if(data.node.folder){
-            $(parent_id).val(data.node.key); 
+            for (var i = 0; i < parent_id.length; i++)
+              $(parent_id[i]).val(data.node.key); 
             var parents = data.node.getParentList();
             var p = "";
             for(var i = 0; i < parents.length; i++)
               p += parents[i].title;
             p += data.node.title;
-            $(parent_path).html(p);
+            for (var i = 0; i < parent_path.length; i++)
+              $(parent_path[i]).html(p);
           }
         },
         dnd: {
@@ -97,9 +99,8 @@ $(document).ready( function() {
               $(data.node.span).addClass("pending");
             }
           }
-        }
+        },
       });
-
       $("#folders-index #new_folder").on("submit",function(evt){
             var serial = $(this).serialize();
             var action = $(this).attr('action');
@@ -132,6 +133,31 @@ $(document).ready( function() {
             return false;
       });
       
+      /*
+      ELIMINAR  UNA CARPETA 
+      */
+      $("#btn-remove-folder").on("click", function(evt){
+        var id = $("#delete_parent_id").val();
+        if(id && confirm("Confirma que desea eliminar la Carpeta seleccionada?")){
+          var tree = $("#tree").fancytree("getTree");
+          var active_node = tree.getActiveNode();
+          $.ajax({
+            type: "DELETE",
+            url: "folders/"+active_node.key,
+            dataType: "json",
+            success: function(data){
+              active_node.remove();
+            },
+            error: function(xhr, event, status) {
+              var errors = jQuery.parseJSON(xhr.responseText);
+              //showError(eldoc.container.error, errors);
+              console.log(errors);
+              return false;
+            }
+          });
+        }
+      });
+
       /*Mover carpeta y documento desde hasta*/
       function move(_data, node){
         //ok = mover_document(data.otherNode.key, node.key);
