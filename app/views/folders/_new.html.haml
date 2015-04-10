@@ -1,6 +1,6 @@
 #id-folder_new
   %h1= t('.title')
-  = form_for(Folder.new, :remote => true,  html: { "data-parsley-validate" => '', id: 'form_new'}) do |f|  
+  = form_for(Folder.new(), :remote => true,  format: :json, id: 'form_new', html: {"data-parsley-validate" => ''}) do |f|  
     = f.hidden_field :parent_id, id: "parent_id"
     .path
       %label= t("labels.directory")

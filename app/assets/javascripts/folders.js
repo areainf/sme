@@ -100,7 +100,7 @@ $(document).ready( function() {
         }
       });
 
-      $("#folders-index form_new").on("click",function(evt){
+      $("#folders-index #new_folder").on("submit",function(evt){
             var serial = $(this).serialize();
             var action = $(this).attr('action');
             evt.preventDefault();
@@ -117,7 +117,9 @@ $(document).ready( function() {
                   active_node = tree.rootNode.children[0];
                 }
                 active_node.addChildren(node);
-                console.log(data);
+                $("#folders-index #new_folder #folder_name").val("");
+                $("#folders-index #new_folder #folder_description").val("");
+                console.log("SUCCESS", data);
                 return false;
               },
               error: function(xhr, event, status) {

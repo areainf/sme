@@ -31,17 +31,17 @@ class FoldersController < ApplicationController
   def create
     @folder = Folder.new(folder_params)
     if @folder.save
-      # respond_to do |format|
-      #   format.html
-      #   format.json {render :json => @folder.to_json }
-      # end 
-      render :json => @folder.to_json
+      respond_to do |format|
+        format.html
+        format.json {render :json => @folder.to_json }
+      end 
+      # render :json => @folder.to_json
     else 
-      # respond_to do |format|
-      #   format.html
-      #   format.json {render :json => @folder.errors.full_messages, :status => 422 }
-      # end 
-      render :json => @folder.errors.full_messages, :status => 422 
+      respond_to do |format|
+        format.html
+        format.json {render :json => @folder.errors.full_messages, :status => :unprocessable_entity }
+      end 
+      # render :json => @folder.errors.full_messages, :status => 422 
     end
   end
 
