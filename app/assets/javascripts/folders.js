@@ -163,12 +163,12 @@ $(document).ready( function() {
         //ok = mover_document(data.otherNode.key, node.key);
                 //data.otherNode.moveTo(node, data.hitMode);
         var params = {id_from: _data.otherNode.key, id_to: node.key};
-        var url = "move_document";
+        var url = "documents/move";
         if(_data.otherNode.folder)
-          url = "move_folder";
+          url = "folders/move";
         $.ajax({
           type: "POST",
-          url: "folders/"+url,
+          url: url,
           data: params,
           dataType: "json",
           success: function(data){

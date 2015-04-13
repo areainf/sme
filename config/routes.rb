@@ -17,10 +17,18 @@ Rails.application.routes.draw do
   resources :notes
   resources :folders do
     collection do
-      post 'move_folder'
-      post 'move_document'
+      post 'move'
+      # post 'move_document'
     end
   end
+  
+  resources :documents do
+    collection do
+      post 'move'
+    end
+  end
+  
+
 
 #+m
   root 'landing#index'
