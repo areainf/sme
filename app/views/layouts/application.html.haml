@@ -16,8 +16,9 @@
       .container
         .sub_header
           = render 'sub_header'
-    #page-content
+    #page-content      
       .container
+        #ajax_error_container
         .space-1
         - flash.each do |key, value|
           %div(class="alert alert-#{key}")

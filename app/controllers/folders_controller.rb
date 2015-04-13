@@ -51,11 +51,19 @@ class FoldersController < ApplicationController
   end
 
   def destroy
-    @folder.destroy
-    respond_with(@folder)
+    if @folder.childs.count == 0
+      @folder.destroy
+      respond_with(@folder)
+    else
+      @folder.errors.add(:base, I18n.t("activerecord.models.errors.message_non_empty_folder"))
+      respond_to do |format|
+        format.html
+        format.json {render :json => @folder.errors.full_messages, :status => 422 }
+      end 
+    end
   end
 
-  def move_folder
+  def move
     @folder = Folder.find(params[:id_from])
     if @folder.update_attribute(:parent_id, params[:id_to])
       respond_to do |format|

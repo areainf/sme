@@ -2,6 +2,10 @@ es:
   activerecord:
     errors:
       models:
+        folder:
+          attributes:
+            name:
+              taken: El Nombren o puede repetirse
         note:
           attributes:
             senders:

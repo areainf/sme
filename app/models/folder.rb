@@ -29,7 +29,7 @@ class Folder < ActiveRecord::Base
   def validate_no_children
     if childs.count != 0
       errors.add(:name, I18n.t("activerecord.models.errors.message_non_empty_folder"))
-      raise I18n.t("activerecord.models.errors.message_non_empty_folder")
+      raise I18n.t("activerecord.models.errors.message_non_empty_folder") 
       false
     end
     true

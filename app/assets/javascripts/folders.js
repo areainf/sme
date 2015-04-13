@@ -120,12 +120,12 @@ $(document).ready( function() {
                 active_node.addChildren(node);
                 $("#folders-index #new_folder #folder_name").val("");
                 $("#folders-index #new_folder #folder_description").val("");
-                console.log("SUCCESS", data);
                 return false;
               },
               error: function(xhr, event, status) {
                 var errors = jQuery.parseJSON(xhr.responseText);
                 //showError(eldoc.container.error, errors);
+                showError(errors);
                 console.log(errors);
                 return false;
               }
@@ -151,6 +151,7 @@ $(document).ready( function() {
             error: function(xhr, event, status) {
               var errors = jQuery.parseJSON(xhr.responseText);
               //showError(eldoc.container.error, errors);
+              showError(errors);
               console.log(errors);
               return false;
             }
@@ -178,6 +179,7 @@ $(document).ready( function() {
           error: function(xhr, event, status) {
             var errors = jQuery.parseJSON(xhr.responseText);
             //showError(eldoc.container.error, errors);
+            showError(errors);
             console.log(errors);
             return false;
           }
@@ -204,6 +206,7 @@ $(document).ready( function() {
             //showError(eldoc.container.error, errors);
             $(node_data.node.span).removeClass("pending");
             node_data.node.setTitle(nameOrig);
+            showError(errors);
             console.log(errors);
             return false;
           }
