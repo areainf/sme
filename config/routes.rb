@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :folders
 
   resources :dependencies
 
@@ -16,6 +15,20 @@ Rails.application.routes.draw do
   end
 
   resources :notes
+  resources :folders do
+    collection do
+      post 'move'
+      # post 'move_document'
+    end
+  end
+  
+  resources :documents do
+    collection do
+      post 'move'
+    end
+  end
+  
+
 
 #+m
   root 'landing#index'

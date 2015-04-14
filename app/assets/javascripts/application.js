@@ -18,6 +18,14 @@
 //= require jquery.tokeninput.js
 //= require parsley
 //= require parsley.i18n.es
+//= require jquery-ui
+//= require jquery.fancytree
+//= require jquery.fancytree.dnd
+//= require jquery.fancytree.edit
+//# require fancytree
+//= require utils
+//= require jsonModels
+
 
 //#m+ 
 //= require bootstrap-sprockets
@@ -32,85 +40,4 @@
 //   $(this).tab('show');
 // })
 
-EntityJson = function(data){
-  if(data != undefined){
-    if ( typeof data == "string"){
-      data = jQuery.parseJSON(data);
-    }
-    this.id = data['id'];
-    this.person_id = data['person_id'];
-    this.dependency_id = data['dependency_id'];
-    this.employment_id = data['employment_id'];
-    this.active = data['active'];
-    this.person = new PersonJson(data['person']);
-    this.dependency = new DependencyJson(data['dependency']);
-    this.employment = new EmploymentJson(data['employment']);
-    this.fullEntityName = function(){
-      var name = this.person.fullPersonName();
-      var dname = this.dependency.name;
-      var ename = this.employment.name;
-      if(dname){
-        if(name.length > 0)
-          name += " ";
-        name += "[" + dname + ']';
-      }
-      if(ename){
-        if(name.length > 0)
-          name += " ";
-        name += '(' + ename + ')';
-      }
-      return name;
-    }
-  }
-}
-PersonJson = function(data){
-  if(data != undefined){
-    if ( typeof data == "string")
-      data = jQuery.parseJSON(data);
-    this.id = data['id'];
-    this.firstname = data['firstname'];
-    this.lastname = data['lastname'];
-  }
-  this.fullPersonName = function(){
-    var name = (this.firstname != undefined) ? this.firstname : '';
-    if(this.lastname != undefined){
-      if (name.length > 0)
-        name += ", ";
-      name += this.lastname;
-    }
-    return name;
 
-  }
-}
-DependencyJson = function(data){
-  if(data != undefined){
-    if ( typeof data == "string")
-      data = jQuery.parseJSON(data);
-    this.id = data['id'];
-    this.name = data['name'];
-  }
-}
-EmploymentJson = function(data){
-  if(data != undefined){
-    if ( typeof data == "string")
-      data = jQuery.parseJSON(data);
-    this.id = data['id'];
-    this.name = data['name'];
-  }
-}
-
-$(document).ready(function() {
-  goto_tab_if_defined();
-});
-
-/*Si la url tiene especificado algun tab "#name" entonces
-  si existe name activar ese tab
-  */
-function goto_tab_if_defined(){
-  var hash = location.hash;
-  var hashPieces = hash.split('?');
-  if(hashPieces[0]){
-    var activeTab = $('[href=' + hashPieces[0] + ']');
-    activeTab && activeTab.tab('show');
-  }
-}

@@ -1,6 +1,7 @@
 class Document < ActiveRecord::Base
   belongs_to :create_user_id
   belongs_to :entry_user_id
+  belongs_to :folder
   has_many :recipients,  inverse_of: :document
   has_many :senders
   has_many :entities_to, through:  :recipients

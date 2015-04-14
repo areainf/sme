@@ -12,12 +12,10 @@
         %li
           %a{href: new_note_path(:direction => ApplicationHelper::DIR_OUTPUT)}
             = t('.document.new_note_output')
+        %li.separate
         %li
-          %a{href: "#"}
-            = t('.document.pending')
-        %li
-          %a{href: "#"}
-            = t('.document.all')
+          %a{href: "#{folders_path}"}
+            = t('.folders')
 
     %li
       %a.dropdown-toggle{data: {toggle: "dropdown"}, class: current_tag('dependencies')}

@@ -38,7 +38,9 @@ gem 'will_paginate', '~> 3.0.6'
 gem 'awesome_print'
 
 gem "parsley-rails"
-gem 'js-tree-rails', '~> 0.0.1'
+gem 'jquery-ui-rails'
+# gem 'fancytree-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

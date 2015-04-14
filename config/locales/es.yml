@@ -2,6 +2,10 @@ es:
   activerecord:
     errors:
       models:
+        folder:
+          attributes:
+            name:
+              taken: El Nombren o puede repetirse
         note:
           attributes:
             senders:
@@ -9,12 +13,14 @@ es:
     models:
       errors:
         message_empty_people_names: Debe igresar el Apellido o Nombre de la Persona
+        message_non_empty_folder: La carpeta debe estar vacía
     attributes:
       user:
         username: Usuario
         remember_me: Recordarme
   buttons:  
     accept: Aceptar
+    delete: Eliminar
   documents:
     directions:
       input: Entrada
@@ -52,10 +58,21 @@ es:
     created: Creado
     deleted: Eliminado
     entity: "Se ha %{message} exitosamente la Entidad"
+  folders:
+    new:
+      title: Nueva Carpeta
+    remove:
+      title: Eliminar Carpeta
+      text: "Sólo se puede eliminar carpetas sin sub carpetas, los documentos contenidos seran movidos a la raiz"
+    sub_header:
+      title: Carpetas
+      sub_title:
+        index: Listado
   labels:    
     active: Activo
     dependency: Dependencia
     description: Descripción
+    directory: Directorio
     emission_date: Fecha de Emisión
     employment: Cargo
     entities_from_ids: Remitentes
@@ -80,12 +97,10 @@ es:
         list: Listado Dependencia
       document:
         all: Todos
-        input: Entrada
         new_note_input: Nota de Entrada
         new_note_output: Nota de Salida
-        output: Salida
-        pending: Pendiente
       documents: Documentos
+      folders: Carpetas      
       master_units:
         new: Nueva Organización
         list: Listado de Organizaciones

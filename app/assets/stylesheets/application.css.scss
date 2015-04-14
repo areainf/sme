@@ -15,9 +15,12 @@
  *= require token-input.css
  *= require token-input-facebook.css
  *= require parsley
- *= require_tree .
+ *= require jquery-ui
+ *= require fancytree/ui.fancytree.css
  *= require_self
+ *= require_tree .
  */
+ //require ui.fancytree
 
 @import "bootstrap-sprockets";
 @import "bootstrap";

@@ -1,8 +1,9 @@
 #ctrllr-folders
   #folders-index
-    %table#folders-index-table{data: {source: folders_path(format: :json)}}
-      %thead
-        %tr
-          %th{width: "90%"}= t('labels.name')
-          %th
-      %tbody
+    .row
+      .col-md-8
+        #tree
+      .col-md-4
+        = render 'new'
+        = render 'remove'
+
