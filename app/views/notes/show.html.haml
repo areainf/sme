@@ -2,9 +2,9 @@
   #notes-show
     %h2
       - if @note.is_input?
-        = t('labels.note_input')
+        = t('labels.Note_input')
       - else
-        = t('labels.note_output')
+        = t('labels.Note_output')
     %p
       %strong= t('labels.senders')      
       = @note.senders.map{|s| s.entity.fullname}.join("; ") unless @note.senders.nil?
@@ -33,6 +33,6 @@
     %p
       %strong= t('labels.reference_people')
       = @note.reference_people
-    / %p
-    /   %strong= t('labels.')
-    /   = @note.
+    %p
+      %strong= t('labels.folder')
+      = @note.folder.present? ? @note.folder.path : '/'

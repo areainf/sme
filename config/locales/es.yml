@@ -21,6 +21,8 @@ es:
   buttons:  
     accept: Aceptar
     delete: Eliminar
+  custom:
+    selected_folder: Carpeta seleccionada
   documents:
     directions:
       input: Entrada
@@ -59,6 +61,8 @@ es:
     deleted: Eliminado
     entity: "Se ha %{message} exitosamente la Entidad"
   folders:
+    index:
+      show_document_title: Detalle del Documento
     new:
       title: Nueva Carpeta
     remove:
@@ -79,11 +83,12 @@ es:
     entities_to_ids: Destinatarios
     entry_at: Fecha de Ingreso
     firstname: Nombre
+    folder: Carpeta
     lastname: Apellido
     master_unit: Organización
     name: Nombre
-    note_input: Nota de Entrada
-    note_output: Nota de Salida
+    Note_input: Nota de Entrada
+    Note_output: Nota de Salida
     observation: Observación
     reference_people: Personas mencionadas
     senders: Remitentes

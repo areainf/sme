@@ -7,3 +7,13 @@
         = render 'new'
         = render 'remove'
 
+
+#modal-show-document.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{:type=>"button", :class=>"close","data-dismiss"=>"modal", "aria-hidden"=>"true"}
+          &times;
+        %h4.modal-title= t('.show_document_title')
+      .modal-body
+        #document-content

@@ -1,6 +1,7 @@
 jQuery(document).ready(function() {
   if ($("#ctrllr-notes").length > 0){
     if($("#notes-edit").length > 0){   
+      var container_folder = {id:"#folder_id", text: "#folder_text"};
       var url_find_receipt = $("#entities_to_ids").data("url");
       $("#entities_to_ids").tokenInput(url_find_receipt, {
         theme: 'facebook',
@@ -46,6 +47,39 @@ jQuery(document).ready(function() {
         if(e.keyCode==9){
           $("#note_description").focus();
         }
+      });
+
+      $("#folder-tree").fancytree({
+        lazy: true,
+        expanded: true,
+        //checkbox: true,
+        selectMode: 1,
+        source: $.ajax({
+          url: "/folders",
+          dataType: "json"
+        }),
+        lazyLoad: function(event, data){
+          var node = data.node;
+          // Issue an ajax request to load child nodes
+          data.result = {
+            url: "/folders.json",
+            data: {id: node.key}
+          }
+        },
+        activate: function(event, data) {
+          if(data.node.folder){
+            $(container_folder.id).val(data.node.key); 
+            var parents = data.node.getParentList();
+            var p = "";
+            for(var i = 1; i < parents.length; i++){
+              p += '<li> <span class="divider"></span>';
+              p += parents[i].title + '</li>';
+            }
+            p += '<li> <span class="divider"></span>';
+            p += data.node.title + '</li>';
+            $(container_folder.text).html(p);
+          }
+        },
       });
 
       //si es edit y tiene recipients mostrarlo
