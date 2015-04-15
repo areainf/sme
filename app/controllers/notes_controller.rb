@@ -53,7 +53,7 @@ class NotesController < ApplicationController
 
     def note_params
       params.require(:note).permit(:direction, :description, :observation, :reference_people, 
-          :emission_date, :system_status, :folder_id,
+          :emission_date, :system_status, :folder_id, :recipient_text, :sender_text,
           :recipients_attributes => [:entity_id, :id, :_destroy], :senders_attributes => [:entity_id, :id, :_destroy])
     end
 
@@ -72,7 +72,7 @@ class NotesController < ApplicationController
     def get_nested_entity_ids(entities_ids)
       entidades = []
       entities_ids.split(",").each do |e|
-        entidades << {entity_id: e}
+        entidades << {entity_id: e} if e.to_i > 0
       end
       entidades
     end

@@ -1,8 +1,47 @@
 jQuery(document).ready(function() {
   if ($("#ctrllr-notes").length > 0){
     if($("#notes-edit").length > 0){   
+      var DialogEntityText = function(title, names, action){
+        this.container = "#entity_text";
+        this.f = {names: "#entity_text-name", title: "#entity_text-title"};
+        this.b = {save: "#entity_text-save"};
+        this.setTitle = function(title){
+          $(this.f.title).html(title);
+        };
+        this.setNames = function(names){
+          $(this.f.names).val(names);
+        };
+        this.clear = function(){
+          $(this.f.names).val("");
+        };
+        this.close = function(){
+          $(this.container).modal("hide");
+        };
+        this.bind_save = function(){
+          var el = this;
+          $(this.b.save).off();
+          $(this.b.save).on("click", function(){
+            if(el.action_save != undefined)
+              el.action_save($(el.f.names).val());
+          });
+        };
+        this.show = function(){
+          $(this.container).modal();
+          $(this.f.names).focus();
+        };
+
+        //constructor
+        this.setTitle(title);
+        this.setNames(names);
+        this.action_save = action;
+        this.bind_save();
+      };
+
       var container_folder = {id:"#folder_id", text: "#folder_text"};
       var url_find_receipt = $("#entities_to_ids").data("url");
+      var real_input_token_from = "#token-input-entities_from_ids";
+      var real_input_token_to = "#token-input-entities_to_ids";
+
       $("#entities_to_ids").tokenInput(url_find_receipt, {
         theme: 'facebook',
         //prePopulate: $("#entities_to_ids").data("pre"),
@@ -15,6 +54,10 @@ jQuery(document).ready(function() {
         tokenFormatter: function(entity) {
           var e = new EntityJson(entity);          
           return "<li><p>" + e.fullEntityName().substring(0,40) + "</p> </li>" 
+        },
+        onResult: function(item){
+          console.log(item);
+          return item;
         },
         noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
         hintText: "<%= I18n.t('token_input.hintText')%>",
@@ -48,7 +91,48 @@ jQuery(document).ready(function() {
           $("#note_description").focus();
         }
       });
+          
+      
+      $(real_input_token_from).on("keyup", function(event){
+        if (event.keyCode == 45) {//key insert
+          var dialog_from = new DialogEntityText("Agregar Remitente", $("#note_sender_text").val(), function(data){
+            if (data.length > 0){
+              var simulateEntity = {
+                id: -10,
+                person: {id: -10, firstname: data, lastname: ""}
+              };
+              $("#entities_from_ids").tokenInput("add", simulateEntity);
+              $("#note_sender_text").val(data)
+            };
+            dialog_from.clear();
+            dialog_from.close();    
+          });
+          dialog_from.show();
+          event.preventDefault();
+        }
+      });
 
+      
+      $(real_input_token_to).on("keyup", function(event){
+        if (event.keyCode == 45) {//key insert
+          var dialog_to = new DialogEntityText("Agregar Destinatario", $("#note_recipient_text").val(), function(data){
+            if (data.length > 0){
+              var simulateEntity = {
+                id: -20,
+                person: {id: -20, firstname: data, lastname: ""}
+              }
+              $("#entities_to_ids").tokenInput("add", simulateEntity);
+              $("#note_recipient_text").val(data)
+            };
+            dialog_to.clear();
+            dialog_to.close();    
+          });
+          dialog_to.show();
+          event.preventDefault();
+        }
+      });
+
+      /*Seleccion de carpeta*/
       $("#folder-tree").fancytree({
         lazy: true,
         expanded: true,
@@ -95,6 +179,10 @@ jQuery(document).ready(function() {
           $("#entities_from_ids").tokenInput("add",new EntityJson(d[i]));
       }
     }
+
+    /*#######################################################
+      ####################  LISTAR NOTAS          ###########
+      #######################################################*/
     if ($("#note-index").length > 0){
       var table = $('#note-index-table').dataTable({
         "processing": true,

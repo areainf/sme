@@ -13,8 +13,8 @@ class Document < ActiveRecord::Base
 
   validates :description, presence: true
   validates :emission_date, presence: true
-  validates :senders, presence: true
-  validates :recipients, presence: true
+  validates :senders, presence: true , if: Proc.new { |a| a.sender_text.blank? } 
+  validates :recipients, presence: true, if: Proc.new { |a| a.recipient_text.blank? } 
     
   def is_input?
     direction.presence && direction.to_i != 0

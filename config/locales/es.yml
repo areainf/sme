@@ -20,7 +20,9 @@ es:
         remember_me: Recordarme
   buttons:  
     accept: Aceptar
+    close: Cerrar
     delete: Eliminar
+    save: Guardar
   custom:
     selected_folder: Carpeta seleccionada
   documents:
@@ -84,6 +86,7 @@ es:
     entry_at: Fecha de Ingreso
     firstname: Nombre
     folder: Carpeta
+    fullnames: Nombres completos
     lastname: Apellido
     master_unit: Organización
     name: Nombre

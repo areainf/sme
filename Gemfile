@@ -39,7 +39,7 @@ gem 'awesome_print'
 
 gem "parsley-rails"
 gem 'jquery-ui-rails'
-# gem 'fancytree-rails'
+gem 'mousetrap-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

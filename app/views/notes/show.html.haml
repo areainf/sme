@@ -8,9 +8,11 @@
     %p
       %strong= t('labels.senders')      
       = @note.senders.map{|s| s.entity.fullname}.join("; ") unless @note.senders.nil?
+      = @note.sender_text unless @note.sender_text.blank?
     %p
       %strong= t('labels.recipients')
       = @note.recipients.map{|s| s.entity.fullname}.join("; ") unless @note.recipients.nil?
+      = @note.recipient_text unless @note.recipient_text.blank?
     %p
       %strong= t('labels.code')
       = @note.code

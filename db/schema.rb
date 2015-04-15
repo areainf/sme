@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150407191613) do
+ActiveRecord::Schema.define(version: 20150415223311) do
 
   create_table "dependencies", force: true do |t|
     t.string   "name"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 20150407191613) do
     t.string   "indident_number"
     t.string   "resolution_number"
     t.integer  "folder_id"
+    t.string   "sender_text"
+    t.string   "recipient_text"
   end
 
   add_index "documents", ["create_user_id_id"], name: "index_documents_on_create_user_id_id", using: :btree

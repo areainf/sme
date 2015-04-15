@@ -11,6 +11,8 @@
 
   = hidden_field :note, :direction
   = hidden_field :note, :folder_id, id: "folder_id"
+  = hidden_field :note, :recipient_text
+  = hidden_field :note, :sender_text
   %fieldset
     .field
       %label{for: "entities_from_ids"}= t("labels.entities_from_ids")
@@ -42,3 +44,4 @@
   .action_container.text-center
     = f.submit t('buttons.accept'), {:class=>"btn-confirm"}
 
+= render 'entity_text'
