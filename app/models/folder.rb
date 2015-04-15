@@ -26,6 +26,14 @@ class Folder < ActiveRecord::Base
     return [self.parent_id] << self.parent.parents
   end
 
+  def path
+    if self.parent.present?
+      self.parent.path + "/" + name 
+    else
+      name
+    end
+  end
+
   def validate_no_children
     if childs.count != 0
       errors.add(:name, I18n.t("activerecord.models.errors.message_non_empty_folder"))

@@ -52,7 +52,9 @@ class NotesController < ApplicationController
     end
 
     def note_params
-      params.require(:note).permit(:direction, :description, :observation, :reference_people, :emission_date, :system_status, :recipients_attributes => [:entity_id, :id, :_destroy], :senders_attributes => [:entity_id, :id, :_destroy])
+      params.require(:note).permit(:direction, :description, :observation, :reference_people, 
+          :emission_date, :system_status, :folder_id,
+          :recipients_attributes => [:entity_id, :id, :_destroy], :senders_attributes => [:entity_id, :id, :_destroy])
     end
 
     def get_data(view_context, query, id)

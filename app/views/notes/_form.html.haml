@@ -9,7 +9,8 @@
       - @note.errors.full_messages.each do |message|
         %li= message
 
-  =hidden_field :note, :direction
+  = hidden_field :note, :direction
+  = hidden_field :note, :folder_id, id: "folder_id"
   %fieldset
     .field
       %label{for: "entities_from_ids"}= t("labels.entities_from_ids")

@@ -1,3 +1,13 @@
 #ctrllr-notes
   #notes-edit
-    = render 'form'
+    .row
+      .col-md-8
+        = render 'form'
+      .col-md-4
+        .side_title
+          = t('custom.selected_folder')
+        %ul.breadcrumb#folder_text
+          - if @note.folder.present?
+            %li
+              = @note.folder.path 
+        #folder-tree

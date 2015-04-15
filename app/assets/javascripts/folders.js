@@ -28,11 +28,22 @@ $(document).ready( function() {
               $(parent_id[i]).val(data.node.key); 
             var parents = data.node.getParentList();
             var p = "";
-            for(var i = 0; i < parents.length; i++)
+            for(var i = 0; i < parents.length; i++){
+              if(p.length > 0) p +="/";
               p += parents[i].title;
+            }
+            if(p.length > 0) p +="/";
             p += data.node.title;
+
             for (var i = 0; i < parent_path.length; i++)
               $(parent_path[i]).html(p);
+          }
+        },
+        dblclick: function(event, data) {
+          if(!data.node.folder){
+            //$("#documents-dialog_show").modal('show');
+             $("#modal-show-document").modal('show');
+            showDocument(data.node.key, "#document-content");
           }
         },
         dnd: {
@@ -80,12 +91,16 @@ $(document).ready( function() {
           triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"],
           beforeEdit: function(event, data){
             // Return false to prevent edit mode
+            if (data.node.folder && data.node.key != "")
+              return true;
+            return false;
           },
           edit: function(event, data){
             // Editor was opened (available as data.input)
           },
           beforeClose: function(event, data){
             // Return false to prevent cancel/save (data.input is available)
+            return data.node.folder;
           },
           save: function(event, data){
             // Save data.input.val() or return false to keep editor open
@@ -207,9 +222,26 @@ $(document).ready( function() {
             $(node_data.node.span).removeClass("pending");
             node_data.node.setTitle(nameOrig);
             showError(errors);
-            console.log(errors);
             return false;
           }
+        });
+      }
+
+      /*Traer mediante ajax el show de document*/
+      function showDocument(id, container){
+        $.ajax({
+            type: "GET",
+            url: "documents/"+id,
+            dataType: "html",
+            success: function(data){
+              $(container).html(data);
+              return true;
+            },
+            error: function(xhr, event, status) {
+              var errors = jQuery.parseJSON(xhr.responseText);
+              showError(errors, container);
+              return false;
+            }
         });
       }
     }
