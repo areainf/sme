@@ -70,6 +70,7 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
     minitest (5.4.3)
+    mousetrap-rails (1.4.6)
     multi_json (1.10.1)
     mysql2 (0.3.17)
     orm_adapter (0.5.0)
@@ -142,6 +143,7 @@ DEPENDENCIES
   jquery-datatables-rails (~> 3.1.1)
   jquery-rails
   jquery-ui-rails
+  mousetrap-rails
   mysql2
   parsley-rails
   rails (= 4.1.8)

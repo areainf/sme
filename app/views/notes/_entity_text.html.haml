@@ -1,0 +1,16 @@
+#entity_text.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{:type=>"button", :class=>"close","data-dismiss"=>"modal", "aria-hidden"=>"true"}
+          &times;
+        %h4.modal-title#entity_text-title
+      .modal-body
+        .field
+          %label{:for => "entity_text-name"}= t("labels.fullnames")
+          %input#entity_text-name.form-control{type: "text"}
+      .modal-footer
+        %button.btn.btn-default#entity_text-save{:type => "button"}
+          = t('buttons.save')
+        %button.btn.btn-default#entity_text-close{:type => "button", "data-dismiss"=>"modal"}
+          = t('buttons.close')

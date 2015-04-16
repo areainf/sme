@@ -39,7 +39,7 @@ PersonJson = function(data){
   }
   this.fullPersonName = function(){
     var name = (this.firstname != undefined) ? this.firstname : '';
-    if(this.lastname != undefined){
+    if(this.lastname != undefined &&  this.lastname.length > 0){
       if (name.length > 0)
         name += ", ";
       name += this.lastname;
