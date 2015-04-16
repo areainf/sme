@@ -74,6 +74,10 @@ es:
       title: Carpetas
       sub_title:
         index: Listado
+  help:
+    keyboard:
+      receipt_text: Presione la tecla Insert para ingresar el Destinatario como texto
+      sender_text: Presione la tecla Insert para ingresar el Remitente como texto
   labels:    
     active: Activo
     dependency: Dependencia

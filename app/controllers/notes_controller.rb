@@ -19,7 +19,7 @@ class NotesController < ApplicationController
 
   def new
     inp =  params[:direction].present? ? params[:direction] : 1
-    @note = Note.new({:direction => inp})
+    @note = Note.new({:direction => inp,:emission_date => Time.now})
     respond_with(@note)
   end
 
@@ -85,7 +85,7 @@ class NotesController < ApplicationController
         if delete_ids.include? e
           delete_ids.delete(e)
         else
-          entidades << {entity_id: e}
+          entidades << {entity_id: e}  if e.to_i > 0
         end
       end
       # delete delete_ids  from relations
@@ -104,7 +104,7 @@ class NotesController < ApplicationController
         if delete_ids.include? e
           delete_ids.delete(e)
         else
-          entidades << {entity_id: e}
+          entidades << {entity_id: e} if e.to_i > 0
         end
       end
       # delete delete_ids  from relations

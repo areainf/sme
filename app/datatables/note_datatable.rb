@@ -73,8 +73,10 @@ private
 
   def data
     documents.map do |record|
-      recip = record.recipients_names
-      send = record.senders_names
+      recip = record.recipients_names || []
+      recip << record.recipient_text
+      send = record.senders_names || []
+      send << record.sender_text
       [
         draw_direction(record),
         recip.blank? ? '' : recip.join("; "),
