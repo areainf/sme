@@ -64,3 +64,16 @@ EmploymentJson = function(data){
     this.name = data['name'];
   }
 }
+EventJson = function(data){
+  if(data != undefined){
+    if ( typeof data == "string")
+      data = jQuery.parseJSON(data);
+    this.id = data['id'];
+    this.description = data['description'];
+    this.date = data['date'];
+    this.dateEs = function(){
+      var m = moment(this.date);
+      return m.format("DD/MM/YYYY");
+    }
+  }
+}

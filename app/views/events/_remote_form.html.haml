@@ -1,0 +1,11 @@
+= form_for(@event, :html => {class: 'form-horizontal', remote: true, id: "id-form_event", "data-parsley-validate" => ''}) do |f|
+  = f.hidden_field :document_id
+  = f.hidden_field :user_id
+  .field
+    = f.label :date, {class: 'col-sm-3 control-label'}
+    .col-sm-4
+      = f.date_field :date, {class: 'form-control', 'data-parsley-group' => 'block_event', required: ''}
+  .field
+    = f.label :description, {class: 'col-sm-3 control-label'}
+    .col-sm-9
+      = f.text_area :description, {class: 'form-control', 'data-parsley-group' => 'block_event', required: ''}

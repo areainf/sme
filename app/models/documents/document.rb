@@ -6,6 +6,7 @@ class Document < ActiveRecord::Base
   has_many :senders
   has_many :entities_to, through:  :recipients
   has_many :entities_from, through: :senders, :class_name => "Entity"
+  has_many :events
   # serialize  :recipients_ids, Array
   # serialize  :senders_ids, Array
   accepts_nested_attributes_for :recipients,:allow_destroy => true

@@ -1,40 +1,48 @@
 #ctrllr-notes
-  #notes-show
+  #note-show
+    %input#document_id{type: 'hidden', value: @note.id}
     %h2
       - if @note.is_input?
         = t('labels.Note_input')
       - else
         = t('labels.Note_output')
-    %p
-      %strong= t('labels.senders')      
-      = @note.senders.map{|s| s.entity.fullname}.join("; ") unless @note.senders.nil?
-      = @note.sender_text unless @note.sender_text.blank?
-    %p
-      %strong= t('labels.recipients')
-      = @note.recipients.map{|s| s.entity.fullname}.join("; ") unless @note.recipients.nil?
-      = @note.recipient_text unless @note.recipient_text.blank?
-    %p
-      %strong= t('labels.code')
-      = @note.code
-    %p
-      %strong= t('labels.description')
-      = @note.description
-    %p
-      %strong= t('labels.observation')
-      = @note.observation
-    %p
-      %strong= t('labels.system_status')
-      = t("documents.system_status.#{@note.system_status}")
-    %p
-      %strong= t('labels.emission_date')
-      = l @note.emission_date, format: :short
-      
-    %p
-      %strong= t('labels.entry_at')
-      = l  @note.entry_at, format: :short
-    %p
-      %strong= t('labels.reference_people')
-      = @note.reference_people
-    %p
-      %strong= t('labels.folder')
-      = @note.folder.present? ? @note.folder.path : '/'
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th= t('labels.code')
+          %th= t('labels.system_status')
+          %th= t('labels.emission_date')
+          %th= t('labels.entry_at')
+          %th= t('labels.folder')
+      %tbody
+        %tr
+          %td= @note.code
+          %td= t("documents.system_status.#{@note.system_status}")
+          %td= l @note.emission_date, format: :short
+          %td= l  @note.entry_at, format: :short
+          %td= @note.folder.present? ? @note.folder.path : '/'
+
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th= t('labels.senders')
+          %th= t('labels.recipients')
+          %th= t('labels.reference_people')
+      %tbody
+        %tr
+          %td
+            = @note.senders.map{|s| s.entity.fullname}.join("; ") unless @note.senders.nil?
+            = @note.sender_text unless @note.sender_text.blank?
+          %td
+            = @note.recipients.map{|s| s.entity.fullname}.join("; ") unless @note.recipients.nil?
+            = @note.recipient_text unless @note.recipient_text.blank?
+          %td= @note.reference_people
+    
+    %h4= t('labels.description')
+    %p= @note.description
+    - unless @note.observation.blank?
+      %h4= t('labels.observation')
+      %p= @note.observation
+    %hr
+    %h2= t('documents.events.title')
+    =render 'events'

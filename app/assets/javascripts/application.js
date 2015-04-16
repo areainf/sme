@@ -24,10 +24,8 @@
 //= require jquery.fancytree.dnd
 //= require jquery.fancytree.edit
 //# require fancytree
-//= require utils
-//= require jsonModels
-
-
+//= require moment
+//= require moment/es.js
 //#m+ 
 //= require bootstrap-sprockets
 

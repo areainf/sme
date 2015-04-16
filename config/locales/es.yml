@@ -15,6 +15,9 @@ es:
         message_empty_people_names: Debe igresar el Apellido o Nombre de la Persona
         message_non_empty_folder: La carpeta debe estar vacía
     attributes:
+      event:
+        date_event: Fecha
+        description: Descripción
       user:
         username: Usuario
         remember_me: Recordarme
@@ -22,6 +25,7 @@ es:
     accept: Aceptar
     close: Cerrar
     delete: Eliminar
+    new_event: Nuevo Evento
     save: Guardar
   custom:
     selected_folder: Carpeta seleccionada
@@ -29,6 +33,9 @@ es:
     directions:
       input: Entrada
       output: Salida
+    events:
+      title: Eventos
+      empty: El documento no tiene eventos asociados
     system_status:
       archived: Archivada
       circulation: Circulación
@@ -58,6 +65,9 @@ es:
         index: Listado
         new: Nuevo
         show: Detalle
+  events:
+    new:
+      title: Agregar Nuevo evento
   flash:
     created: Creado
     deleted: Eliminado
@@ -175,6 +185,10 @@ es:
     formats:
       default: "%d/%m/%Y"
       short: "%d/%m/%Y"
+    order:
+      - "day"
+      - "month"
+      - "year"
   time:
     formats:
       default: "%d/%m/%Y %H:%M:%S"

@@ -1,0 +1,14 @@
+#note_event_modal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button{:type=>"button", :class=>"close","data-dismiss"=>"modal", "aria-hidden"=>"true"}
+          &times;
+        %h4.modal-title= t('events.new.title')
+      .modal-body
+        #event-remote-form
+      .modal-footer
+        %button.btn.btn-default#event-save{:type => "button"}
+          = t('buttons.save')
+        %button.btn.btn-default#event-close{:type => "button", "data-dismiss"=>"modal"}
+          = t('buttons.close')

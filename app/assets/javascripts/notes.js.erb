@@ -236,5 +236,151 @@ jQuery(document).ready(function() {
         }
       });
     }
+
+    /*#######################################################
+      ####################  SHOW NOTA          ###########
+      #######################################################*/
+    if ($("#note-show").length > 0){
+
+      var Event = function(){
+        var el = this;
+        this.f = {open_new_event: "#open_new_event",
+                  document_id: "#document_id",
+                  event_modal: "#note_event_modal",
+                  event_remote_container: "#event-remote-form",
+                  event_empty: "#event_empty",
+                  event_form: "#id-form_event",
+                  event_save: "#event-save",
+                  event_list: "#list-events"
+                 };
+        this.documentId = function(){return $(this.f.document_id).val()};
+        this.draw = function(data){
+          var li = '<li class="list-group-item" id="event_' + data.id + '">';
+          li += '<div class="row"><div class="col-md-1"><span class="label label-default">';
+          li += data.dateEs();
+          li += '</span></div><div class="col-md-9">'
+          li += data.description;
+          li += '</div><div class="col-md-2">';
+          li += "Tú";
+          li += '</div></div></li>';
+          $(el.f.event_list).append(li);
+          
+        };
+        this._openModal = function() {
+          var el = this;
+          $.ajax({
+              type: "GET",
+              url: "/events/new",
+              data: {event: {document_id: el.documentId()}},
+              dataType: "html",
+              success: function(data){
+                $(el.f.event_remote_container).html(data);
+                $(el.f.event_modal).modal();
+                return false;
+              },
+              error: function(xhr, event, status) {
+                var errors = jQuery.parseJSON(xhr.responseText);
+                showError(errors);
+                return false;
+              }
+          });
+        };
+
+
+        /*******************************************
+          Codigo que se ejecuta al cargar la pagina
+         *******************************************/
+        /*On click button open new event for current note*/
+        $(el.f.open_new_event).on("click",function(){
+          el._openModal();
+        });
+        /*
+         * ON PRESS BUTTON SAVE EVENT
+        */
+        $(el.f.event_save).on("click",function(){
+          var valid = $(el.f.event_form).parsley().validate();
+          if ( ! valid )
+            return false;
+          
+          var form_data = $(el.f.event_form).serialize();
+          $.ajax({
+                type: "POST",
+                url: "/events",
+                data: form_data,
+                dataType: "json",
+                success: function(data){
+                  /* remove empty event message */
+                  $(el.f.event_empty).remove();
+                  /* draw event */
+                  el.draw(new EventJson(data));
+                  $(el.f.event_modal).modal("hide");
+                  return false;
+                },
+                error: function(xhr, event, status) {
+                  var errors = jQuery.parseJSON(xhr.responseText);
+                  showError(errors);
+                  return false;
+                }
+          });
+        });
+      }();
+
+      // var f = {
+      //     open_new_event: "#open_new_event",
+      //     document_id: "#document_id",
+      //     event_modal: "#note_event_modal",
+      //     event_remote_container: "#event-remote-form",
+      //     event_empty: "#event_empty",
+      //     event_form: "#id-form_event",
+      //     event_save: "#event-save",
+      // };
+      // var document_id = $(f.document_id).val();
+      // /*On click button open new event for current note*/
+      // $(f.open_new_event).on("click",function(){
+      //   $.ajax({
+      //         type: "GET",
+      //         url: "/events/new",
+      //         data: {event: {document_id: document_id}},
+      //         dataType: "html",
+      //         success: function(data){
+      //           $(f.event_remote_container).html(data);
+      //           $(f.event_modal).modal();
+      //           return false;
+      //         },
+      //         error: function(xhr, event, status) {
+      //           var errors = jQuery.parseJSON(xhr.responseText);
+      //           showError(errors);
+      //           return false;
+      //         }
+      //   });
+      // });
+      // /*
+      //  * ON PRESS BUTTON SAVE EVENT
+      // */
+      // $(f.event_save).on("click",function(){
+      //   var form_data = $(f.event_form).serialize();
+      //   $.ajax({
+      //         type: "POST",
+      //         url: "/events",
+      //         data: form_data,
+      //         dataType: "json",
+      //         success: function(data){
+      //           /* remove empty event message */
+      //           $(f.event_empty).remove();
+      //           /* draw event */
+      //           alert("Dibujar evento");
+      //           console.log(data);
+      //           $(f.event_modal).modal("hide");
+      //           return false;
+      //         },
+      //         error: function(xhr, event, status) {
+      //           var errors = jQuery.parseJSON(xhr.responseText);
+      //           showError(errors);
+      //           return false;
+      //         }
+      //   });
+      // });
+
+    }
   }
 });
