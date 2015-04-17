@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150415223311) do
+ActiveRecord::Schema.define(version: 20150416222304) do
 
   create_table "dependencies", force: true do |t|
     t.string   "name"
@@ -69,6 +69,18 @@ ActiveRecord::Schema.define(version: 20150415223311) do
   add_index "entities", ["employment_id"], name: "index_entities_on_employment_id", using: :btree
   add_index "entities", ["person_id"], name: "index_entities_on_person_id", using: :btree
   add_index "entities", ["user_id"], name: "index_entities_on_user_id", using: :btree
+
+  create_table "events", force: true do |t|
+    t.text     "description"
+    t.date     "date"
+    t.integer  "document_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
+  add_index "events", ["document_id"], name: "index_events_on_document_id", using: :btree
+  add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
 
   create_table "folders", force: true do |t|
     t.string   "name"
