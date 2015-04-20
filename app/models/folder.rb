@@ -15,8 +15,8 @@ class Folder < ActiveRecord::Base
   end
   def no_recursive
     p = parents
-    if ! p.nil? && p.include?(id)
-      errors.add(:parent_id,"Carpeta Recursiva")
+    if !id.nil? && p.include?(id)
+      errors.add(:base,"Carpeta Recursiva")
     end
   end
   def parents

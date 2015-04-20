@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   resources :documents do
     collection do
       post 'move'
+      get 'in_folder'
     end
   end
   

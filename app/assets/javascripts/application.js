@@ -26,6 +26,7 @@
 //# require fancytree
 //= require moment
 //= require moment/es.js
+//= require daterangepicker
 //#m+ 
 //= require bootstrap-sprockets
 

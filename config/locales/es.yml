@@ -39,6 +39,9 @@ es:
     system_status:
       archived: Archivada
       circulation: Circulación
+    type:
+      Expedient: Expediente
+      Note: Nota
   dependencies:
     buttons:
       edit: Editar
@@ -75,11 +78,9 @@ es:
   folders:
     index:
       show_document_title: Detalle del Documento
-    new:
-      title: Nueva Carpeta
-    remove:
-      title: Eliminar Carpeta
-      text: "Sólo se puede eliminar carpetas sin sub carpetas, los documentos contenidos seran movidos a la raiz"
+    toolbar:
+      new: Nueva Carpeta
+      remove: "Sólo se puede eliminar carpetas sin sub carpetas, los documentos contenidos seran movidos a la raiz"
     sub_header:
       title: Carpetas
       sub_title:
@@ -90,6 +91,7 @@ es:
       sender_text: Presione la tecla Insert para ingresar el Remitente como texto
   labels:    
     active: Activo
+    code: Código
     dependency: Dependencia
     description: Descripción
     directory: Directorio
@@ -110,6 +112,7 @@ es:
     reference_people: Personas mencionadas
     senders: Remitentes
     system_status: Estado en el Sistema
+    type: Tipo
     recipients: Destinatarios
   layouts:
     header:
