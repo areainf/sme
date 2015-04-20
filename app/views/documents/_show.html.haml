@@ -1,0 +1,57 @@
+.box_show_document
+  %h2
+    - label_type = "labels.#{@document.type}"
+    - if @document.is_input?
+      = t("#{label_type}_input")
+    - else
+      = t("#{label_type}_output")
+
+  %table.table.table-bordered
+    %thead
+      %tr
+        %th= t('labels.code')
+        %th= t('labels.system_status')
+        %th= t('labels.emission_date')
+        %th= t('labels.entry_at')
+        %th= t('labels.folder')
+    %tbody
+      %tr
+        %td= @document.code
+        %td= t("documents.system_status.#{@document.system_status}")
+        %td= l @document.emission_date, format: :short
+        %td= l  @document.entry_at, format: :short
+        %td= @document.folder.present? ? @document.folder.path : '/'
+
+  %table.table.table-bordered
+    %thead
+      %tr
+        %th= t('labels.senders')
+        %th= t('labels.recipients')
+        %th= t('labels.reference_people')
+    %tbody
+      %tr
+        %td
+          = @document.senders.map{|s| s.entity.fullname}.join("; ") unless @document.senders.nil?
+          = @document.sender_text unless @document.sender_text.blank?
+        %td
+          = @document.recipients.map{|s| s.entity.fullname}.join("; ") unless @document.recipients.nil?
+          = @document.recipient_text unless @document.recipient_text.blank?
+        %td= @document.reference_people
+  
+  %h4= t('labels.description')
+  %p= @document.description
+  - unless @document.observation.blank?
+    %h4= t('labels.observation')
+    %p= @document.observation
+  %hr
+  %h2= t('documents.events.title')
+  %ul#list-events.list-group
+    - @document.events.each do |ev|
+      %li.list-group-item
+        .row
+          .col-md-2
+            %span.label.label-default= l ev.date
+          .col-md-8
+            = ev.description
+          .col-md-2
+            = ev.user.try(:username)

@@ -2,120 +2,138 @@ $(document).ready( function() {
   if($("#ctrllr-folders").length >0 ){
     if($("#folders-index").length >0 ){
       var parent_path = ["#parent_path", "#delete_parent_path"];
-      var parent_id = ["#parent_id", "#delete_parent_id"];
-
-      $("#tree").fancytree({
-        lazy: true,
-        extensions: ["dnd", "edit"],
-        expanded: true,
-        //checkbox: true,
-        selectMode: 1,
-        source: $.ajax({
-          url: "folders",
-          dataType: "json"
-        }),
-        lazyLoad: function(event, data){
-          var node = data.node;
-          // Issue an ajax request to load child nodes
-          data.result = {
-            url: "folders.json",
-            data: {id: node.key}
-          }
-        },
-        activate: function(event, data) {
-          if(data.node.folder){
-            for (var i = 0; i < parent_id.length; i++)
-              $(parent_id[i]).val(data.node.key); 
-            var parents = data.node.getParentList();
-            var p = "";
-            for(var i = 0; i < parents.length; i++){
+      var parent_id = "#parent_id";
+      function buildTree(){
+        $("#tree").fancytree({
+          lazy: true,
+          extensions: ["dnd", "edit"],
+          expanded: true,
+          //checkbox: true,
+          selectMode: 1,
+          source: $.ajax({
+            url: "folders",
+            dataType: "json"
+          }),
+          lazyLoad: function(event, data){
+            var node = data.node;
+            // Issue an ajax request to load child nodes
+            data.result = {
+              url: "folders.json",
+              data: {id: node.key}
+            }
+          },
+          activate: function(event, data) {
+            if(data.node.folder){
+              $(parent_id).val(data.node.key); 
+              var parents = data.node.getParentList();
+              var p = "";
+              for(var i = 0; i < parents.length; i++){
+                if(p.length > 0) p +="/";
+                p += parents[i].title;
+              }
               if(p.length > 0) p +="/";
-              p += parents[i].title;
-            }
-            if(p.length > 0) p +="/";
-            p += data.node.title;
+              p += data.node.title;
 
-            for (var i = 0; i < parent_path.length; i++)
-              $(parent_path[i]).html(p);
-          }
-        },
-        dblclick: function(event, data) {
-          if(!data.node.folder){
-            //$("#documents-dialog_show").modal('show');
-             $("#modal-show-document").modal('show');
-            showDocument(data.node.key, "#document-content");
-          }
-        },
-        dnd: {
-          autoExpandMS: 400,
-          focusOnClick: true,
-          preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
-          preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
-          dragStart: function(node, data) {
-            /** This function MUST be defined to enable dragging for the tree.
-             *  Return false to cancel dragging of node.
-             */
-            return true;
-          },
-          dragEnter: function(node, data) {
-            /** data.otherNode may be null for non-fancytree droppables.
-             *  Return false to disallow dropping on node. In this case
-             *  dragOver and dragLeave are not called.
-             *  Return 'over', 'before, or 'after' to force a hitMode.
-             *  Return ['before', 'after'] to restrict available hitModes.
-             *  Any other return value will calc the hitMode from the cursor position.
-             */
-            // Prevent dropping a parent below another parent (only sort
-            // nodes under the same parent)
-            /*if(node.parent !== data.otherNode.parent){
-              return false;
+              for (var i = 0; i < parent_path.length; i++)
+                $(parent_path[i]).html(p);
             }
-            // Don't allow dropping *over* a node (would create a child)
-            return ["before", "after"];
-            */
-             return true;
           },
-          dragDrop: function(node, data) {
-            /** This function MUST be defined to enable dropping of items on
-             *  the tree.
-             * expand if lazy load
-              console.log("MOVER "+data.otherNode.key+ " a "+node.key);
-             */
-            node.setExpanded(true).always(function(){
-              // Wait until expand finished, then add the additional child
-              move(data,node);
-            });
-          }
-        },
-        edit: {
-          triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"],
-          beforeEdit: function(event, data){
-            // Return false to prevent edit mode
-            if (data.node.folder && data.node.key != "")
+          dblclick: function(event, data) {
+            if(!data.node.folder){
+              //$("#documents-dialog_show").modal('show');
+               $("#modal-show-document").modal('show');
+              showDocument(data.node.key, "#document-content");
+            }
+          },
+          click: function(event, data) {
+            if (data.node.folder){
+              var c = $(event.toElement).attr("class");
+              if (c && c.indexOf("fancytree-expander")<0){
+                showDocumentInFolder(data.node.key,"#show-documents");
+                //Es click
+              }
+              else
+                $("#show-documents").html("");
+            }
+            else{
+              showDocument(data.node.key,"#show-documents");
+            }
+            // return false to prevent default behavior (i.e. activation, ...)
+            //return false;
+          },
+          dnd: {
+            autoExpandMS: 400,
+            focusOnClick: true,
+            preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+            preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+            dragStart: function(node, data) {
+              /** This function MUST be defined to enable dragging for the tree.
+               *  Return false to cancel dragging of node.
+               */
               return true;
-            return false;
-          },
-          edit: function(event, data){
-            // Editor was opened (available as data.input)
-          },
-          beforeClose: function(event, data){
-            // Return false to prevent cancel/save (data.input is available)
-            return data.node.folder;
-          },
-          save: function(event, data){
-            // Save data.input.val() or return false to keep editor open
-            rename(data);
-            return true;
-          },
-          close: function(event, data){
-            // Editor was removed
-            if( data.save ) {
-              // Since we started an async request, mark the node as preliminary
-              $(data.node.span).addClass("pending");
+            },
+            dragEnter: function(node, data) {
+              /** data.otherNode may be null for non-fancytree droppables.
+               *  Return false to disallow dropping on node. In this case
+               *  dragOver and dragLeave are not called.
+               *  Return 'over', 'before, or 'after' to force a hitMode.
+               *  Return ['before', 'after'] to restrict available hitModes.
+               *  Any other return value will calc the hitMode from the cursor position.
+               */
+              // Prevent dropping a parent below another parent (only sort
+              // nodes under the same parent)
+              /*if(node.parent !== data.otherNode.parent){
+                return false;
+              }
+              // Don't allow dropping *over* a node (would create a child)
+              return ["before", "after"];
+              */
+               return true;
+            },
+            dragDrop: function(node, data) {
+              /** This function MUST be defined to enable dropping of items on
+               *  the tree.
+               * expand if lazy load
+                console.log("MOVER "+data.otherNode.key+ " a "+node.key);
+               */
+              node.setExpanded(true).always(function(){
+                // Wait until expand finished, then add the additional child
+                move(data,node);
+              });
             }
-          }
-        },
-      });
+          },
+          edit: {
+            triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"],
+            beforeEdit: function(event, data){
+              // Return false to prevent edit mode
+              if (data.node.folder && data.node.key != "")
+                return true;
+              return false;
+            },
+            edit: function(event, data){
+              // Editor was opened (available as data.input)
+            },
+            beforeClose: function(event, data){
+              // Return false to prevent cancel/save (data.input is available)
+              return data.node.folder;
+            },
+            save: function(event, data){
+              // Save data.input.val() or return false to keep editor open
+              rename(data);
+              return true;
+            },
+            close: function(event, data){
+              // Editor was removed
+              if( data.save ) {
+                // Since we started an async request, mark the node as preliminary
+                $(data.node.span).addClass("pending");
+              }
+            }
+          },
+        });
+      }
+      buildTree();
+
       $("#folders-index #new_folder").on("submit",function(evt){
             var serial = $(this).serialize();
             var action = $(this).attr('action');
@@ -135,13 +153,12 @@ $(document).ready( function() {
                 active_node.addChildren(node);
                 $("#folders-index #new_folder #folder_name").val("");
                 $("#folders-index #new_folder #folder_description").val("");
+                removeError();
                 return false;
               },
               error: function(xhr, event, status) {
                 var errors = jQuery.parseJSON(xhr.responseText);
-                //showError(eldoc.container.error, errors);
                 showError(errors);
-                console.log(errors);
                 return false;
               }
             });
@@ -152,7 +169,7 @@ $(document).ready( function() {
       ELIMINAR  UNA CARPETA 
       */
       $("#btn-remove-folder").on("click", function(evt){
-        var id = $("#delete_parent_id").val();
+        var id = $(parent_id).val();
         if(id && confirm("Confirma que desea eliminar la Carpeta seleccionada?")){
           var tree = $("#tree").fancytree("getTree");
           var active_node = tree.getActiveNode();
@@ -162,12 +179,11 @@ $(document).ready( function() {
             dataType: "json",
             success: function(data){
               active_node.remove();
+              removeError();
             },
             error: function(xhr, event, status) {
               var errors = jQuery.parseJSON(xhr.responseText);
-              //showError(eldoc.container.error, errors);
               showError(errors);
-              console.log(errors);
               return false;
             }
           });
@@ -189,13 +205,12 @@ $(document).ready( function() {
           dataType: "json",
           success: function(data){
             _data.otherNode.moveTo(node, _data.hitMode);
+            removeError();
             return false;
           },
           error: function(xhr, event, status) {
             var errors = jQuery.parseJSON(xhr.responseText);
-            //showError(eldoc.container.error, errors);
             showError(errors);
-            console.log(errors);
             return false;
           }
         });
@@ -215,10 +230,10 @@ $(document).ready( function() {
           success: function(data){
             $(node_data.node.span).removeClass("pending");
             node_data.node.setTitle(node_data.node.title);
+            removeError();
           },
           error: function(xhr, event, status) {
             var errors = jQuery.parseJSON(xhr.responseText);
-            //showError(eldoc.container.error, errors);
             $(node_data.node.span).removeClass("pending");
             node_data.node.setTitle(nameOrig);
             showError(errors);
@@ -235,6 +250,25 @@ $(document).ready( function() {
             dataType: "html",
             success: function(data){
               $(container).html(data);
+              removeError();
+              return true;
+            },
+            error: function(xhr, event, status) {
+              var errors = jQuery.parseJSON(xhr.responseText);
+              showError(errors, container);
+              return false;
+            }
+        });
+      }
+      function showDocumentInFolder(id, container){
+        $.ajax({
+            type: "GET",
+            url: "documents/in_folder",
+            data: {folder_id: id},
+            dataType: "html",
+            success: function(data){
+              $(container).html(data);
+              removeError();
               return true;
             },
             error: function(xhr, event, status) {

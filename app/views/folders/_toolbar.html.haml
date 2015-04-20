@@ -1,0 +1,24 @@
+#id-folder_new
+  = form_for(Folder.new(), :remote => true,  format: :json, id: 'form_new', html: {"data-parsley-validate" => ''}) do |f|  
+    = f.hidden_field :parent_id, id: "parent_id"
+    .row
+      .col-md-4
+        .path
+          %label= t("labels.directory")
+          %span#parent_path
+            \/
+      .col-md-4
+        .row
+          .col-md-2
+            = f.label :name, t(".new", class: "label control-label")
+          .col-md-7
+            = f.text_field :name, {'data-parsley-group' => 'block_folder', required: '', class: 'form-control input-sm'}
+          .col-md-3
+            = f.button t('buttons.accept'), {:class=>"btn btn-confirm btn-sm", id: "button-add-folder"}
+      .col-md-4
+        .row
+          .col-md-10
+            %p= t('.remove')
+          .col-md-2
+            #id-folder_remove
+              %input#btn-remove-folder.btn.btn-danger.btn-sm{type: "button", value: "#{t('buttons.delete')}"}

@@ -35,7 +35,7 @@ jQuery(document).ready(function() {
           $(this.container).modal();
           setTimeout(function (){
             $(el.f.names).focus();
-          }, 1000);
+          }, 800);
           // $(this.f.names).focus();
         };
 
@@ -276,6 +276,10 @@ jQuery(document).ready(function() {
               success: function(data){
                 $(el.f.event_remote_container).html(data);
                 $(el.f.event_modal).modal();
+                setTimeout(function (){
+                  var elem = $(el.f.event_form).find('input[type=text],textarea,select').filter(':visible:first')
+                  elem.focus();
+                }, 800);
                 return false;
               },
               error: function(xhr, event, status) {
@@ -324,63 +328,6 @@ jQuery(document).ready(function() {
           });
         });
       }();
-
-      // var f = {
-      //     open_new_event: "#open_new_event",
-      //     document_id: "#document_id",
-      //     event_modal: "#note_event_modal",
-      //     event_remote_container: "#event-remote-form",
-      //     event_empty: "#event_empty",
-      //     event_form: "#id-form_event",
-      //     event_save: "#event-save",
-      // };
-      // var document_id = $(f.document_id).val();
-      // /*On click button open new event for current note*/
-      // $(f.open_new_event).on("click",function(){
-      //   $.ajax({
-      //         type: "GET",
-      //         url: "/events/new",
-      //         data: {event: {document_id: document_id}},
-      //         dataType: "html",
-      //         success: function(data){
-      //           $(f.event_remote_container).html(data);
-      //           $(f.event_modal).modal();
-      //           return false;
-      //         },
-      //         error: function(xhr, event, status) {
-      //           var errors = jQuery.parseJSON(xhr.responseText);
-      //           showError(errors);
-      //           return false;
-      //         }
-      //   });
-      // });
-      // /*
-      //  * ON PRESS BUTTON SAVE EVENT
-      // */
-      // $(f.event_save).on("click",function(){
-      //   var form_data = $(f.event_form).serialize();
-      //   $.ajax({
-      //         type: "POST",
-      //         url: "/events",
-      //         data: form_data,
-      //         dataType: "json",
-      //         success: function(data){
-      //           /* remove empty event message */
-      //           $(f.event_empty).remove();
-      //           /* draw event */
-      //           alert("Dibujar evento");
-      //           console.log(data);
-      //           $(f.event_modal).modal("hide");
-      //           return false;
-      //         },
-      //         error: function(xhr, event, status) {
-      //           var errors = jQuery.parseJSON(xhr.responseText);
-      //           showError(errors);
-      //           return false;
-      //         }
-      //   });
-      // });
-
     }
   }
 });

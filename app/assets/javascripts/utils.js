@@ -13,12 +13,11 @@ function goto_tab_if_defined(){
 /*Mostrar errores dinamicanete*/
 function showError(hash_error, container){
   //set default value for container  
-  VARR = hash_error;
   container = typeof container !== 'undefined' ? container : "#ajax_error_container";
   if (hash_error instanceof Array){
     hash_error = {errors: {0: hash_error}};
   }
-  var text = '<div class="alert  alert-error"> \
+  var text = '<div class="alert alert-danger"> \
               <button type="button" class="close" data-dismiss="alert">&times;</button>\
               <h4>Error</h4> \
               <ul>';
@@ -36,7 +35,10 @@ function showError(hash_error, container){
   text += '</ul></div>';
   $(container).html(text);
 }
-
+function removeError(container){
+  container = typeof container !== 'undefined' ? container : "#ajax_error_container";
+  $(container).html("");
+}
 $(document).ready(function() {
   goto_tab_if_defined();
 });

@@ -151,25 +151,16 @@ private
     "#{columns[col.to_i]} #{dir}" 
   end
 
-  # def sort_direction
-  #   params[:sSortDir_0] == "desc" ? "desc" : "asc"
-  # end
 
-  def customer(invoice)
-    name, path = invoice.customer.try(:complete_name) || "", invoice.customer
-    link_to name, path
-  end
-
-
-  def build_link(invoice)
+  def build_link(document)
     separator = raw "&nbsp;&nbsp;&nbsp;"
     icon = "glyphicon glyphicon-info-sign"
-    link = link_to(raw("<i class=\"#{icon}\"></i>"), invoice)
+    link = link_to(raw("<i class=\"#{icon}\"></i>"), document)
     link += separator
     css_icon = 'glyphicon glyphicon-remove'
-    confirm = I18n.t('invoices.message_confirm_delete')
-    title = I18n.t('invoices.link_title_delete')
-    link += link_to(raw("<i class=\"#{css_icon}\"></i>"),invoice,
+    confirm = I18n.t('documents.message_confirm_delete')
+    title = I18n.t('documents.link_title_delete')
+    link += link_to(raw("<i class=\"#{css_icon}\"></i>"),document,
      {method: :delete, data: {confirm: confirm}, :title => title})
     link
   end

@@ -2,6 +2,8 @@
   - if @note.events.blank?
     #event_empty.alert.alert-info{role: "alert"}
       = t('documents.events.empty')
+    %ul#list-events.list-group
+
   - else
     %ul#list-events.list-group
       - @note.events.each do |ev|

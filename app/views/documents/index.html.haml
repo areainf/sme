@@ -1,0 +1,28 @@
+#ctrllr-documents
+  #documents-index
+    %table#documents-index-table{data: {source: documents_path(format: :json)}}
+      %thead
+        %tr
+          %th= select_tag :document_type,
+                            options_for_select(optSel_Types),
+                            { include_blank: true, class: 'pretty-input-datatable' }
+          %th= select_tag :document_direction,
+                            options_for_select(optSel_Directions),
+                            { include_blank: true, class: 'pretty-input-datatable' }
+          %th
+          %th
+          %th
+            %input#emission_date{type: "text", name: "emission_date", class: 'pretty-input-datatable'}
+            = #Porque no toma el cambio de emission_at
+            %input#range_date{type: "hidden", name: "range_date"}
+          %th
+          %th
+        %tr
+          %th{width: "10%"}= t('labels.type')
+          %th{width: "10%"}= t('labels.direction')
+          %th{width: "20%"}= t('labels.recipients')
+          %th{width: "20%"}= t('labels.senders')
+          %th{width: "15%"}= t('labels.emission_date')
+          %th{width: "20%"}= t('labels.description')
+          %th{width: "5%", nowrap: "nowrap"} 
+      %tbody
