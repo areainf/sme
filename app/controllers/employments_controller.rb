@@ -18,7 +18,11 @@ class EmploymentsController < ApplicationController
 
   def new
     @employment = Employment.new
-    respond_with(@employment)
+    if request.xhr?
+      render '_remote_form', layout: false 
+    else
+      respond_with(@employment )
+    end
   end
 
   def edit

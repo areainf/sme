@@ -1,0 +1,413 @@
+jQuery(document).ready(function() {
+  if($("#modal-forms").length > 0){
+    /*
+    ** INICIO formulario nuevos cargos
+    */
+    if($("#modal-forms-employment").length > 0){
+      ModalEmployment = {
+        container: {root: '#modal-forms-employment', modal: '#modal-employment', 
+                    content: "#employment-remote-form", form: '#id-form_employment',
+                    error: "#employment-remote-error"},
+        buttons: {open: '#btn-open-new-employment', save: '#employment-save'},
+        is_load_html: false,
+        openModal: function (){
+          var el = this;
+          if(!el.is_load_html){
+            $.ajax({
+                type: "GET",
+                url: "/employments/new",
+                dataType: "html",
+                success: function(data){
+                  $(el.container.content).html(data);
+                  $(el.container.modal).modal();
+                  setTimeout(function (){
+                    var elem = $(el.container.root).find('input[type=text],textarea,select').filter(':visible:first')
+                    elem.focus();
+                  }, 800);
+                  el.is_load_html = true;
+                  return false;
+                },
+                error: function(xhr, event, status) {
+                  var errors = jQuery.parseJSON(xhr.responseText);
+                  showError(errors);
+                  return false;
+                }
+            });
+          }
+          else{
+            $(el.container.modal).modal();
+            setTimeout(function (){
+              var elem = $(el.container.root).find('input[type=text],textarea,select').filter(':visible:first')
+              elem.focus();
+            }, 800);
+          }
+        },
+        closeModal: function(){
+          $(this.container.modal).modal('hide');
+        },
+        save: function(){
+          var el = this;
+          var valid = $(el.container.form).parsley().validate();
+          if ( ! valid )
+            return false;
+          
+          var form_data = $(el.container.form).serialize();
+          $.ajax({
+                type: "POST",
+                url: "/employments",
+                data: form_data,
+                dataType: "json",
+                success: function(data){
+                  el.closeModal();
+                  return false;
+                },
+                error: function(xhr, event, status) {
+                  var errors = jQuery.parseJSON(xhr.responseText);
+                  showError(errors, el.container.error);
+                  return false;
+                }
+          });
+        },
+        init: function(){
+         $(this.buttons.open).on('click', function(){ModalEmployment.openModal();});
+          $(this.buttons.save).on('click', function(){
+            ModalEmployment.save();
+          });
+        },
+      };// End of ModalEmployment
+      ModalMasterUnit = {
+        container: {root: '#modal-forms-master_unit', modal: '#modal-master_unit', 
+                    content: "#master_unit-remote-form", form: '#id-form_master_unit',
+                    error: "#master_unit-remote-error"},
+        buttons: {open: '#btn-open-new-master_unit', save: '#master_unit-save'},
+        is_load_html: false,
+        openModal: function (){
+          var el = this;
+          if(!el.is_load_html){
+            $.ajax({
+                type: "GET",
+                url: "/master_units/new",
+                dataType: "html",
+                success: function(data){
+                  $(el.container.content).html(data);
+                  $(el.container.modal).modal();
+                  setTimeout(function (){
+                    var elem = $(el.container.root).find('input[type=text],textarea,select').filter(':visible:first')
+                    elem.focus();
+                  }, 800);
+                  el.is_load_html = true;
+                  return false;
+                },
+                error: function(xhr, event, status) {
+                  var errors = jQuery.parseJSON(xhr.responseText);
+                  showError(errors);
+                  return false;
+                }
+            });
+          }
+          else{
+            $(el.container.modal).modal();
+            setTimeout(function (){
+              var elem = $(el.container.root).find('input[type=text],textarea,select').filter(':visible:first')
+              elem.focus();
+            }, 800);
+          }
+        },
+        closeModal: function(){
+          $(this.container.modal).modal('hide');
+        },
+        save: function(){
+          var el = this;
+          var valid = $(el.container.form).parsley().validate();
+          if ( ! valid )
+            return false;
+          
+          var form_data = $(el.container.form).serialize();
+          $.ajax({
+                type: "POST",
+                url: "/master_units",
+                data: form_data,
+                dataType: "json",
+                success: function(data){
+                  el.closeModal();
+                  return false;
+                },
+                error: function(xhr, event, status) {
+                  var errors = jQuery.parseJSON(xhr.responseText);
+                  showError(errors, el.container.error);
+                  return false;
+                }
+          });
+        },
+        init: function(){
+         $(this.buttons.open).on('click', function(){ModalMasterUnit.openModal();});
+          $(this.buttons.save).on('click', function(){
+            ModalMasterUnit.save();
+          });
+        },
+      };// End of ModalMasterUnit
+      ModalDependency = {
+        container: {root: '#modal-forms-dependency', modal: '#modal-dependency', 
+                    content: "#dependency-remote-form", form: '#id-form_dependency',
+                    error: "#dependency-remote-error"},
+        buttons: {open: '#btn-open-new-dependency', save: '#dependency-save'},
+        is_load_html: false,
+        openModal: function (){
+          var el = this;
+          if(!el.is_load_html){
+            $.ajax({
+                type: "GET",
+                url: "/dependencies/new",
+                dataType: "html",
+                success: function(data){
+                  $(el.container.content).html(data);
+                  el._bind_tkinp_parent_dependency();
+                  el._bind_tkinp_master_unit();
+                  $(el.container.modal).modal();
+                  setTimeout(function (){
+                    var elem = $(el.container.root).find('input[type=text],textarea,select').filter(':visible:first')
+                    elem.focus();
+                  }, 800);
+                  el.is_load_html = true;
+                  return false;
+                },
+                error: function(xhr, event, status) {
+                  var errors = jQuery.parseJSON(xhr.responseText);
+                  showError(errors);
+                  return false;
+                }
+            });
+          }
+          else{
+            $(el.container.modal).modal();
+            setTimeout(function (){
+              var elem = $(el.container.root).find('input[type=text],textarea,select').filter(':visible:first')
+              elem.focus();
+            }, 800);
+          }
+        },
+        closeModal: function(){
+          $(this.container.modal).modal('hide');
+        },
+        save: function(){
+          var el = this;
+          var valid = $(el.container.form).parsley().validate();
+          if ( ! valid )
+            return false;
+          
+          var form_data = $(el.container.form).serialize();
+          $.ajax({
+                type: "POST",
+                url: "/dependencies",
+                data: form_data,
+                dataType: "json",
+                success: function(data){
+                  el.closeModal();
+                  return false;
+                },
+                error: function(xhr, event, status) {
+                  var errors = jQuery.parseJSON(xhr.responseText);
+                  showError(errors, el.container.error);
+                  return false;
+                }
+          });
+        },
+        _bind_tkinp_parent_dependency: function(){
+          var data_dep  = $("#parent_id").data("prepopulate");
+          $("#parent_id").tokenInput('/dependencies.json', {
+            theme: 'facebook',
+            tokenLimit: "1",
+            minChars: "3",
+            zindex: 9999,
+            prePopulate: data_dep,
+            resultsFormatter: function(dependency){
+              var compleName = dependency.name + " (" + dependency.description + ")";
+              return "<li> <p style='color: black' >" + compleName + " </p> </li>"; 
+            },
+            tokenFormatter: function(dependency) {
+              if (dependency == null) return "";
+              return "<li><p>" + dependency.name + " (" + dependency.description.substring(0,20) + ") </p> </li>" 
+            },
+            noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
+            hintText: "<%= I18n.t('token_input.hintText')%>",
+            searchigText: "<%= I18n.t('token_input.searching_text')%>",
+            onAdd: function(data){
+              //el.draw(new CustomerJson(data));
+            },
+            onDelete: function(data){
+              // el.clear();
+            }
+          });
+        },
+        _bind_tkinp_master_unit: function(){
+          var data_mu  = $("#master_unit_id").data("prepopulate");
+          $("#master_unit_id").tokenInput('/master_units.json', {
+            theme: 'facebook',
+            zindex: 9999,
+            tokenLimit: "1",
+            minChars: "3",
+            prePopulate: data_mu,
+            resultsFormatter: function(master_unit){
+              var compleName = master_unit.name;
+              return "<li> <p style='color: black' >" + compleName + " </p> </li>"; 
+            },
+            tokenFormatter: function(master_unit) {
+              if (master_unit == null) return "";
+              return "<li><p>" + master_unit.name+ " </p> </li>" 
+            },
+            noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
+            hintText: "<%= I18n.t('token_input.hintText')%>",
+            searchigText: "<%= I18n.t('token_input.searching_text')%>",
+            onAdd: function(data){
+              //el.draw(new CustomerJson(data));
+            },
+            onDelete: function(data){
+              // el.clear();
+            }
+          });
+        },
+        init: function(){
+          $(this.buttons.open).on('click', function(){ModalDependency.openModal();});
+          $(this.buttons.save).on('click', function(){
+            ModalDependency.save();
+          });
+
+        },
+      };// End of ModalDependency
+      ModalPerson = {
+        container: {root: '#modal-forms-person', modal: '#modal-person', 
+                    content: "#person-remote-form", form: '#id-form_person',
+                    error: "#person-remote-error"},
+        buttons: {open: '#btn-open-new-person', save: '#person-save'},
+        is_load_html: false,
+        openModal: function (){
+          var el = this;
+          if(!el.is_load_html){
+            $.ajax({
+                type: "GET",
+                url: "/people/new",
+                dataType: "html",
+                success: function(data){
+                  $(el.container.content).html(data);
+                  el._bind_tkinp_dependency();
+                  el._bind_tkinp_employment();
+                  $(el.container.modal).modal();
+                  setTimeout(function (){
+                    var elem = $(el.container.root).find('input[type=text],textarea,select').filter(':visible:first')
+                    elem.focus();
+                  }, 800);
+                  el.is_load_html = true;
+                  return false;
+                },
+                error: function(xhr, event, status) {
+                  var errors = jQuery.parseJSON(xhr.responseText);
+                  showError(errors);
+                  return false;
+                }
+            });
+          }
+          else{
+            $(el.container.modal).modal();
+            setTimeout(function (){
+              var elem = $(el.container.root).find('input[type=text],textarea,select').filter(':visible:first')
+              elem.focus();
+            }, 800);
+          }
+        },
+        closeModal: function(){
+          $(this.container.modal).modal('hide');
+        },
+        save: function(){
+          var el = this;
+          var valid = $(el.container.form).parsley().validate();
+          if ( ! valid )
+            return false;
+          
+          var form_data = $(el.container.form).serialize();
+          $.ajax({
+                type: "POST",
+                url: "/people",
+                data: form_data,
+                dataType: "json",
+                success: function(data){
+                  el.closeModal();
+                  return false;
+                },
+                error: function(xhr, event, status) {
+                  var errors = jQuery.parseJSON(xhr.responseText);
+                  showError(errors, el.container.error);
+                  return false;
+                }
+          });
+        },
+        _bind_tkinp_dependency: function(){
+          var data_dep  = $("#person_dependency_id").data("prepopulate");
+          $("#person_dependency_id").tokenInput('/dependencies.json', {
+            theme: 'facebook',
+            tokenLimit: "1",
+            minChars: "3",
+            zindex: 9999,
+            prePopulate: data_dep,
+            resultsFormatter: function(dependency){
+              var compleName = dependency.name + " (" + dependency.description + ")";
+              return "<li> <p style='color: black' >" + compleName + " </p> </li>"; 
+            },
+            tokenFormatter: function(dependency) {
+              if (dependency == null) return "";
+              return "<li><p>" + dependency.name + " (" + dependency.description.substring(0,20) + ") </p> </li>" 
+            },
+            noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
+            hintText: "<%= I18n.t('token_input.hintText')%>",
+            searchigText: "<%= I18n.t('token_input.searching_text')%>",
+            onAdd: function(data){
+              //el.draw(new CustomerJson(data));
+            },
+            onDelete: function(data){
+              // el.clear();
+            }
+          });
+        },
+        _bind_tkinp_employment: function(){
+          var data_mu  = $("#person_employment_id").data("prepopulate");
+          $("#person_employment_id").tokenInput('/employments.json', {
+            theme: 'facebook',
+            zindex: 9999,
+            tokenLimit: "1",
+            minChars: "3",
+            prePopulate: data_mu,
+            resultsFormatter: function(employment){
+              var compleName = employment.name;
+              return "<li> <p style='color: black' >" + compleName + " </p> </li>"; 
+            },
+            tokenFormatter: function(employment) {
+              if (employment == null) return "";
+              return "<li><p>" + employment.name+ " </p> </li>" 
+            },
+            noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
+            hintText: "<%= I18n.t('token_input.hintText')%>",
+            searchigText: "<%= I18n.t('token_input.searching_text')%>",
+            onAdd: function(data){
+              //el.draw(new CustomerJson(data));
+            },
+            onDelete: function(data){
+              // el.clear();
+            }
+          });
+        },
+        init: function(){
+          $(this.buttons.open).on('click', function(){ModalPerson.openModal();});
+          $(this.buttons.save).on('click', function(){
+            ModalPerson.save();
+          });
+
+        },
+      };// End of ModalPerson
+
+      ModalEmployment.init();
+      ModalMasterUnit.init();
+      ModalDependency.init();
+      ModalPerson.init();
+    }
+    /*** FIN formulario nuevos cargos ***/
+  }
+});

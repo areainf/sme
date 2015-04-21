@@ -18,7 +18,12 @@ class PeopleController < ApplicationController
 
   def new
     @person = Person.new
-    respond_with(@person)
+    if request.xhr?
+      @person.entities.build
+      render '_remote_form', layout: false 
+    else
+      respond_with(@person)
+    end
   end
 
   def edit
@@ -46,6 +51,6 @@ class PeopleController < ApplicationController
     end
 
     def person_params
-      params.require(:person).permit(:firstname, :lastname)
+      params.require(:person).permit(:firstname, :lastname, :entities_attributes => [:dependency_id, :employment_id])
     end
 end

@@ -2,7 +2,7 @@ class MasterUnitsController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_master_unit, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :html, :json
 
   def index
     respond_to do |format|
@@ -17,7 +17,11 @@ class MasterUnitsController < ApplicationController
 
   def new
     @master_unit = MasterUnit.new
-    respond_with(@master_unit)
+    if request.xhr?
+      render '_remote_form', layout: false 
+    else
+      respond_with(@master_unit)
+    end
   end
 
   def edit

@@ -1,0 +1,14 @@
+= form_for(@dependency, :html => {class: 'form-horizontal', remote: true, id: "id-form_dependency", "data-parsley-validate" => ''}) do |f|
+  .field
+    = f.label :name, t("labels.name")
+    = f.text_field :name, {class: 'form-control', 'data-parsley-group' => 'block_dependency', required: ''}
+  .field
+    = f.label :description, t("labels.description")
+    = f.text_field :description, {class: 'form-control'}
+  .field
+    = f.label :parent_id, t("labels.dependencia")
+    = f.text_field :parent_id, :id => "parent_id", "data-prepopulate" => "[#{@dependency.parent.present? ? @dependency.parent.to_json : ''}]"
+  .field
+    = f.label :master_unit_id, t("labels.master_unit")
+    = f.text_field :master_unit_id, :id => "master_unit_id", "data-prepopulate" => "[#{@dependency.master_unit.present? ? @dependency.master_unit.to_json : ''}]"
+
