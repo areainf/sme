@@ -10,6 +10,8 @@ es:
           attributes:
             name:
               taken: El Cargo o puede repetirse
+        entity:
+          unique: Ya existe la entidad
         folder:
           attributes:
             name:
@@ -27,7 +29,6 @@ es:
             senders:
               blank: Debe ingresar un Remitente
     models:
-      
       errors:
         message_empty_people_names: Debe igresar el Apellido o Nombre de la Persona
         message_non_empty_folder: La carpeta debe estar vacía
@@ -91,6 +92,9 @@ es:
         index: Listado
         new: Nuevo
         show: Detalle
+  entities:
+    new:
+      title: Agregar Nueva Entidad
   events:
     new:
       title: Agregar Nuevo evento

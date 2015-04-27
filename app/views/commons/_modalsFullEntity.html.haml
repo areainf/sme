@@ -11,6 +11,9 @@
   %button.btn.btn-default#btn-open-new-person{:type => "button"}
     %span.glyphicon.glyphicon-user
     = t('labels.person')
+  %button.btn.btn-default#btn-open-new-entity{:type => "button"}
+    %span.glyphicon.glyphicon-user
+    = t('labels.entity')
   #modal-forms-employment
     #modal-employment.modal.fade
       .modal-dialog
@@ -74,4 +77,20 @@
             %button.btn.btn-default#person-save{:type => "button"}
               = t('buttons.save')
             %button.btn.btn-default#person-close{:type => "button", "data-dismiss"=>"modal"}
+              = t('buttons.close')
+  #modal-forms-entity
+    #modal-entity.modal.fade
+      .modal-dialog
+        .modal-content
+          .modal-header
+            %button{:type=>"button", :class=>"close","data-dismiss"=>"modal", "aria-hidden"=>"true"}
+              &times;
+            %h4.modal-title= t('entities.new.title')
+          .modal-body
+            #entity-remote-error
+            #entity-remote-form
+          .modal-footer
+            %button.btn.btn-default#entity-save{:type => "button"}
+              = t('buttons.save')
+            %button.btn.btn-default#entity-close{:type => "button", "data-dismiss"=>"modal"}
               = t('buttons.close')

@@ -1,21 +1,27 @@
 #entities_remote_form
   - if !@entity.present? && entity.present?
     - @entity = entity
-  - if !options.present?
+  - if try(:options).nil?
     - options = {}
   - opt_person = options[:person] || {}
   - opt_dependency = options[:dependency] || {}
   - opt_employment = options[:employment] || {}
-  = form_for @entity do |f|
+  = form_for(@entity, :html => {class: 'form-horizontal', remote: true, id: "id-form_entity", "data-parsley-validate" => ''}) do |f|
     - if !opt_person[:hidden]
       .field
-        = f.label :person, t("labels.people")
+        = f.label :person, t("labels.person")
         - if opt_person[:disabled]
           %label.form-control= @entity.person.fullname
-          = f.hidden_field :person_id, value: @entity.person_id, id: "person_id"
+          = f.hidden_field :person_id, value: @entity.person_id, id: "entity_person_id"
         - else
-          = f.text_field :person_id, id: "person_id"
-          %input#token_person{type: "hidden"}
+          .input-group
+            = f.text_field :person_id, id: "entity_person_id", class: "form-control"
+            %input#token_person{type: "hidden"}
+            %span.input-group-addon
+              %button.btn.btn-default.btn-xs#btn-open-new-person{:type => "button"}
+                %span.glyphicon.glyphicon-user
+                = t('labels.person')
+
     - else
       = f.hidden_field :person_id, value: @entity.person_id, id: "person_id"
 
@@ -24,27 +30,31 @@
         = f.label :dependency, t("labels.dependency")
         - if opt_dependency[:disabled]
           %label.form-control= @entity.dependency.fullname
-          = f.hidden_field :dependency_id, value: @entity.dependency_id, id: "dependency_id"
+          = f.hidden_field :dependency_id, value: @entity.dependency_id, id: "entity_dependency_id"
         - else
-          = f.text_field :dependency_id, id: "dependency_id"
-          %input#token_dependency{type: "hidden"}
+          .input-group
+            = f.text_field :dependency_id, id: "entity_dependency_id", 'data-parsley-group' => 'block_entity', required: ''
+            %input#token_dependency{type: "hidden"}
+            %span.input-group-addon
+              %button.btn.btn-default.btn-xs#btn-open-new-dependency{:type => "button"}
+                %span.glyphicon.glyphicon-briefcase
+                = t('labels.dependency')
     - else
-      = f.hidden_field :dependency_id, value: @entity.dependency_id, id: "dependency_id"
+      = f.hidden_field :dependency_id, value: @entity.dependency_id, id: "entity_dependency_id"
 
     - if !opt_employment[:hidden]
       .field
         = f.label :employment, t("labels.employment")
         - if opt_employment[:disabled]
           %label.form-control= @entity.employment.fullname
-          = f.hidden_field :employment_id, value: @entity.employment_id, id: "employment_id"
+          = f.hidden_field :employment_id, value: @entity.employment_id, id: "entity_employment_id"
         - else
-          = f.text_field :employment_id, id: "employment_id"
-          %input#token_employment{type: "hidden"}
+          .input-group
+            = f.text_field :employment_id, id: "entity_employment_id"
+            %input#token_employment{type: "hidden"}
+            %span.input-group-addon
+              %button.btn.btn-default.btn-xs#btn-open-new-employment{:type => "button"}
+                %span.glyphicon.glyphicon-briefcase
+                = t('labels.employment')
     - else
-      = f.hidden_field :employment_id, value: @entity.employment_id, id: "employment_id"
-
-
-    .action_container
-      = f.button t('buttons.accept'), {:class=>"btn-confirm"}
-
-    
+      = f.hidden_field :employment_id, value: @entity.employment_id, id: "entity_employment_id"

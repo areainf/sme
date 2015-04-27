@@ -5,10 +5,9 @@ class PeopleController < ApplicationController
   respond_to :html, :json
 
   def index
-    @people = Person.all
     respond_to do |format|
       format.html
-      format.json { render json: PersonDatatable.new(view_context) }
+      format.json { render json: get_data(view_context, params[:q], params[:id]) }
     end
   end
 
@@ -52,5 +51,17 @@ class PeopleController < ApplicationController
 
     def person_params
       params.require(:person).permit(:firstname, :lastname, :entities_attributes => [:dependency_id, :employment_id])
+    end
+
+    def get_data(view_context, query, id)
+      if query.present?
+        Person.where("firstname LIKE :search or
+                         lastname LIKE :search",
+                        search: "%#{query}%").to_json(:methods => :fullname)
+      elsif id.present?
+        Person.find(id).to_json
+      else
+        PersonDatatable.new(view_context).to_json
+      end      
     end
 end
