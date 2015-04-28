@@ -122,3 +122,8 @@ body{
   .modal-body{
     margin: 10px !important;
   }
+
+.action_container{
+  @extend .text-center;
+  margin-top: 20px;
+}

@@ -13,6 +13,11 @@ class EntitiesController < ApplicationController
 
   def new
     @entity = Entity.new
+    @dependency = Dependency.new
+    @employment = Employment.new
+    @master_unit = MasterUnit.new
+    @person = Person.new
+    @person.entities.build
     if request.xhr?
       render '_remote_form', layout: false 
     else
@@ -33,9 +38,7 @@ class EntitiesController < ApplicationController
         format.html
         format.json { render :json =>  @entity.errors.full_messages, status: :unprocessable_entity}
       end
-
     end
-
   end
 
   def update_active

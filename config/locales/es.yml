@@ -9,17 +9,17 @@ es:
         employment:
           attributes:
             name:
-              taken: El Cargo o puede repetirse
+              taken: El Cargo no puede repetirse
         entity:
           unique: Ya existe la entidad
         folder:
           attributes:
             name:
-              taken: El Nombren o puede repetirse
+              taken: El Nombren no puede repetirse
         master_unit:
           attributes:
             name:
-              taken: El Nombren o puede repetirse
+              taken: El Nombren no puede repetirse
         person:
           attributes:
             lastname:
@@ -33,6 +33,8 @@ es:
         message_empty_people_names: Debe igresar el Apellido o Nombre de la Persona
         message_non_empty_folder: La carpeta debe estar vacía
     attributes:
+      employment:
+        name: Nombre
       event:
         date_event: Fecha
         description: Descripción
@@ -94,7 +96,14 @@ es:
         show: Detalle
   entities:
     new:
-      title: Agregar Nueva Entidad
+      title: Acceso Rápido
+      title_sub: Crear nuevos Elementos
+    remote_form:
+      dependency: Dependencia
+      employment: Cargo
+      entity: Entidad
+      master_unit: Organizaciones
+      person: Persona
   events:
     new:
       title: Agregar Nuevo evento
@@ -127,6 +136,7 @@ es:
     entities_from_ids: Remitentes
     entities_to_ids: Destinatarios
     entry_at: Fecha de Ingreso
+    shorcuts_entities: Creación Rápida de Elementos
     firstname: Nombre
     folder: Carpeta
     fullnames: Nombres completos
@@ -176,6 +186,12 @@ es:
         show: Detalle
   messages:
     confirm_delete: "Eliminara %{message}\\n¿Desea continuar?"
+    success:
+      save_dependency: Se guardo correctamente la Dependencia
+      save_employment: Se guardo correctamente el Cargo
+      save_entity: Se guardo correctamente la Entidad
+      save_master_unit: Se guardo correctamente la Unidad Organizacional
+      save_person: Se guardo correctamente la Persona
   notes:
     buttons:
       edit: Editar

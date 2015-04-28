@@ -1,0 +1,7 @@
+= form_for(@employment, :html => {class: 'form-horizontal', remote: true, id: "id-form_employment", "data-parsley-validate" => ''}) do |f|
+  .field
+    = f.label :name, t("labels.name")
+    = f.text_field :name, {class: 'form-control', 'data-parsley-group' => 'block_employment', required: ''}
+  .action_container
+    %button.btn.btn-default#employment-save{:type => "button"}
+      = t('buttons.save')

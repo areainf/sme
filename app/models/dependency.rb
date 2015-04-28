@@ -5,6 +5,6 @@ class Dependency < ActiveRecord::Base
   belongs_to :master_unit
 
   validates :name, presence: true
-  validates :name, uniqueness: {:scope => :master_unit}
+  validates :name, uniqueness: {:scope => :master_unit, :case_sensitive => false }
 
 end

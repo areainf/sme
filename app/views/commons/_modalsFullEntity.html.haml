@@ -1,83 +1,7 @@
 #modal-forms
-  %button.btn.btn-default#btn-open-new-employment{:type => "button"}
-    %span.glyphicon.glyphicon-briefcase
-    = t('labels.employment')
-  %button.btn.btn-default#btn-open-new-master_unit{:type => "button"}
-    %span.glyphicon.glyphicon-briefcase
-    = t('labels.master_unit')
-  %button.btn.btn-default#btn-open-new-dependency{:type => "button"}
-    %span.glyphicon.glyphicon-briefcase
-    = t('labels.dependency')
-  %button.btn.btn-default#btn-open-new-person{:type => "button"}
+  %button.btn.btn-success#btn-open-new-entity{:type => "button"}
     %span.glyphicon.glyphicon-user
-    = t('labels.person')
-  %button.btn.btn-default#btn-open-new-entity{:type => "button"}
-    %span.glyphicon.glyphicon-user
-    = t('labels.entity')
-  #modal-forms-employment
-    #modal-employment.modal.fade
-      .modal-dialog
-        .modal-content
-          .modal-header
-            %button{:type=>"button", :class=>"close","data-dismiss"=>"modal", "aria-hidden"=>"true"}
-              &times;
-            %h4.modal-title= t('employments.new.title')
-          .modal-body
-            #employment-remote-error
-            #employment-remote-form
-          .modal-footer
-            %button.btn.btn-default#employment-save{:type => "button"}
-              = t('buttons.save')
-            %button.btn.btn-default#employment-close{:type => "button", "data-dismiss"=>"modal"}
-              = t('buttons.close')
-  #modal-forms-master_unit
-    #modal-master_unit.modal.fade
-      .modal-dialog
-        .modal-content
-          .modal-header
-            %button{:type=>"button", :class=>"close","data-dismiss"=>"modal", "aria-hidden"=>"true"}
-              &times;
-            %h4.modal-title= t('master_units.new.title')
-          .modal-body
-            #master_unit-remote-error
-            #master_unit-remote-form
-          .modal-footer
-            %button.btn.btn-default#master_unit-save{:type => "button"}
-              = t('buttons.save')
-            %button.btn.btn-default#master_unit-close{:type => "button", "data-dismiss"=>"modal"}
-              = t('buttons.close')
-  #modal-forms-dependency
-    #modal-dependency.modal.fade
-      .modal-dialog
-        .modal-content
-          .modal-header
-            %button{:type=>"button", :class=>"close","data-dismiss"=>"modal", "aria-hidden"=>"true"}
-              &times;
-            %h4.modal-title= t('dependencies.new.title')
-          .modal-body
-            #dependency-remote-error
-            #dependency-remote-form
-          .modal-footer
-            %button.btn.btn-default#dependency-save{:type => "button"}
-              = t('buttons.save')
-            %button.btn.btn-default#dependency-close{:type => "button", "data-dismiss"=>"modal"}
-              = t('buttons.close')
-  #modal-forms-person
-    #modal-person.modal.fade
-      .modal-dialog
-        .modal-content
-          .modal-header
-            %button{:type=>"button", :class=>"close","data-dismiss"=>"modal", "aria-hidden"=>"true"}
-              &times;
-            %h4.modal-title= t('people.new.title')
-          .modal-body
-            #person-remote-error
-            #person-remote-form
-          .modal-footer
-            %button.btn.btn-default#person-save{:type => "button"}
-              = t('buttons.save')
-            %button.btn.btn-default#person-close{:type => "button", "data-dismiss"=>"modal"}
-              = t('buttons.close')
+    = t('labels.shorcuts_entities')
   #modal-forms-entity
     #modal-entity.modal.fade
       .modal-dialog
@@ -85,12 +9,14 @@
           .modal-header
             %button{:type=>"button", :class=>"close","data-dismiss"=>"modal", "aria-hidden"=>"true"}
               &times;
-            %h4.modal-title= t('entities.new.title')
+            %h4.modal-title
+              = t('entities.new.title')
+              %sub= t('entities.new.title_sub')
           .modal-body
-            #entity-remote-error
+            #remote-error-message
             #entity-remote-form
           .modal-footer
-            %button.btn.btn-default#entity-save{:type => "button"}
-              = t('buttons.save')
+            / %button.btn.btn-default#entity-save{:type => "button"}
+            /   = t('buttons.save')
             %button.btn.btn-default#entity-close{:type => "button", "data-dismiss"=>"modal"}
               = t('buttons.close')
