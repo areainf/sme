@@ -15,7 +15,7 @@ jQuery(document).ready(function() {
     if ($("#dependencies_form").length > 0){
       //var data = [{id: 25, name: "Claudio", description: "JOSE"}];
       var data_dep  = $("#dependency_id").data("prepopulate");
-      $("#dependency_id").tokenInput('/dependencies.json', {
+      $("#parent_id").tokenInput('/dependencies.json', {
         theme: 'facebook',
         tokenLimit: "1",
         minChars: "3",

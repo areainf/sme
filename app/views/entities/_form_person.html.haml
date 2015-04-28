@@ -1,0 +1,17 @@
+= form_for(@person, :html => {class: 'form-horizontal', remote: true, id: "id-form_person", "data-parsley-validate" => ''}) do |f|
+  .field
+    = f.label :firstname, t("labels.firstname")
+    = f.text_field :firstname
+  .field
+    = f.label :lastname, t("labels.lastname")
+    = f.text_field :lastname
+  = f.fields_for :entities do |fe|
+    .field
+      = fe.label :dependency_id, t("labels.dependency")
+      = fe.text_field :dependency_id, :id => "person_dependency_id"
+    .field
+      = fe.label :employment_id, t("labels.employment")
+      = fe.text_field :employment_id, :id => "person_employment_id"
+  .action_container
+    %button.btn.btn-default#person-save{:type => "button"}
+      = t('buttons.save')

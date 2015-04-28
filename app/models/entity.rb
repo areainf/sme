@@ -6,9 +6,19 @@ class Entity < ActiveRecord::Base
   has_many :senders
   has_many :recipients
   validate :valid_entity
-
+  validate :unique_entity, :before => :create
   def valid_entity
     (self.person.present? || self.employment.present?) && dependency.present?
+  end
+
+  def unique_entity
+    p_id = self.person_id.blank? ? nil : self.person_id
+    d_id = self.dependency_id.blank? ? nil : self.dependency_id
+    e_id = self.employment_id.blank? ? nil : self.employment_id
+    if ! Entity.where(:person_id => p_id, :dependency_id => d_id, :employment_id => e_id).empty?
+      errors.add(:base, I18n.t('activerecord.errors.models.entity.unique'))
+      false
+    end
   end
   def fullname
     name = []

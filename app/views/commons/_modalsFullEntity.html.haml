@@ -1,0 +1,22 @@
+#modal-forms
+  %button.btn.btn-success#btn-open-new-entity{:type => "button"}
+    %span.glyphicon.glyphicon-user
+    = t('labels.shorcuts_entities')
+  #modal-forms-entity
+    #modal-entity.modal.fade
+      .modal-dialog
+        .modal-content
+          .modal-header
+            %button{:type=>"button", :class=>"close","data-dismiss"=>"modal", "aria-hidden"=>"true"}
+              &times;
+            %h4.modal-title
+              = t('entities.new.title')
+              %sub= t('entities.new.title_sub')
+          .modal-body
+            #remote-error-message
+            #entity-remote-form
+          .modal-footer
+            / %button.btn.btn-default#entity-save{:type => "button"}
+            /   = t('buttons.save')
+            %button.btn.btn-default#entity-close{:type => "button", "data-dismiss"=>"modal"}
+              = t('buttons.close')

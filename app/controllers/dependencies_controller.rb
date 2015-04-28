@@ -2,7 +2,7 @@ class DependenciesController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_dependency, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :html, :json
 
   def index
     # @dependencies = Dependency.all
@@ -19,7 +19,11 @@ class DependenciesController < ApplicationController
 
   def new
     @dependency = Dependency.new
-    respond_with(@dependency)
+    if request.xhr?
+      render '_remote_form', layout: false 
+    else
+      respond_with(@dependency)
+    end
   end
 
   def edit

@@ -9,7 +9,23 @@ function goto_tab_if_defined(){
     activeTab && activeTab.tab('show');
   }
 }
-
+/*Mostrar mensajes dinamicanete*/
+function showMessage(messages, container){
+  //set default value for container  
+  container = typeof container !== 'undefined' ? container : "#ajax_error_container";
+  if (! (messages instanceof Array)){
+    messages = [messages];
+  }
+  var text = '<div class="alert alert-success"> \
+              <button type="button" class="close" data-dismiss="alert">&times;</button>\
+              <h4>Mensajes</h4> \
+              <ul>';
+  for(var i = 0; i < messages.length; i++){
+      text += "<li>" + messages[i] + "</li>";
+  }
+  text += '</ul></div>';
+  $(container).html(text);
+}
 /*Mostrar errores dinamicanete*/
 function showError(hash_error, container){
   //set default value for container  
@@ -23,7 +39,6 @@ function showError(hash_error, container){
               <ul>';
   for(var key in hash_error.errors){
     var t = hash_error.errors[key];
-    console.log(t);
     if (t instanceof String)
       text += "<li>" + t + "</li>";
     else{

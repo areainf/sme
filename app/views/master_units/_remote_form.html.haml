@@ -1,0 +1,4 @@
+= form_for(@master_unit, :html => {class: 'form-horizontal', remote: true, id: "id-form_master_unit", "data-parsley-validate" => ''}) do |f|
+  .field
+    = f.label :name, t("labels.name")
+    = f.text_field :name, {class: 'form-control', 'data-parsley-group' => 'block_master_unit', required: ''}

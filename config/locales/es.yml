@@ -2,10 +2,28 @@ es:
   activerecord:
     errors:
       models:
+        dependency:
+          attributes:
+            name:
+              taken: No puede repetirse el Nombre en la Organización seleccionada
+        employment:
+          attributes:
+            name:
+              taken: El Cargo no puede repetirse
+        entity:
+          unique: Ya existe la entidad
         folder:
           attributes:
             name:
-              taken: El Nombren o puede repetirse
+              taken: El Nombren no puede repetirse
+        master_unit:
+          attributes:
+            name:
+              taken: El Nombren no puede repetirse
+        person:
+          attributes:
+            lastname:
+              taken: Ya existe una persona con ese Nombre y Apellido
         note:
           attributes:
             senders:
@@ -15,9 +33,13 @@ es:
         message_empty_people_names: Debe igresar el Apellido o Nombre de la Persona
         message_non_empty_folder: La carpeta debe estar vacía
     attributes:
+      employment:
+        name: Nombre
       event:
         date_event: Fecha
         description: Descripción
+      person:
+        lastname: Apellido
       user:
         username: Usuario
         remember_me: Recordarme
@@ -47,6 +69,8 @@ es:
       edit: Editar
       new: Nueva
       index: Volver al Listado  
+    new:
+      title: Agregar Nueva Dependencia  
     sub_header:
       title: Dependencias
       sub_title:
@@ -60,7 +84,9 @@ es:
     buttons:
       edit: Editar
       new: Nuevo
-      index: Volver al Listado   
+      index: Volver al Listado
+    new:
+      title: Agregar Nuevo Cargo   
     sub_header:    
       title: Cargos      
       sub_title:
@@ -68,6 +94,16 @@ es:
         index: Listado
         new: Nuevo
         show: Detalle
+  entities:
+    new:
+      title: Acceso Rápido
+      title_sub: Crear nuevos Elementos
+    remote_form:
+      dependency: Dependencia
+      employment: Cargo
+      entity: Entidad
+      master_unit: Organizaciones
+      person: Persona
   events:
     new:
       title: Agregar Nuevo evento
@@ -100,6 +136,7 @@ es:
     entities_from_ids: Remitentes
     entities_to_ids: Destinatarios
     entry_at: Fecha de Ingreso
+    shorcuts_entities: Creación Rápida de Elementos
     firstname: Nombre
     folder: Carpeta
     fullnames: Nombres completos
@@ -109,6 +146,7 @@ es:
     Note_input: Nota de Entrada
     Note_output: Nota de Salida
     observation: Observación
+    person: Persona
     reference_people: Personas mencionadas
     senders: Remitentes
     system_status: Estado en el Sistema
@@ -137,6 +175,8 @@ es:
     buttons:
       edit: Editar
       index: Volver al Listado  
+    new:
+      title: Nueva Unidad Organizacional  
     sub_header:
       title: Unidad Organizacional
       sub_title:
@@ -146,6 +186,12 @@ es:
         show: Detalle
   messages:
     confirm_delete: "Eliminara %{message}\\n¿Desea continuar?"
+    success:
+      save_dependency: Se guardo correctamente la Dependencia
+      save_employment: Se guardo correctamente el Cargo
+      save_entity: Se guardo correctamente la Entidad
+      save_master_unit: Se guardo correctamente la Unidad Organizacional
+      save_person: Se guardo correctamente la Persona
   notes:
     buttons:
       edit: Editar
@@ -167,6 +213,8 @@ es:
       profile: Perfil
     form_employments:
       add_entity: Asignarle un nuevo cargo
+    new:
+      title: Agregar Nueva Persona
     sub_header:    
       title: Personas
       sub_title:

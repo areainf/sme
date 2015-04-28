@@ -11,13 +11,33 @@ class EntitiesController < ApplicationController
     end
   end
 
+  def new
+    @entity = Entity.new
+    @dependency = Dependency.new
+    @employment = Employment.new
+    @master_unit = MasterUnit.new
+    @person = Person.new
+    @person.entities.build
+    if request.xhr?
+      render '_remote_form', layout: false 
+    else
+      respond_with(@entity)
+    end
+  end
 
   def create
     @entity = Entity.new(entity_params)
-    flash[:success] = t('flash.entity', message: t('flash.created')) if @entity.save
-    respond_to do |format|
+    if @entity.save
+      flash[:success] = t('flash.entity', message: t('flash.created'))
+      respond_to do |format|
         format.html
         format.json { render :json =>  @entity, :include => [:person, :dependency, :employment] }
+      end
+    else 
+      respond_to do |format|
+        format.html
+        format.json { render :json =>  @entity.errors.full_messages, status: :unprocessable_entity}
+      end
     end
   end
 

@@ -1,0 +1,51 @@
+#entities_form
+  #entity_error
+  - if !@entity.present? && entity.present?
+    - @entity = entity
+  - if !options.present?
+    - options = {}
+  - opt_person = options[:person] || {}
+  - opt_dependency = options[:dependency] || {}
+  - opt_employment = options[:employment] || {}
+  = form_for @entity do |f|
+    - if !opt_person[:hidden]
+      .field
+        = f.label :person, t("labels.people")
+        - if opt_person[:disabled]
+          %label.form-control= @entity.person.fullname
+          = f.hidden_field :person_id, value: @entity.person_id, id: "person_id"
+        - else
+          = f.text_field :person_id, id: "person_id"
+          %input#token_person{type: "hidden"}
+    - else
+      = f.hidden_field :person_id, value: @entity.person_id, id: "person_id"
+
+    - if !opt_dependency[:hidden]
+      .field
+        = f.label :dependency, t("labels.dependency")
+        - if opt_dependency[:disabled]
+          %label.form-control= @entity.dependency.fullname
+          = f.hidden_field :dependency_id, value: @entity.dependency_id, id: "dependency_id"
+        - else
+          = f.text_field :dependency_id, id: "dependency_id"
+          %input#token_dependency{type: "hidden"}
+    - else
+      = f.hidden_field :dependency_id, value: @entity.dependency_id, id: "dependency_id"
+
+    - if !opt_employment[:hidden]
+      .field
+        = f.label :employment, t("labels.employment")
+        - if opt_employment[:disabled]
+          %label.form-control= @entity.employment.fullname
+          = f.hidden_field :employment_id, value: @entity.employment_id, id: "employment_id"
+        - else
+          = f.text_field :employment_id, id: "employment_id"
+          %input#token_employment{type: "hidden"}
+    - else
+      = f.hidden_field :employment_id, value: @entity.employment_id, id: "employment_id"
+
+
+    .action_container
+      = f.button t('buttons.accept'), {:class=>"btn-confirm"}
+
+    

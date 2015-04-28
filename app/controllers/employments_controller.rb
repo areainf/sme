@@ -18,7 +18,11 @@ class EmploymentsController < ApplicationController
 
   def new
     @employment = Employment.new
-    respond_with(@employment)
+    if request.xhr?
+      render '_remote_form', layout: false 
+    else
+      respond_with(@employment )
+    end
   end
 
   def edit
@@ -26,8 +30,18 @@ class EmploymentsController < ApplicationController
 
   def create
     @employment = Employment.new(employment_params)
-    @employment.save
-    respond_with(@employment)
+    if @employment.save
+      flash[:success] = t('flash.entity', message: t('flash.created'))
+      respond_to do |format|
+        format.html
+        format.json { render :json =>  @employment}
+      end
+    else 
+      respond_to do |format|
+        format.html
+        format.json { render :json =>  @employment.errors.full_messages, status: :unprocessable_entity}
+      end
+    end
   end
 
   def update

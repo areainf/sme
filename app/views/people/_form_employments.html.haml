@@ -24,4 +24,4 @@
   .col-md-3.col-md-offset-3
     .side-right.side-form
       %h2= t('.add_entity')
-      = render '/entities/remote_form', entity: @person.entities.build(), :options => {:person => {:hidden => true} }
+      = render 'form_entity', entity: @person.entities.build(), :options => {:person => {:hidden => true} }
