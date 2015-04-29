@@ -27,5 +27,9 @@ class Entity < ActiveRecord::Base
     if dependency.present? then name << dependency.name end
     name.join(' - ')
   end
+  
+  def root?
+    self.dependency.nil? && self.employment.nil?
+  end
 
 end
