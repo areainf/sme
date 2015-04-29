@@ -1,8 +1,62 @@
 #ctrllr-people
   #people-show
-    %p
-      %strong= t('labels.firstname')
-      = @person.firstname 
-    %p
-      %strong= t('labels.lastname')
-      = @person.lastname 
+    .row
+      .col-md-4
+        .panel.panel-primary
+          .panel-heading
+            = t('.personal_date')
+          .panel-body
+            %p
+              %strong= "#{t('labels.firstname')}:"
+              = @person.firstname 
+            %p
+              %strong= "#{t('labels.lastname')}:"
+              = @person.lastname 
+      .col-md-8
+        .panel.panel-primary
+          .panel-heading
+            = t('.entity_title')
+          .panel-body
+            - if @person.entities.count > 1
+              %table.dataTable.no-footer.table-bordered
+                %thead
+                  %tr
+                    %th= t('labels.dependency')
+                    %th= t('labels.employment')
+                    %th= t('labels.active')
+                %tbody
+                  - @person.entities.each do |entity|
+                    - unless entity.root?
+                      %tr
+                        %td= entity.dependency.try(:name) || '---'
+                        %td= entity.employment.try(:name) || '---'
+                        %td= entity.active ? 'Si' : 'No'
+            - else
+              .alert.alert-danger
+                = t('.entity_empty')
+    .row
+      .col-md-6
+        %h2= t('.document_title')
+        %table#documents_list.dataTable.no-footer.table-bordered
+          %thead
+            %tr
+              %th= t('labels.type')
+              %th= t('labels.direction')
+              %th= t('labels.recipients')
+              %th= t('labels.senders')
+              %th= t('labels.date')
+
+          %tbody
+            - @person.documents.each do |document|
+              %tr.bind_on_click-show_document{id: "document_#{document.id}", 'data-id' => "#{document.id}"}
+                - recip = document.recipients_names || []
+                - recip << document.recipient_text
+                - send = document.senders_names || []
+                - send << document.sender_text
+                
+                %td= draw_type_document(document)
+                %td= draw_direction(document)
+                %td= recip.blank? ? '' : recip.join("; ")
+                %td= send.blank? ? '' : send.join("; ")
+                %td{nowrap: "nowrap"}= l document.emission_date
+      #document_show.col-md-6

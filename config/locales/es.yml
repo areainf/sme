@@ -128,6 +128,7 @@ es:
   labels:    
     active: Activo
     code: Código
+    date: Fecha
     dependency: Dependencia
     description: Descripción
     directory: Directorio
@@ -162,15 +163,16 @@ es:
         all: Todos
         new_note_input: Nota de Entrada
         new_note_output: Nota de Salida
-      documents: Documentos
-      folders: Carpetas      
       master_units:
         new: Nueva Organización
         list: Listado de Organizaciones
       employments: Cargos
+      documents: Documentos
       entities: Cargo / Persona
       exit: Salir
+      folders: Carpetas      
       organization: Organización
+      people: Personas
   master_units:
     buttons:
       edit: Editar
@@ -215,6 +217,11 @@ es:
       add_entity: Asignarle un nuevo cargo
     new:
       title: Agregar Nueva Persona
+    show:
+      document_title: Documentos en lo que aparece
+      entity_empty: No tiene asociado ninguna Entidad
+      entity_title: Entidades en la  que aparece
+      personal_date: Datos personales
     sub_header:    
       title: Personas
       sub_title:

@@ -18,6 +18,20 @@ class Person < ActiveRecord::Base
     if !self.firstname.blank? then name << self.firstname end
     name.join(", ")
   end
+
+  def documents
+    #ap a.entities.map{|x| x.recipients.map{|y| y.document} + x.senders.map{|z| z.document}}
+    docs = []
+    self.entities.each do |entity|
+      entity.recipients.each do |recipient|
+        docs << recipient.document
+      end
+      entity.senders.each do |sender|
+        docs << sender.document
+      end
+    end
+    docs
+  end
 private
   def create_empty_entity
     self.entities.create    

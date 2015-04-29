@@ -197,5 +197,49 @@ jQuery(document).ready(function() {
       };
       Entity.init();
     } 
+    /*---------------------------*
+     *--- ACTION SHOW PEOPLE  ---*
+     *---------------------------*/
+    if ($("#people-show").length > 0){
+      //bind actions on click document row
+      $(".bind_on_click-show_document").on('click', function(){
+        showDocument($(this).data('id'));
+      });
+      //resaltando row in document
+      $('#documents_list tbody')
+        .on( 'mouseover', 'td', function () {
+          var tr = $(this).closest('tr');
+          $('#documents_list tbody td').each(function(index, element){
+            $(this).removeClass( 'row-highlight' );
+          })          
+          $("#"+tr.attr('id')+' td').addClass( 'row-highlight' );
+        } )
+        .on( 'mouseleave', function () {
+            $('#documents_list tbody td').each(function(index, element){
+            $(this).removeClass( 'row-highlight' );
+
+          })
+        });
+
+      /*Traer mediante ajax el show de document*/
+      function showDocument(id){
+        $.ajax({
+            type: "GET",
+            url: "/documents/"+id,
+            dataType: "html",
+            success: function(data){
+              $("#document_show").html(data);
+              return true;
+            },
+            error: function(xhr, event, status) {
+              var errors = jQuery.parseJSON(xhr.responseText);
+              showError(errors, "#document_show");
+              return false;
+            }
+        });
+      }
+
+    }
+    /*--- end ACTION SHOW PEOPLE  ---*/
   }
 });
