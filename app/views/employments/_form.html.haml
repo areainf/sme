@@ -1,4 +1,4 @@
-= form_for(@employment) do |f|
+= form_for(@employment, html: { "data-parsley-validate" => ''}) do |f|
   - if @employment.errors.any? 
     #error_explanation
       %h2
@@ -11,7 +11,7 @@
 
   .field
     = f.label :name, t("labels.name")
-    = f.text_field :name
+    = f.text_field :name, {'data-parsley-group' => 'block_employment', required: ''}
   .action_container
     = f.submit t('buttons.accept'), {:class=>"btn-confirm"}
 
