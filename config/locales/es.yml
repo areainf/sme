@@ -33,6 +33,7 @@ es:
         user:
           attributes:
             password:
+              blank: Debe ingresar una contraseña
               too_short: Contraseña demasiada corta. 6 caractéres como mínimo
 
     models:

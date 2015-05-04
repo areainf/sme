@@ -11,6 +11,7 @@ ActiveAdmin.register User do
     column :last_sign_in_at
     column :sign_in_count
     # default_actions
+    actions
    end
 
   # filter :surname
@@ -28,11 +29,22 @@ ActiveAdmin.register User do
       # f.input :name
       f.input :username
       f.input :email
+      f.input :role, :as => :select, :collection => ['admin', 'reception', 'dependency']
+
       f.input :password
       f.input :password_confirmation
     end
     f.actions
   end
 
+  controller do
+    def update
+      if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+        params[:user].delete("password")
+        params[:user].delete("password_confirmation")
+      end
+      super
+    end
+  end
 
 end
