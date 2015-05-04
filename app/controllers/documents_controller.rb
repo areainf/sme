@@ -1,7 +1,7 @@
 class DocumentsController < ApplicationController
   before_filter :authenticate_user!
   respond_to :html, :json
-
+  load_and_authorize_resource
   def index
     # @notes = Note.all
     respond_to do |format|

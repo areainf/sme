@@ -4,6 +4,8 @@ class FoldersController < ApplicationController
 
   respond_to :html, :json
 
+  load_and_authorize_resource
+
   def index
     if params[:id].present?
       result_json = folder_child(params[:id])

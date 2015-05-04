@@ -34,7 +34,8 @@ gem 'haml'
 gem 'jquery-datatables-rails', '~> 3.1.1'
 
 gem 'ajax-datatables-rails'
-gem 'will_paginate', '~> 3.0.6'
+gem 'will_paginate'
+#, '~> 3.0.6'
 gem 'awesome_print'
 
 gem "parsley-rails"
@@ -42,6 +43,8 @@ gem 'jquery-ui-rails'
 gem 'mousetrap-rails'
 gem 'momentjs-rails'
 gem 'bootstrap-daterangepicker-rails'
+gem 'activeadmin', '~> 1.0.0.pre1'
+gem 'cancancan', '~> 1.10'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

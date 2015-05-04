@@ -1,4 +1,6 @@
 es:
+  active_admin:
+    details_user: Información sobre el Usuario
   activerecord:
     errors:
       models:
@@ -28,6 +30,12 @@ es:
           attributes:
             senders:
               blank: Debe ingresar un Remitente
+        user:
+          attributes:
+            password:
+              blank: Debe ingresar una contraseña
+              too_short: Contraseña demasiada corta. 6 caractéres como mínimo
+
     models:
       errors:
         message_empty_people_names: Debe igresar el Apellido o Nombre de la Persona
@@ -251,3 +259,4 @@ es:
     formats:
       default: "%d/%m/%Y %H:%M:%S"
       short: "%d/%m/%Y"
+      long: "%d/%m/%Y %H:%M:%S"

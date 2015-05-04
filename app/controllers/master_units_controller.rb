@@ -4,6 +4,8 @@ class MasterUnitsController < ApplicationController
 
   respond_to :html, :json
 
+  load_and_authorize_resource
+
   def index
     respond_to do |format|
       format.html

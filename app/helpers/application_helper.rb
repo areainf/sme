@@ -1,5 +1,8 @@
 module ApplicationHelper
   DIR_OUTPUT = 0
+  ROLE_ADMIN = "admin"
+  ROLE_DEPENDENCY = "dependency"
+  ROLE_RECEPTION = "reception"
   #use in main menu
   def current_tag(tag)
     'active' if controller_path == tag

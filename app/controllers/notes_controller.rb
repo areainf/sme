@@ -5,6 +5,8 @@ class NotesController < ApplicationController
 
   respond_to :html, :json
 
+  load_and_authorize_resource
+
   def index
     # @notes = Note.all
     respond_to do |format|
