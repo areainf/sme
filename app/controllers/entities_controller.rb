@@ -4,6 +4,8 @@ class EntitiesController < ApplicationController
 
   respond_to :html, :json
 
+  load_and_authorize_resource
+
   def index
     @entities = get_data(params[:q])
     respond_to do |format|
