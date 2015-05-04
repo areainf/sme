@@ -17,11 +17,12 @@ es:
         folder:
           attributes:
             name:
-              taken: El Nombren no puede repetirse
+              taken: El Nombre no puede repetirse
         master_unit:
           attributes:
             name:
-              taken: El Nombren no puede repetirse
+              taken: El Nombre no puede repetirse
+              blank: Debe Ingresar un Nombre
         person:
           attributes:
             lastname:
@@ -46,6 +47,8 @@ es:
       event:
         date_event: Fecha
         description: Descripción
+      master_unit:
+        name: Nombre
       person:
         lastname: Apellido
       user:

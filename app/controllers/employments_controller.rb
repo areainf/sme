@@ -40,7 +40,7 @@ class EmploymentsController < ApplicationController
       end
     else 
       respond_to do |format|
-        format.html
+        format.html{render  'new'}
         format.json { render :json =>  @employment.errors.full_messages, status: :unprocessable_entity}
       end
     end

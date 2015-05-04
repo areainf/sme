@@ -1,5 +1,5 @@
 #dependencies_form
-  = form_for(@master_unit) do |f|
+  = form_for(@master_unit, html: { "data-parsley-validate" => ''}) do |f|
     - if @master_unit.errors.any? 
       #error_explanation
         %h2
@@ -12,7 +12,7 @@
 
     .field
       = f.label :name, t("labels.name")
-      = f.text_field :name
+      = f.text_field :name, {'data-parsley-group' => 'block_master_unit', required: ''}
     .action_container
       = f.submit t('buttons.accept'), {:class=>"btn-confirm"}
 
