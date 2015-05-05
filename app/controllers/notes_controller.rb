@@ -32,14 +32,40 @@ class NotesController < ApplicationController
     params[:note][:recipients_attributes] = get_nested_entity_ids(params[:entities_to_ids])
     params[:note][:senders_attributes] = get_nested_entity_ids(params[:entities_from_ids])
     @note = Note.new(note_params)
-    @note.save
+    if @note.save
+      # to handle multiple images upload on create
+      if params[:attachments]
+        params[:attachments].each{|file|
+          @note.attachments.create({:filedoc => file})
+        }
+      end
+      flash[:success] = t('flash.note', message: t('flash.created'))
+    else 
+      flash[:alert] = @note.errors.flush_messages
+    end
     respond_with(@note)
+
   end
 
   def update
     params[:note][:recipients_attributes] = get_nested_and_delete_recipients(params[:entities_to_ids])
     params[:note][:senders_attributes] = get_nested_and_delete_senders(params[:entities_from_ids])
-    @note.update(note_params)
+    if @note.update(note_params)
+      if params[:attachments]
+        params[:attachments].each{|file|
+          @note.attachments.create({:filedoc => file})
+        }
+      end
+      if params[:attachments_destroy]
+        params[:attachments_destroy].each do |attach|
+          attachment = Attachment.find(attach)
+          attachment.destroy
+        end
+      end
+      flash[:success] = t('flash.note', message: t('flash.updated'))
+    else 
+      flash[:alert] = @note.errors.flush_messages
+    end
     respond_with(@note)
   end
 

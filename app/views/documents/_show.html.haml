@@ -37,21 +37,27 @@
           = @document.recipients.map{|s| s.entity.fullname}.join("; ") unless @document.recipients.nil?
           = @document.recipient_text unless @document.recipient_text.blank?
         %td= @document.reference_people
-  
-  %h4= t('labels.description')
-  %p= @document.description
-  - unless @document.observation.blank?
-    %h4= t('labels.observation')
-    %p= @document.observation
-  %hr
-  %h2= t('documents.events.title')
-  %ul#list-events.list-group
-    - @document.events.each do |ev|
-      %li.list-group-item
-        .row
-          .col-md-2
-            %span.label.label-default= l ev.date
-          .col-md-8
-            = ev.description
-          .col-md-2
-            = ev.user.try(:username)
+  .row
+    - divclass = @document.attachments.blank? ? 'col-md-12' : 'col-md-9'
+    %div{class: "#{divclass}"}
+      %h4= t('labels.description')
+      %p= @document.description
+      - unless @document.observation.blank?
+        %h4= t('labels.observation')
+        %p= @document.observation
+    - unless @document.attachments.blank?
+      .col-md-3
+        = render "show_attachments"
+  - unless @document.events.blank?
+    %hr
+    %h2= t('documents.events.title')
+    %ul#list-events.list-group
+      - @document.events.each do |ev|
+        %li.list-group-item
+          .row
+            .col-md-2
+              %span.label.label-default= l ev.date
+            .col-md-8
+              = ev.description
+            .col-md-2
+              = ev.user.try(:username)

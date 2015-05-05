@@ -1,0 +1,7 @@
+- unless @note.attachments.blank?
+  %ul.list-group
+    %li.list-group-item.active= t('documents.attachments.list')
+    - @note.attachments.each do |attachment|
+      %li.list-group-item
+        %a{href: "#{attachment.filedoc.url}", target: "new"}
+          = attachment.filedoc.file.filename

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504190009) do
+ActiveRecord::Schema.define(version: 20150505175501) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(version: 20150504190009) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "attachments", force: true do |t|
+    t.integer  "document_id"
+    t.string   "filedoc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "attachments", ["document_id"], name: "index_attachments_on_document_id", using: :btree
+
   create_table "dependencies", force: true do |t|
     t.string   "name"
     t.string   "description"
@@ -67,8 +76,8 @@ ActiveRecord::Schema.define(version: 20150504190009) do
     t.string   "reference_people"
     t.string   "recipients"
     t.string   "senders"
-    t.integer  "create_user_id_id"
-    t.integer  "entry_user_id_id"
+    t.integer  "create_user_id"
+    t.integer  "entry_user_id"
     t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -79,8 +88,8 @@ ActiveRecord::Schema.define(version: 20150504190009) do
     t.string   "recipient_text"
   end
 
-  add_index "documents", ["create_user_id_id"], name: "index_documents_on_create_user_id_id", using: :btree
-  add_index "documents", ["entry_user_id_id"], name: "index_documents_on_entry_user_id_id", using: :btree
+  add_index "documents", ["create_user_id"], name: "index_documents_on_create_user_id", using: :btree
+  add_index "documents", ["entry_user_id"], name: "index_documents_on_entry_user_id", using: :btree
   add_index "documents", ["folder_id"], name: "index_documents_on_folder_id", using: :btree
 
   create_table "employments", force: true do |t|
