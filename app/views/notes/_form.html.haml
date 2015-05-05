@@ -1,4 +1,4 @@
-= form_for(@note, html: { "data-parsley-validate" => '', id: "document_form" }) do |f|
+= form_for(@note, html: { "data-parsley-validate" => '', id: "document_form" , multipart: true }) do |f|
   - if @note.errors.any? 
     #error_explanation
       %h2
@@ -41,6 +41,26 @@
       .field
         = f.label :system_status, t("labels.system_status")
         = f.select :system_status, options_for_select(optSel_SystemStatus, @note.system_status)
+  %fieldset
+    %legend= t("labels.attachments")
+    .row
+      .col-md-12
+        .field
+          %input#attachments.form-control{type: 'file', name: "attachments[]", multiple: true}
+          %span.help-block
+            = t('labels.help_file_multiple_upload')
+    - unless @note.attachments.blank?
+      .panel.panel-default
+        .panel-heading= t('documents.attachments.select_remove')
+        .panel-body
+          .row
+            .col-md-12
+              - @note.attachments.each do |attachment|
+                .col-md-3
+                  %label
+                    %input{type: 'checkbox', name: 'attachments_destroy[]', value: "#{attachment.id}" }
+                    = attachment.filedoc.file.filename
+    
   %br
   %br
   .action_container.text-center

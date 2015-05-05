@@ -45,6 +45,7 @@ gem 'momentjs-rails'
 gem 'bootstrap-daterangepicker-rails'
 gem 'activeadmin', '~> 1.0.0.pre1'
 gem 'cancancan', '~> 1.10'
+gem 'carrierwave'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -1,12 +1,15 @@
 class Document < ActiveRecord::Base
-  belongs_to :create_user_id
-  belongs_to :entry_user_id
+  belongs_to :create_user, :class_name => "User"
+  belongs_to :entry_user, :class_name => "User"
   belongs_to :folder
   has_many :recipients,  inverse_of: :document
   has_many :senders
   has_many :entities_to, through:  :recipients
   has_many :entities_from, through: :senders, :class_name => "Entity"
   has_many :events
+  has_many :attachments, :inverse_of => :document, :dependent => :destroy
+  accepts_nested_attributes_for :attachments, allow_destroy: true
+
   # serialize  :recipients_ids, Array
   # serialize  :senders_ids, Array
   accepts_nested_attributes_for :recipients,:allow_destroy => true

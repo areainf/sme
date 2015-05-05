@@ -63,6 +63,9 @@ es:
   custom:
     selected_folder: Carpeta seleccionada
   documents:
+    attachments:
+      list: Archivos Adjuntos
+      select_remove: Eliminar los  Adjuntos Seleccionados
     directions:
       input: Entrada
       output: Salida
@@ -121,7 +124,9 @@ es:
   flash:
     created: Creado
     deleted: Eliminado
+    updated: Actualizado
     entity: "Se ha %{message} exitosamente la Entidad"
+    note: "Se ha %{message} exitosamente la Nota"
   folders:
     index:
       show_document_title: Detalle del Documento
@@ -138,6 +143,7 @@ es:
       sender_text: Presione la tecla Insert para ingresar el Remitente como texto
   labels:    
     active: Activo
+    attachments: Adjuntos
     code: Código
     date: Fecha
     dependency: Dependencia
@@ -148,10 +154,10 @@ es:
     entities_from_ids: Remitentes
     entities_to_ids: Destinatarios
     entry_at: Fecha de Ingreso
-    shorcuts_entities: Creación Rápida de Elementos
     firstname: Nombre
     folder: Carpeta
     fullnames: Nombres completos
+    help_file_multiple_upload: Seleccione uno o mas archivos para adjuntar
     lastname: Apellido
     master_unit: Organización
     name: Nombre
@@ -159,11 +165,12 @@ es:
     Note_output: Nota de Salida
     observation: Observación
     person: Persona
+    recipients: Destinatarios
     reference_people: Personas mencionadas
     senders: Remitentes
+    shorcuts_entities: Creación Rápida de Elementos
     system_status: Estado en el Sistema
     type: Tipo
-    recipients: Destinatarios
   layouts:
     header:
       confirm: Está seguro que desea Salir del Sistema?

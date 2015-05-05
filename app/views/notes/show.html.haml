@@ -37,12 +37,17 @@
             = @note.recipients.map{|s| s.entity.fullname}.join("; ") unless @note.recipients.nil?
             = @note.recipient_text unless @note.recipient_text.blank?
           %td= @note.reference_people
-    
-    %h4= t('labels.description')
-    %p= @note.description
-    - unless @note.observation.blank?
-      %h4= t('labels.observation')
-      %p= @note.observation
+    .row
+      - divclass = @note.attachments.blank? ? 'col-md-12' : 'col-md-9'
+      %div{class: "#{divclass}"}
+        %h4= t('labels.description')
+        %p= @note.description
+        - unless @note.observation.blank?
+          %h4= t('labels.observation')
+          %p= @note.observation
+      - unless @note.attachments.blank?
+        .col-md-3
+          = render 'show_attachments'
     %hr
     %h2= t('documents.events.title')
     =render 'events'
