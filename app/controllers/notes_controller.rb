@@ -31,6 +31,7 @@ class NotesController < ApplicationController
   def create
     params[:note][:recipients_attributes] = get_nested_entity_ids(params[:entities_to_ids])
     params[:note][:senders_attributes] = get_nested_entity_ids(params[:entities_from_ids])
+    params[:note][:create_user_id] = current_user.id
     @note = Note.new(note_params)
     if @note.save
       # to handle multiple images upload on create
@@ -79,9 +80,9 @@ class NotesController < ApplicationController
       @note = Note.find(params[:id])
     end
 
-    def note_params
+    def note_params      
       params.require(:note).permit(:direction, :description, :observation, :reference_people, 
-          :emission_date, :system_status, :folder_id, :recipient_text, :sender_text,
+          :emission_date, :system_status, :folder_id, :recipient_text, :sender_text, :create_user_id,
           :recipients_attributes => [:entity_id, :id, :_destroy], :senders_attributes => [:entity_id, :id, :_destroy])
     end
 

@@ -30,7 +30,7 @@ class DependenciesController < ApplicationController
   end
 
   def create
-    @dependency = Dependency.new(dependency_params)
+    @dependency = current_user.dependencies.new(dependency_params)
     @dependency.save
     respond_with(@dependency)
   end

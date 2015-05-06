@@ -1,5 +1,7 @@
 class Person < ActiveRecord::Base
   has_many :entities, :dependent => :restrict_with_error
+  belongs_to :create_user, :class_name => "User"
+
   accepts_nested_attributes_for :entities, :reject_if => lambda { |entity| entity[:dependency_id].blank? && entity[:employment_id].blank? }
 
   validate :validate_names

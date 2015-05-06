@@ -28,7 +28,7 @@ class EntitiesController < ApplicationController
   end
 
   def create
-    @entity = Entity.new(entity_params)
+    @entity = current_user.entities.new(entity_params)
     if @entity.save
       flash[:success] = t('flash.entity', message: t('flash.created'))
       respond_to do |format|

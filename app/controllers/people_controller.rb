@@ -31,7 +31,7 @@ class PeopleController < ApplicationController
   end
 
   def create
-    @person = Person.new(person_params)
+    @person = current_user.people.create(person_params)
     @person.save
     respond_with(@person)
   end
