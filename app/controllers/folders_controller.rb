@@ -31,7 +31,7 @@ class FoldersController < ApplicationController
   end
 
   def create
-    @folder = Folder.new(folder_params)
+    @folder = current_user.folders.create(folder_params)
     if @folder.save
       respond_to do |format|
         format.html

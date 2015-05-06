@@ -31,13 +31,10 @@ class EmploymentsController < ApplicationController
   end
 
   def create
-    @employment = Employment.new(employment_params)
+    @employment = current_user.employments.create(employment_params)
     if @employment.save
       flash[:success] = t('flash.entity', message: t('flash.created'))
-      respond_to do |format|
-        format.html
-        format.json { render :json =>  @employment}
-      end
+      respond_with(@employment)
     else 
       respond_to do |format|
         format.html{render  'new'}

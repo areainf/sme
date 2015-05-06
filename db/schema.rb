@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505175501) do
+ActiveRecord::Schema.define(version: 20150506165154) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -63,7 +63,10 @@ ActiveRecord::Schema.define(version: 20150505175501) do
     t.integer  "master_unit_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
+
+  add_index "dependencies", ["user_id"], name: "index_dependencies_on_user_id", using: :btree
 
   create_table "documents", force: true do |t|
     t.string   "description"
@@ -96,7 +99,10 @@ ActiveRecord::Schema.define(version: 20150505175501) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
+
+  add_index "employments", ["user_id"], name: "index_employments_on_user_id", using: :btree
 
   create_table "entities", force: true do |t|
     t.integer  "person_id"
@@ -131,22 +137,30 @@ ActiveRecord::Schema.define(version: 20150505175501) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "folders", ["parent_id"], name: "index_folders_on_parent_id", using: :btree
+  add_index "folders", ["user_id"], name: "index_folders_on_user_id", using: :btree
 
   create_table "master_units", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
+
+  add_index "master_units", ["user_id"], name: "index_master_units_on_user_id", using: :btree
 
   create_table "people", force: true do |t|
     t.string   "firstname"
     t.string   "lastname"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "create_user_id"
   end
+
+  add_index "people", ["create_user_id"], name: "index_people_on_create_user_id", using: :btree
 
   create_table "references", force: true do |t|
     t.integer  "document_id"

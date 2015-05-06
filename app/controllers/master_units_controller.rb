@@ -30,7 +30,7 @@ class MasterUnitsController < ApplicationController
   end
 
   def create
-    @master_unit = MasterUnit.new(master_unit_params)
+    @master_unit = current_user.master_units.new(master_unit_params)
     @master_unit.save
     respond_with(@master_unit)
   end

@@ -6,6 +6,15 @@ class User < ActiveRecord::Base
   devise  :database_authenticatable, :recoverable, :rememberable, 
           :trackable, :validatable, :timeoutable, :timeout_in => 60.minutes
   has_many :events
+  has_many :documents_created, :foreign_key => :create_user_id, :class_name => "Document"
+  has_many :documents_entries, :foreign_key => :entry_user_id, :class_name => "Document"
+  has_many :dependencies
+  has_many :employments
+  has_many :entities
+  has_many :folders
+  has_many :master_units
+  has_many :people, :foreign_key => :create_user_id, :class_name => "Person"
+
 
   def is_admin?
     self.role == ApplicationHelper::ROLE_ADMIN

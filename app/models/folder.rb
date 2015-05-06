@@ -1,9 +1,10 @@
 class Folder < ActiveRecord::Base
   belongs_to :parent, :class_name => 'Folder', :foreign_key => 'parent_id'
   has_many :documents
+  belongs_to :user
+
   validates :name, presence: true
   validates :name, uniqueness: { scope: :parent}
-
   validate :no_recursive
 
   before_destroy :validate_no_children
