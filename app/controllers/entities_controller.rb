@@ -71,6 +71,7 @@ private
                   LEFT JOIN dependencies as dependency ON entities.dependency_id = dependency.id
                   LEFT JOIN employments as employment ON entities.employment_id = employment.id")
           .where("person.firstname LIKE :search or
+                  person.lastname LIKE :search or
                   dependency.name LIKE :search or 
                   employment.name LIKE :search",search: "%#{query}%")
   end
