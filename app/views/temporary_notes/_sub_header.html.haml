@@ -1,0 +1,20 @@
+.row
+  .col-title
+    .row
+      .col-md-5
+        %h1= t('.title')      
+      .col-md-7
+        - if edit_or_new_page?(@temporary_note)
+          %h2= t(".sub_title.#{action_name}")
+        - else
+          %h2= t(".sub_title.#{action_name}")
+  .col-buttons
+    - if edit_or_new_page?(@temporary_note) 
+      = link_to t('temporary_notes.buttons.index'), temporary_notes_path, :class=>"btn btn-info"
+      / - elsif index_page?
+      /   = link_to t('temporary_notes.buttons.new'), new_temporary_note_path, :class=>"btn btn-info"
+    - elsif show_page?(@temporary_note)
+      = link_to t('temporary_notes.buttons.edit'), edit_temporary_note_path(@temporary_note), :class=>"btn btn-info"
+      = link_to t('temporary_notes.buttons.index'), temporary_notes_path, :class=>"btn btn-info"
+    
+  

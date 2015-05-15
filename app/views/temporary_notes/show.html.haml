@@ -1,0 +1,46 @@
+#ctrllr-temporary_notes
+  #temporary_note-show
+    %input#document_id{type: 'hidden', value: @temporary_note.id}
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th= t('labels.code')
+          %th= t('labels.system_status')
+          %th= t('labels.emission_date')
+          %th= t('labels.entry_at')
+      %tbody
+        %tr
+          %td= @temporary_note.code
+          %td= t("documents.system_status.#{@temporary_note.system_status}") unless @temporary_note.system_status.blank?
+          %td= l @temporary_note.emission_date, format: :short
+          %td= l  @temporary_note.entry_at, format: :short unless @temporary_note.entry_at.blank?
+
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th= t('labels.senders')
+          %th= t('labels.recipients')
+          %th= t('labels.reference_people')
+      %tbody
+        %tr
+          %td
+            = @temporary_note.senders.map{|s| s.entity.fullname}.join("; ") unless @temporary_note.senders.nil?
+            = @temporary_note.sender_text.gsub('&', '; ') unless @temporary_note.sender_text.blank?
+          %td
+            = @temporary_note.recipients.map{|s| s.entity.fullname}.join("; ") unless @temporary_note.recipients.nil?
+            = @temporary_note.recipient_text.gsub('&', '; ') unless @temporary_note.recipient_text.blank?
+          %td= @temporary_note.reference_people
+    .row
+      - divclass = @temporary_note.attachments.blank? ? 'col-md-12' : 'col-md-9'
+      %div{class: "#{divclass}"}
+        %h4= t('labels.description')
+        %p= @temporary_note.description
+        - unless @temporary_note.observation.blank?
+          %h4= t('labels.observation')
+          %p= @temporary_note.observation
+      - unless @temporary_note.attachments.blank?
+        .col-md-3
+          = render 'show_attachments'
+    %hr
+    %h2= t('documents.events.title')
+    =render 'events'

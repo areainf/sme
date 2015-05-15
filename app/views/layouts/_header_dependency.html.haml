@@ -1,0 +1,40 @@
+%nav.nav-dependency-color
+  .container-fluid
+    .row
+      .col-md-3
+        %a.btn.btn-default{href: "#{new_temporary_note_path}"}
+          = t('.documents.new_temporary_note')
+        %a.btn.btn-default{href: "#{temporary_notes_path}"}
+          %span.glyphicon.glyphicon-list-alt
+          = t('.documents.list')
+      .col-md-5
+      .col-md-4
+        %a.btn.btn-default.pull-right{href: "#{destroy_user_session_path}",
+                 "data-confirm" => t('.confirm'),
+                 "data-method" => "delete" }
+          %i.icon-remove-sign.icon-3x
+          = t('.exit')
+        %a.btn.btn-default.pull-right{href: "#{edit_users_path}", class: current_tag('users')}
+          %i.icon-folder-open-alt.icon-3x
+          = t('.password')
+
+
+    / %ul.nav.navbar-nav
+    /   %li
+    /     %a.btn.btn-default{href: "#{new_temporary_note_path}"}
+    /       = t('.documents.new_temporary_note')
+    /   %li
+    /     %a{href: "#{temporary_notes_path}"}
+    /       %span.glyphicon.glyphicon-list-alt
+    /       = t('.documents.list')
+    / %ul.nav.navbar-nav.navbar-right
+    /   %li
+    /     %a{href: "#{edit_users_path}", class: current_tag('users')}
+    /       %i.icon-folder-open-alt.icon-3x
+    /       = t('.password')
+    /   %li
+    /     %a.last{href: "#{destroy_user_session_path}",
+    /              "data-confirm" => t('.confirm'),
+    /              "data-method" => "delete" }
+    /       %i.icon-remove-sign.icon-3x
+    /       = t('.exit')

@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 protected
   def set_layout
     if user_signed_in?
-      "application"
+      current_user.is_dependency? ? "dependency" : "application"
     else
       "welcome"
     end

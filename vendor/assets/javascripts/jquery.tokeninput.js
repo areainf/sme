@@ -87,7 +87,8 @@
     selectedDropdownItem : "token-input-selected-dropdown-item",
     inputToken           : "token-input-input-token",
     focused              : "token-input-focused",
-    disabled             : "token-input-disabled"
+    disabled             : "token-input-disabled",
+    resalt               : "token-input-resalt", //add by mmarozzi
   };
 
   // Input box position "enum"
@@ -605,7 +606,11 @@
           if(readonly) $this_token.addClass($(input).data("settings").classes.tokenReadOnly);
 
           $this_token.addClass($(input).data("settings").classes.token).insertBefore(input_token);
-
+          /*mmarozzi.
+            Si el id es negativo, es que no existe y se agrego a mano, destacarlo*/
+          if (item.id < 0){
+            $this_token.addClass($(input).data("settings").classes.resalt);
+          }
           // The 'delete token' button
           if(!readonly) {
             $("<span>" + $(input).data("settings").deleteText + "</span>")

@@ -27,4 +27,9 @@ class User < ActiveRecord::Base
   def is_reception?
     self.role == ApplicationHelper::ROLE_RECEPTION
   end
+
+  def temporary_notes
+    documents_created.where(type: TemporaryNote.name)
+  end
+  
 end

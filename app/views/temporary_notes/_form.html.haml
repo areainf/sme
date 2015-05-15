@@ -1,0 +1,62 @@
+= form_for(@temporary_note, html: { "data-parsley-validate" => '', id: "document_form" , multipart: true }) do |f|
+  - if @temporary_note.errors.any? 
+    #error_explanation
+      %h2
+        = pluralize(@temporary_note.errors.count, "error")
+        prohibited this note from being saved:
+
+      %ul
+      - @temporary_note.errors.full_messages.each do |message|
+        %li= message
+
+  = hidden_field :temporary_note, :recipient_text, {:id => 'recipient_text'}
+  = hidden_field :temporary_note, :sender_text, {:id => 'sender_text'}
+  = hidden_field :system_status, :system_status
+  .row
+    .col-md-3
+      = f.label :emission_date, t("labels.emission_date")
+      = f.date_field :emission_date, {'data-parsley-group' => 'block_document', required: '', 'parsley-type' => 'dateIso', :class=>'form-control col-sm-3'}
+
+  %fieldset
+    .field
+      %label{for: "entities_from_ids"}= t("labels.entities_from_ids")
+      %input#entities_from_ids{type: "text", name: "entities_from_ids", data: {url: "#{entities_path(format: :json)}"}, 'data-select'=> entities_data_pre(@temporary_note.senders), 'data-parsley-group' => 'block_document', required: ''}
+      %p.help-block= t('help.keyboard.sender_text')
+    .field
+      %label{for: "entities_to_ids"}= t("labels.entities_to_ids")
+      %input#entities_to_ids{type: "text", name: "entities_to_ids", data: {url: "#{entities_path(format: :json)}"}, 'data-select'=> entities_data_pre(@temporary_note.recipients) ,'data-parsley-group' => 'block_document', required: ''}
+      %p.help-block= t('help.keyboard.receipt_text')
+  %fieldset
+    .field
+      = f.label :description, t("labels.description")
+      = f.text_field :description,{'data-parsley-group' => 'block_document', required: ''}
+    .field
+      = f.label :observation, t("labels.observation")
+      = f.text_area :observation, {class: "form-control"}
+    .field
+      = f.label :reference_people, t("labels.reference_people")
+      = f.text_field :reference_people
+  %fieldset
+    %legend= t("labels.attachments")
+    .row
+      .col-md-12
+        .field
+          %input#attachments.form-control{type: 'file', name: "attachments[]", multiple: true}
+          %span.help-block
+            = t('labels.help_file_multiple_upload')
+    - unless @temporary_note.attachments.blank?
+      .panel.panel-default
+        .panel-heading= t('documents.attachments.select_remove')
+        .panel-body
+          .row
+            .col-md-12
+              - @temporary_note.attachments.each do |attachment|
+                .col-md-3
+                  %label
+                    %input{type: 'checkbox', name: 'attachments_destroy[]', value: "#{attachment.id}" }
+                    = attachment.filedoc.file.filename
+  %br
+  %br
+  .action_container.text-center
+    = f.submit t('buttons.accept'), {:class=>"btn-confirm"}
+
