@@ -1,0 +1,18 @@
+#note_events
+  - if @temporary_note.events.blank?
+    #event_empty.alert.alert-info{role: "alert"}
+      = t('documents.events.empty')
+    %ul#list-events.list-group
+
+  - else
+    %ul#list-events.list-group
+      - @temporary_note.events.each do |ev|
+        %li.list-group-item
+          .row
+            .col-md-1
+              %span.label.label-default= l ev.date
+            .col-md-9
+              = ev.description
+            .col-md-2
+              = ev.user.try(:username)
+    

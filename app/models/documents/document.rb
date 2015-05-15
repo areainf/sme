@@ -1,4 +1,7 @@
 class Document < ActiveRecord::Base
+  DIR_OUT = 0
+  DIR_IN = 1
+  SYS_STATUS_TEMPORARY = 'temporary'
   belongs_to :create_user, :class_name => "User"
   belongs_to :entry_user, :class_name => "User"
   belongs_to :folder
@@ -21,7 +24,7 @@ class Document < ActiveRecord::Base
   validates :recipients, presence: true, if: Proc.new { |a| a.recipient_text.blank? } 
     
   def is_input?
-    direction.presence && direction.to_i != 0
+    direction.presence && direction.to_i != DIR_OUT
   end
  
   def recipients_names

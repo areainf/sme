@@ -1,0 +1,165 @@
+jQuery(document).ready(function() {
+  if ($("#ctrllr-temporary_notes").length > 0){
+    /*======================================
+      ==========    ADD and EDIT    =======*/
+    if($("#temporary_notes-form").length > 0){
+      var tempEntity = function(field_id){
+        this.field_id = "#"+field_id;
+        this.id = -1;
+        this.data = [];
+        this.separator = '&';
+        this.add = function(value){
+          var key = this.id.toString();
+          this.data[key] =  value;
+          var simulateEntity = {
+                  id: this.id,
+                  person: {id: this.id, firstname: value, lastname: ""}
+          }
+          this.id--;
+          this._draw();
+          return simulateEntity;
+        };
+        this.del = function(id){
+          var key = id.toString();
+          delete this.data[key]
+          this._draw();
+        };
+        this._draw = function(){
+          var names = "";
+          for(var key in this.data){
+            if(names.length > 0)
+              names += this.separator;
+            names += this.data[key];
+          }
+          $(this.field_id).val(names);
+        };
+        this.preload = function(token_input, data){
+          var custom_data = data;
+          if(custom_data == undefined)
+            custom_data = $(this.field_id).val();
+          if(custom_data.length > 0){
+            var names = custom_data.split(this.separator);
+            for(var i = 0; i < names.length; i++){
+              $(token_input).tokenInput("add", this.add(names[i]));
+            }
+          }
+        };
+
+      }
+      var tempFrom = new tempEntity("sender_text");
+      /*=>Note from is token input*/
+      var url_find_sender = $("#entities_from_ids").data("url");
+      $("#entities_from_ids").tokenInput(url_find_sender, {
+        theme: 'facebook',
+        preventDuplicates: true,
+        minChars: "3",
+        resultsFormatter: function(entity){
+          var e = new EntityJson(entity);
+          return "<li> <p style='color: black' >" + e.fullEntityName() + " </p> </li>";
+        },
+        tokenFormatter: function(entity) {
+          var e = new EntityJson(entity);
+          return "<li><p>" + e.fullEntityName().substring(0,40) + "</p> </li>"
+        },
+        onDelete: function(item){
+          if (item.id < 0)
+            tempFrom.del(item.id);
+        },
+        noResultsText: "<%= I18n.t('token_input.noResultsText') %> Presione Insert para Agregarlo",
+        hintText: "<%= I18n.t('token_input.hintText')%>",
+        searchigText: "<%= I18n.t('token_input.searching_text')%>",
+      });
+      /*=>On key tab in note from*/
+      $("#token-input-entities_from_ids").on("keyup", function(e){
+        if(e.keyCode==9){
+          //$("#token-input-entities_from_ids").focus();
+          $("#token-input-entities_to_ids").focus();
+        }
+        if (e.keyCode == 45){
+          var name = $("#token-input-entities_from_ids").val();
+          if(name.length > 0){
+            var simulateEntity = tempFrom.add(name);
+            $("#entities_from_ids").tokenInput("add", simulateEntity);
+          }
+        }
+      });
+      /*<=On key tab in note from*/
+      /*<=Note from is token input*/
+
+      /*=>Note to is token input*/
+      var tempTo = new tempEntity("recipient_text");
+      var url_find_receipt = $("#entities_to_ids").data("url");
+      $("#entities_to_ids").tokenInput(url_find_receipt, {
+        theme: 'facebook',
+        //prePopulate: $("#entities_to_ids").data("pre"),
+        preventDuplicates: true,
+        minChars: "3",
+        resultsFormatter: function(entity){
+          var e = new EntityJson(entity);
+          return "<li> <p style='color: black' >" + e.fullEntityName() + " </p> </li>";
+        },
+        tokenFormatter: function(entity) {
+          var e = new EntityJson(entity);
+          return "<li><p>" + e.fullEntityName().substring(0,40) + "</p> </li>"
+        },
+        onDelete: function(item){
+          if (item.id < 0)
+              tempTo.del(item.id);
+        },
+        noResultsText: "<%= I18n.t('token_input.noResultsText') %> Presione Insert para Agregarlo",
+        hintText: "<%= I18n.t('token_input.hintText')%>",
+        searchigText: "<%= I18n.t('token_input.searching_text')%>",
+      });
+      /*=>On key tab in note to*/
+      $("#token-input-entities_to_ids").on("keyup", function(e){
+        if(e.keyCode==9){
+          //$("#token-input-entities_from_ids").focus();
+          $("#temporary_note_description").focus();
+        }
+        if (e.keyCode == 45){
+          var name = $("#token-input-entities_to_ids").val();
+          if(name.length > 0){
+            var simulateEntity = tempTo.add(name);
+            $("#entities_to_ids").tokenInput("add", simulateEntity);
+          }
+        }
+      });
+      /*<=On key tab in note to*/
+      /*<=Note to is token input*/
+
+      //si es edit y tiene recipients mostrarlo
+      var d = $("#entities_to_ids").data("select");
+      if(d){
+        for(var i = 0; i < d.length; i++)
+          $("#entities_to_ids").tokenInput("add",new EntityJson(d[i]));
+      }
+
+      //si es edit y tiene senders mostrarlo      
+      d = $("#entities_from_ids").data("select");
+      if(d){
+        for(var i = 0; i < d.length; i++)
+          $("#entities_from_ids").tokenInput("add",new EntityJson(d[i]));
+      }
+      /*=> Preload sender_text and recipient_text*/
+      tempFrom.preload("#entities_from_ids");
+      tempTo.preload("#entities_to_ids");
+      /*<= Preload sender_text and recipient_text*/
+
+    }
+    /*#######################################################
+      #############  LISTAR NOTAS TEMPORALES      ###########
+      #######################################################*/
+    if ($("#temporary_note-index").length > 0){
+      var table = $('#temporary_note-index-table').dataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": $('#note-index-table').data('source'),
+        "pagingType": "full_numbers",
+         aoColumnDefs: [{ 'bSortable': false, 'aTargets': [  1, 2, 4, 5 ] }],
+        language: {
+            url: "/datatables/spanish.txt",
+        }
+      });
+    }
+  }// end if controller
+});//end on document ready

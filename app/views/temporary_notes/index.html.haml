@@ -1,0 +1,12 @@
+#ctrllr-temporary_notes
+  #temporary_note-index
+    %table#temporary_note-index-table{data: {source: temporary_notes_path(format: :json)}}
+      %thead
+        %tr
+          %th{width: "10%"}= t('labels.status')
+          %th{width: "25%"}= t('labels.recipients')
+          %th{width: "25%"}= t('labels.senders')
+          %th{width: "15%"}= t('labels.emission_date')
+          %th{width: "20%"}= t('labels.description')
+          %th{width: "5%", nowrap: "nowrap"} 
+      %tbody

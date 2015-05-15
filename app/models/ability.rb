@@ -13,7 +13,15 @@ class Ability
       #   item.try(:user) == user
       # end
     elsif user.is_dependency?
+      can :read, Entity
       can :update, User
+      can :create, TemporaryNote
+      can :read, TemporaryNote do |tmpnote|
+        tmpnote.try(:create_user) == user
+      end
+      can :update, TemporaryNote do |tmpnote|
+        tmpnote.try(:create_user) == user
+      end
       # can :read, Item
     end
     # Define abilities for the passed in user here. For example:

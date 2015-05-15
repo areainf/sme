@@ -31,6 +31,12 @@ es:
           attributes:
             senders:
               blank: Debe ingresar un Remitente
+        temporary_note:
+          attributes:
+            recipients:
+              blank: Debe ingresar un Destinatario
+            senders:
+              blank: Debe ingresar un Remitente
         user:
           attributes:
             password:
@@ -75,6 +81,7 @@ es:
     system_status:
       archived: Archivada
       circulation: Circulación
+      temporary: No ingresada
     type:
       Expedient: Expediente
       Note: Nota
@@ -127,6 +134,7 @@ es:
     updated: Actualizado
     entity: "Se ha %{message} exitosamente la Entidad"
     note: "Se ha %{message} exitosamente la Nota"
+    temporary_note: "Se ha %{message} exitosamente la Nota"
   folders:
     index:
       show_document_title: Detalle del Documento
@@ -191,6 +199,12 @@ es:
       folders: Carpetas      
       organization: Organización
       people: Personas
+    header_dependency:
+      documents:
+        list: Documentos Cargados
+        new_temporary_note: Nueva Nota
+      exit: Salir
+      password: Contraseña
   master_units:
     buttons:
       edit: Editar
@@ -247,6 +261,17 @@ es:
         index: Listado
         new: Nueva  
         show: Detalle
+  temporary_notes:
+    buttons:
+      edit: Editar
+      index: Volver al Listado
+    sub_header:
+      title: Notas
+      sub_title:
+        edit: Modificar
+        index: Listado de Notas
+        new: Nueva Nota
+        show: Detalle de la Nota
   token_input:
     hintText: Ingrese el texto
     noResultsText: Sin resultados

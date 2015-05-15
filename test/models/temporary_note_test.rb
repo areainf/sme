@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DocumentsProvisoriesControllerTest < ActionController::TestCase
+class TemporaryNoteTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

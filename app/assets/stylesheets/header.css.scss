@@ -2,7 +2,7 @@
 @import "bootstrap";
 #header {
   .menu-head {
-    @extend .nav, .nav-justified;
+    @extend .nav, .nav-justified;    
   }
 
   .menu-head li > a {
@@ -45,5 +45,9 @@
         background-color: #6BC9F8;
       }
   }  
-
+}
+  /*MENU HEAD FOR DEPENDENCY*/
+.nav-dependency-color{
+    background-color: #eee !important;
+    border: none !important;
 }

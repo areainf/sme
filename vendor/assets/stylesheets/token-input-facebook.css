@@ -43,7 +43,11 @@ li.token-input-token-facebook {
     float: left;
     white-space: nowrap;
 }
-
+/*mmarozzi*/
+li.token-input-resalt-facebook {
+    background-color: #F58080 !important;
+}
+/*fin mmarozzi*/
 li.token-input-token-facebook p {
     display: inline;
     padding: 0;

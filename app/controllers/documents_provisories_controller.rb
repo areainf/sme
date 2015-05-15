@@ -1,2 +1,0 @@
-class DocumentsProvisoriesController < ApplicationController
-end
