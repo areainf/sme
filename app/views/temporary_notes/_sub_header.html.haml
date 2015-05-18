@@ -17,6 +17,9 @@
         - if can? :update, @temporary_note
           = link_to t('temporary_notes.buttons.edit'), edit_temporary_note_path(@temporary_note), :class=>"btn btn-info"
         = link_to t('temporary_notes.buttons.index'), temporary_notes_path, :class=>"btn btn-info"
-    - elsif can?( :process, @temporary_notes ) &&  @temporary_note.final_document.blank?
-      = link_to t('temporary_notes.buttons.enter'), enter_notes_path(:temporary_note_id => @temporary_note), :class=>"btn btn-info"
+        / - elsif can?( :process, @temporary_notes ) &&  @temporary_note.final_document.blank?
+        /   = link_to t('temporary_notes.buttons.enter'), enter_notes_path(:temporary_note_id => @temporary_note), :class=>"btn btn-info"
+    - elsif can?( :process, @temporary_note) &&  @temporary_note.document.blank?
+      = link_to t('temporary_notes.buttons.enter'), enter_notes_path(:temporary_id => @temporary_note), :class=>"btn btn-info"
+
       

@@ -3,7 +3,7 @@ class TemporaryNote < Document
   SYS_STATUS_TEMPORARY_ENTER = 'temporary_enter'
 
   #=Relations
-  belongs_to :final_document, :class_name => "Document", :inverse_of => :temporary_document
+  has_one :document, :class_name => "Document",:foreign_key => "temporary_id"
 
   #initialize object
   after_initialize :defaults
@@ -42,6 +42,15 @@ class TemporaryNote < Document
 
   def generate_code
     self.code = TemporaryNote.nextCode(Time.now) if self.code.nil?
+  end
+
+  #update status swith parent document
+  def update_status(document)
+    if self.system_status.blank? || self.system_status == SYS_STATUS_TEMPORARY
+      self.system_status = SYS_STATUS_TEMPORARY_ENTER
+      self.entry_user = document.entry_user
+      self.entry_at = document.entry_at
+    end
   end
 end
 

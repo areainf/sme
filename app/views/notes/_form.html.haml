@@ -13,17 +13,17 @@
   = hidden_field :note, :folder_id, id: "folder_id"
   = hidden_field :note, :recipient_text
   = hidden_field :note, :sender_text
-  = hidden_field_tag "note[create_user_id]", @temporary_note.create_user.id if @temporary_note.present?
-  = hidden_field_tag :temporary_note_id, @temporary_note.id if @temporary_note.present?
+  = hidden_field_tag "note[create_user_id]", @temporary.create_user.id if @temporary.present?
+  = hidden_field_tag "note[temporary_id]", @temporary.id if @temporary.present?
 
-  - if @note.senders.count > 0 || ! @temporary_note.present?
+  - if @note.senders.count > 0 || ! @temporary.present?
     - data_senders = entities_data_pre(@note.senders)
   - else
-    - data_senders = entities_data_pre(@temporary_note.senders)
-  - if @note.recipients.count > 0 || ! @temporary_note.present?
+    - data_senders = entities_data_pre(@temporary.senders)
+  - if @note.recipients.count > 0 || ! @temporary.present?
     - data_recipients = entities_data_pre(@note.recipients)
   - else
-    - data_recipients = entities_data_pre(@temporary_note.recipients)
+    - data_recipients = entities_data_pre(@temporary.recipients)
   %fieldset
     .field
       %label{for: "entities_from_ids"}= t("labels.entities_from_ids")

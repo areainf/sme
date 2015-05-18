@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518175231) do
+ActiveRecord::Schema.define(version: 20150518224641) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -89,13 +89,13 @@ ActiveRecord::Schema.define(version: 20150518175231) do
     t.integer  "folder_id"
     t.string   "sender_text"
     t.string   "recipient_text"
-    t.integer  "final_document_id"
+    t.integer  "temporary_id"
   end
 
   add_index "documents", ["create_user_id"], name: "index_documents_on_create_user_id", using: :btree
   add_index "documents", ["entry_user_id"], name: "index_documents_on_entry_user_id", using: :btree
-  add_index "documents", ["final_document_id"], name: "index_documents_on_final_document_id", using: :btree
   add_index "documents", ["folder_id"], name: "index_documents_on_folder_id", using: :btree
+  add_index "documents", ["temporary_id"], name: "index_documents_on_temporary_id", using: :btree
 
   create_table "employments", force: true do |t|
     t.string   "name"

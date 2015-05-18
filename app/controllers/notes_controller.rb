@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
   before_filter :authenticate_user!
-  
+
   before_action :set_note, only: [:show, :edit, :update, :destroy]
 
   respond_to :html, :json
@@ -35,19 +35,18 @@ class NotesController < ApplicationController
     params[:note][:entry_user_id] = current_user.id
     @note = Note.new(note_params)
     if @note.save
-      if params[:temporary_note_id].present?
-        temporary_note = TemporaryNote.find(params[:temporary_note_id])
-        temporary_note.final_document_id = @note.id
-        temporary_note.save
-      end
-      # to handle multiple images upload on create
       if params[:attachments]
         params[:attachments].each{|file|
           @note.attachments.create({:filedoc => file})
         }
       end
+      unless @note.temporary.blank?
+        @note.temporary.attachments.each do |attach|
+          @note.attachments.create({:filedoc =>  File.open(attach.filedoc.path)})
+        end
+      end
       flash[:success] = t('flash.note', message: t('flash.created'))
-    else 
+    else
       flash[:alert] = @note.errors.flush_messages
     end
     respond_with(@note)
@@ -70,7 +69,7 @@ class NotesController < ApplicationController
         end
       end
       flash[:success] = t('flash.note', message: t('flash.updated'))
-    else 
+    else
       flash[:alert] = @note.errors.flush_messages
     end
     respond_with(@note)
@@ -82,8 +81,8 @@ class NotesController < ApplicationController
   end
 
   def enter
-    @temporary_note = TemporaryNote.find(params[:temporary_note_id])
-    @note = Note.new(@temporary_note.attributes.except('id', 'created_at', 'updated_at', 'entry_at', 'type','recipients', 'senders'))
+    @temporary = TemporaryNote.find(params[:temporary_id])
+    @note = Note.new(@temporary.attributes.except('id', 'created_at', 'updated_at', 'entry_at', 'type','recipients', 'senders'))
     @note.direction = Document::DIR_IN
     render "new"
   end
@@ -92,9 +91,9 @@ class NotesController < ApplicationController
       @note = Note.find(params[:id])
     end
 
-    def note_params      
+    def note_params
       params.require(:note).permit(:direction, :description, :observation, :reference_people, :entry_user_id,
-          :emission_date, :system_status, :folder_id, :recipient_text, :sender_text, :create_user_id, 
+          :emission_date, :system_status, :folder_id, :recipient_text, :sender_text, :create_user_id, :temporary_id,
           :recipients_attributes => [:entity_id, :id, :_destroy], :senders_attributes => [:entity_id, :id, :_destroy])
     end
 

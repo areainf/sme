@@ -10,8 +10,10 @@ class Document < ActiveRecord::Base
   has_many :entities_from, through: :senders, :class_name => "Entity"
   has_many :events
   has_many :attachments, :inverse_of => :document, :dependent => :destroy
+  
   accepts_nested_attributes_for :attachments, allow_destroy: true
-  has_one :temporary_document, :class_name => "TemporaryNote", :foreign_key => "final_document_id"
+  # has_one :temporary_document, :class_name => "TemporaryNote", :foreign_key => "final_document_id"
+  belongs_to :temporary, :class_name => "TemporaryNote", :foreign_key => "temporary_id", autosave: true 
 
   # serialize  :recipients_ids, Array
   # serialize  :senders_ids, Array
@@ -22,7 +24,8 @@ class Document < ActiveRecord::Base
   validates :emission_date, presence: true
   validates :senders, presence: true , if: Proc.new { |a| a.sender_text.blank? } 
   validates :recipients, presence: true, if: Proc.new { |a| a.recipient_text.blank? } 
-    
+   
+  after_create :update_temporary_state
   def is_input?
     direction.presence && direction.to_i != DIR_OUT
   end
@@ -34,4 +37,10 @@ class Document < ActiveRecord::Base
   def senders_names
     senders.map{|x| x.entity.fullname}  unless senders.blank?
   end
+
+  def update_temporary_state
+    self.temporary.update_status(self) unless self.temporary.blank?
+    self.temporary.save
+  end
+
 end
