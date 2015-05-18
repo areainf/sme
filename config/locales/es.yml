@@ -85,6 +85,7 @@ es:
     type:
       Expedient: Expediente
       Note: Nota
+    message_confirm_delete: Confirma que desea eliminar el documento
   dependencies:
     buttons:
       edit: Editar
@@ -200,6 +201,7 @@ es:
       organization: Organización
       people: Personas
     header_dependency:
+      confirm: Está seguro que desea Salir del Sistema?
       documents:
         list: Documentos Cargados
         new_temporary_note: Nueva Nota
