@@ -1,7 +1,15 @@
 class TemporaryNote < Document
+  SYS_STATUS_TEMPORARY = 'temporary'
+  SYS_STATUS_TEMPORARY_ENTER = 'temporary_enter'
+
+  #=Relations
+  belongs_to :final_document, :class_name => "Document", :inverse_of => :temporary_document
+
   #initialize object
   after_initialize :defaults
   before_save :initial_values, if: Proc.new { |tmp| tmp.code.blank? }
+  before_save :update_system_status, unless: Proc.new { |tmp| tmp.final_document_id.blank? }
+  
   #Temporary note always is INPUT
   def defaults
     self.direction ||=  DIR_IN
@@ -9,7 +17,13 @@ class TemporaryNote < Document
 
   def initial_values
     generate_code
-    system_status = SYS_STATUS_TEMPORARY
+    self.system_status = SYS_STATUS_TEMPORARY
+  end
+  
+  def update_system_status
+    if self.system_status.blank? || self.system_status == SYS_STATUS_TEMPORARY
+      self.system_status = SYS_STATUS_TEMPORARY_ENTER
+    end
   end
 
   def self.nextCode(date)

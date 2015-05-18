@@ -31,9 +31,15 @@ class NotesController < ApplicationController
   def create
     params[:note][:recipients_attributes] = get_nested_entity_ids(params[:entities_to_ids])
     params[:note][:senders_attributes] = get_nested_entity_ids(params[:entities_from_ids])
-    params[:note][:create_user_id] = current_user.id
+    params[:note][:create_user_id] = current_user.id if params[:note][:create_user_id].blank?
+    params[:note][:entry_user_id] = current_user.id
     @note = Note.new(note_params)
     if @note.save
+      if params[:temporary_note_id].present?
+        temporary_note = TemporaryNote.find(params[:temporary_note_id])
+        temporary_note.final_document_id = @note.id
+        temporary_note.save
+      end
       # to handle multiple images upload on create
       if params[:attachments]
         params[:attachments].each{|file|
@@ -75,14 +81,20 @@ class NotesController < ApplicationController
     respond_with(@note)
   end
 
+  def enter
+    @temporary_note = TemporaryNote.find(params[:temporary_note_id])
+    @note = Note.new(@temporary_note.attributes.except('id', 'created_at', 'updated_at', 'entry_at', 'type','recipients', 'senders'))
+    @note.direction = Document::DIR_IN
+    render "new"
+  end
   private
     def set_note
       @note = Note.find(params[:id])
     end
 
     def note_params      
-      params.require(:note).permit(:direction, :description, :observation, :reference_people, 
-          :emission_date, :system_status, :folder_id, :recipient_text, :sender_text, :create_user_id,
+      params.require(:note).permit(:direction, :description, :observation, :reference_people, :entry_user_id,
+          :emission_date, :system_status, :folder_id, :recipient_text, :sender_text, :create_user_id, 
           :recipients_attributes => [:entity_id, :id, :_destroy], :senders_attributes => [:entity_id, :id, :_destroy])
     end
 

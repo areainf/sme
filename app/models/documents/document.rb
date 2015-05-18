@@ -1,7 +1,6 @@
 class Document < ActiveRecord::Base
   DIR_OUT = 0
   DIR_IN = 1
-  SYS_STATUS_TEMPORARY = 'temporary'
   belongs_to :create_user, :class_name => "User"
   belongs_to :entry_user, :class_name => "User"
   belongs_to :folder
@@ -12,6 +11,7 @@ class Document < ActiveRecord::Base
   has_many :events
   has_many :attachments, :inverse_of => :document, :dependent => :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
+  has_one :temporary_document, :class_name => "TemporaryNote", :foreign_key => "final_document_id"
 
   # serialize  :recipients_ids, Array
   # serialize  :senders_ids, Array

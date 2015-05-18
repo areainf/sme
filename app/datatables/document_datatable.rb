@@ -1,7 +1,7 @@
 class DocumentDatatable
   include ApplicationHelper
   include DocumentsHelper
-  delegate :raw, :simple_format, :params, :h, :link_to, :draw_direction, :draw_type_document, :number_to_currency, to: :@view
+  delegate :raw, :simple_format, :params, :l, :h, :link_to, :draw_direction, :draw_type_document, :number_to_currency, to: :@view
 
   # def initialize(view, current_user)
   def initialize(view)
@@ -30,7 +30,7 @@ private
         draw_direction(record),
         recip.blank? ? '' : recip.join("; "),
         send.blank? ? '' : send.join("; "),
-        record.emission_date,
+        l(record.emission_date),
         record.description,
         build_link(record),
       ]

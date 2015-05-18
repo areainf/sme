@@ -4,11 +4,15 @@ class Ability
   def initialize(user)
     if user.is_admin?
       can :manage, :all
+      cannot :update, TemporaryNote
+      cannot :create, TemporaryNote
     elsif user.is_reception?
       can :read, :all
       can :create, :all
       can :update, :all
       can :move, Folder
+      cannot :update, TemporaryNote
+      cannot :create, TemporaryNote
       # can :destroy, Item do |item|
       #   item.try(:user) == user
       # end

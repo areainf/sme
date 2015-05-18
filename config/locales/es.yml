@@ -82,9 +82,11 @@ es:
       archived: Archivada
       circulation: Circulación
       temporary: No ingresada
+      temporary_enter: Ingresada
     type:
       Expedient: Expediente
       Note: Nota
+      TemporaryNote: Nota Temporal
     message_confirm_delete: Confirma que desea eliminar el documento
   dependencies:
     buttons:
@@ -154,6 +156,7 @@ es:
     active: Activo
     attachments: Adjuntos
     code: Código
+    create_user: Creación
     date: Fecha
     dependency: Dependencia
     description: Descripción
@@ -163,6 +166,7 @@ es:
     entities_from_ids: Remitentes
     entities_to_ids: Destinatarios
     entry_at: Fecha de Ingreso
+    entry_user: Ingresado
     firstname: Nombre
     folder: Carpeta
     fullnames: Nombres completos
@@ -179,6 +183,7 @@ es:
     senders: Remitentes
     shorcuts_entities: Creación Rápida de Elementos
     system_status: Estado en el Sistema
+    temporary_document: Documento Temporal
     type: Tipo
   layouts:
     header:
@@ -266,6 +271,7 @@ es:
   temporary_notes:
     buttons:
       edit: Editar
+      enter: Dar Ingreso
       index: Volver al Listado
     sub_header:
       title: Notas

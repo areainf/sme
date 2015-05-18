@@ -20,7 +20,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :notes
+  resources :notes do
+    collection do
+      get 'enter'
+    end
+  end
   resources :folders do
     collection do
       post 'move'
