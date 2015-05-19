@@ -11,8 +11,8 @@
 
   = hidden_field :note, :direction
   = hidden_field :note, :folder_id, id: "folder_id"
-  = hidden_field :note, :recipient_text
-  = hidden_field :note, :sender_text
+  = hidden_field :note, :recipient_text, {:id => 'recipient_text'}
+  = hidden_field :note, :sender_text, {:id => 'sender_text'}
   = hidden_field_tag "note[create_user_id]", @temporary.create_user.id if @temporary.present?
   = hidden_field_tag "note[temporary_id]", @temporary.id if @temporary.present?
 
@@ -76,5 +76,3 @@
   %br
   .action_container.text-center
     = f.submit t('buttons.accept'), {:class=>"btn-confirm"}
-
-= render 'entity_text'

@@ -204,6 +204,7 @@ es:
       exit: Salir
       folders: Carpetas      
       organization: Organización
+      password: Contraseña
       people: Personas
     header_dependency:
       confirm: Está seguro que desea Salir del Sistema?
@@ -237,6 +238,7 @@ es:
     buttons:
       edit: Editar
       index: Volver al Listado
+      new: Nueva de Entrada
     sub_header:
       title: Notas
       sub_title:

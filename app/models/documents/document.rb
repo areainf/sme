@@ -43,8 +43,10 @@ class Document < ActiveRecord::Base
   end
 
   def update_temporary_state
-    self.temporary.update_status(self) unless self.temporary.blank?
-    self.temporary.save
+    unless self.temporary.blank?
+      self.temporary.update_status(self)
+      self.temporary.save
+    end
   end
 
 end

@@ -1,7 +1,8 @@
 class DocumentDatatable
   include ApplicationHelper
   include DocumentsHelper
-  delegate :raw, :simple_format, :params, :l, :h, :link_to, :draw_direction, :draw_type_document, :number_to_currency, to: :@view
+  delegate :raw, :simple_format, :params, :l, :h, :link_to, :content_tag,
+           :draw_direction, :draw_type_document, :number_to_currency, to: :@view
 
   # def initialize(view, current_user)
   def initialize(view)
@@ -21,15 +22,34 @@ private
 
   def data
     documents.map do |record|
-      recip = record.recipients_names || []
-      recip << record.recipient_text
-      send = record.senders_names || []
-      send << record.sender_text
+      recip =  ""
+      unless record.recipients_names.blank?
+        record.recipients_names.each do |name|
+          recip << content_tag(:span, name, class: "is_entity") << "&nbsp;"
+        end
+      end
+      unless record.recipient_text.blank?
+        record.recipient_text.split('&').each do |text|
+          recip << content_tag(:span, text.strip, class: "not_is_entity") << "&nbsp;"
+        end
+      end
+
+      send =  ""
+      unless record.senders_names.blank?
+        record.senders_names.each do |name|
+          send << content_tag(:span, name, class: "is_entity") << "&nbsp;"
+        end
+      end
+      unless record.sender_text.blank?
+        record.sender_text.split('&').each do |text|
+          send << content_tag(:span, text.strip, class: "not_is_entity") << "&nbsp;"
+        end
+      end
       [
         link_to(draw_type_document(record), record),
         draw_direction(record),
-        recip.blank? ? '' : recip.join("; "),
-        send.blank? ? '' : send.join("; "),
+        recip.blank? ? '' : recip,
+        send.blank? ? '' : send,
         l(record.emission_date),
         record.description,
         build_link(record),
