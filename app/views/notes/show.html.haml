@@ -37,11 +37,11 @@
       %tbody
         %tr
           %td
-            = @note.senders.map{|s| s.entity.fullname}.join("; ") unless @note.senders.nil?
-            = @note.sender_text unless @note.sender_text.blank?
+            = raw(@note.senders.map{|s| content_tag(:span, s.entity.fullname, class: "is_entity")}.inject(""){|ant,current| ant << current}) unless @note.senders.nil?
+            = raw(@note.sender_text.split('&').map{|text| content_tag(:span, text.strip, class: "not_is_entity")}.inject(""){|ant,current| ant << current}) unless @note.sender_text.blank?
           %td
-            = @note.recipients.map{|s| s.entity.fullname}.join("; ") unless @note.recipients.nil?
-            = @note.recipient_text unless @note.recipient_text.blank?
+            = raw(@note.recipients.map{|s| content_tag(:span, s.entity.fullname, class: "is_entity")}.inject(""){|ant,current| ant << current}) unless @note.recipients.nil?
+            = raw(@note.recipient_text.split('&').map{|text| content_tag(:span, text.strip, class: "not_is_entity")}.inject(""){|ant,current| ant << current}) unless @note.recipient_text.blank?
           %td= @note.reference_people
     .row
       - divclass = @note.attachments.blank? ? 'col-md-12' : 'col-md-9'

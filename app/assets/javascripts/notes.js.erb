@@ -1,51 +1,6 @@
 jQuery(document).ready(function() {
   if ($("#ctrllr-notes").length > 0){
     if($("#notes-edit").length > 0){   
-      var DialogEntityText = function(title, names, action){
-        this.container = "#entity_text";
-        this.f = {names: "#entity_text-name", title: "#entity_text-title"};
-        this.b = {save: "#entity_text-save"};
-        this.setTitle = function(title){
-          $(this.f.title).html(title);
-        };
-        this.setNames = function(names){
-          $(this.f.names).val(names);
-        };
-        this.clear = function(){
-          $(this.f.names).val("");
-        };
-        this.close = function(){
-          $(this.container).modal("hide");
-        };
-        this.bind_save = function(){
-          var el = this;
-          $(this.b.save).off();
-          $(this.b.save).on("click", function(){
-            if(el.action_save != undefined)
-              el.action_save($(el.f.names).val());
-          });
-          $(this.f.names).off();
-          $(this.f.names).on("keyup", function(e){
-            if(e.keyCode == 13 && el.action_save != undefined)
-              el.action_save($(el.f.names).val());
-          });
-        };
-        this.show = function(){
-          var el = this;
-          $(this.container).modal();
-          setTimeout(function (){
-            $(el.f.names).focus();
-          }, 800);
-          // $(this.f.names).focus();
-        };
-
-        //constructor
-        this.setTitle(title);
-        this.setNames(names);
-        this.action_save = action;
-        this.bind_save();
-      };
-
       var container_folder = {id:"#folder_id", text: "#folder_text"};
       var url_find_receipt = $("#entities_to_ids").data("url");
       var real_input_token_from = "#token-input-entities_from_ids";
@@ -53,6 +8,49 @@ jQuery(document).ready(function() {
       var temp_id_recipient = -10;
       var temp_id_sender = -20;
 
+      var tempEntity = function(field_id){
+        this.field_id = "#"+field_id;
+        this.id = -1;
+        this.data = [];
+        this.separator = '&';
+        this.add = function(value){
+          var key = this.id.toString();
+          this.data[key] =  value;
+          var simulateEntity = {
+                  id: this.id,
+                  person: {id: this.id, firstname: value, lastname: ""}
+          }
+          this.id--;
+          this._draw();
+          return simulateEntity;
+        };
+        this.del = function(id){
+          var key = id.toString();
+          delete this.data[key]
+          this._draw();
+        };
+        this._draw = function(){
+          var names = "";
+          for(var key in this.data){
+            if(names.length > 0)
+              names += this.separator;
+            names += this.data[key];
+          }
+          $(this.field_id).val(names);
+        };
+        this.preload = function(token_input, data){
+          var custom_data = data;
+          if(custom_data == undefined)
+            custom_data = $(this.field_id).val();
+          if(custom_data.length > 0){
+            var names = custom_data.split(this.separator);
+            for(var i = 0; i < names.length; i++){
+              $(token_input).tokenInput("add", this.add(names[i]));
+            }
+          }
+        };
+      }
+      var tempTo = new tempEntity("recipient_text");
       $("#entities_to_ids").tokenInput(url_find_receipt, {
         theme: 'facebook',
         //prePopulate: $("#entities_to_ids").data("pre"),
@@ -68,7 +66,7 @@ jQuery(document).ready(function() {
         },
         onDelete: function(item){
           if (item.id < 0)
-              $("#note_receipt_text").val("");
+              tempTo.del(item.id);
         },
         noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
         hintText: "<%= I18n.t('token_input.hintText')%>",
@@ -79,7 +77,16 @@ jQuery(document).ready(function() {
           //$("#token-input-entities_from_ids").focus();
           $("#note_description").focus();
         }
+        else if (e.keyCode == 45){
+          var name = $("#token-input-entities_to_ids").val();
+          if(name.length > 0){
+            var simulateEntity = tempTo.add(name);
+            $("#entities_to_ids").tokenInput("add", simulateEntity);
+          }
+        }
       });
+      
+      var tempFrom = new tempEntity("sender_text");
       var url_find_sender = $("#entities_from_ids").data("url");
       $("#entities_from_ids").tokenInput(url_find_sender, {
         theme: 'facebook',
@@ -96,7 +103,7 @@ jQuery(document).ready(function() {
         },
         onDelete: function(item){
           if (item.id < 0)
-              $("#note_sender_text").val("");
+              tempFrom.del(item.id);
         },
 
         noResultsText: "<%= I18n.t('token_input.noResultsText') %>",
@@ -107,51 +114,16 @@ jQuery(document).ready(function() {
         if(e.keyCode == 9){          
           $("#token-input-entities_to_ids").focus();
         }
+        else if (e.keyCode == 45){
+          var name = $("#token-input-entities_from_ids").val();
+          if(name.length > 0){
+            var simulateEntity = tempFrom.add(name);
+            $("#entities_from_ids").tokenInput("add", simulateEntity);
+          }
+        }
       });
           
-      $(real_input_token_from).on("keyup", function(event){
-        if (event.keyCode == 45) {//key insert
-          var dialog_from = new DialogEntityText("Agregar Remitente", $("#note_sender_text").val(), function(data){
-            if (data.length > 0){
-              var simulateEntity = {
-                id: temp_id_sender,
-                person: {id: temp_id_sender, firstname: data, lastname: ""}
-              };
-              $("#entities_from_ids").tokenInput("remove", {id: temp_id_sender});
-
-              $("#entities_from_ids").tokenInput("add", simulateEntity);
-              $("#note_sender_text").val(data)
-              $("#token-input-entities_from_ids").focus();
-            };
-            dialog_from.clear();
-            dialog_from.close();    
-          });
-          dialog_from.show();
-          event.preventDefault();
-        }
-      });
-
       
-      $(real_input_token_to).on("keyup", function(event){
-        if (event.keyCode == 45) {//key insert
-          var dialog_to = new DialogEntityText("Agregar Destinatario", $("#note_recipient_text").val(), function(data){
-            if (data.length > 0){
-              var simulateEntity = {
-                id: temp_id_recipient,
-                person: {id: temp_id_recipient, firstname: data, lastname: ""}
-              }
-              $("#entities_to_ids").tokenInput("remove", {id: temp_id_recipient});
-              $("#entities_to_ids").tokenInput("add", simulateEntity);
-              $("#note_recipient_text").val(data)
-            };
-            dialog_to.clear();
-            dialog_to.close();    
-          });
-          dialog_to.show();
-          event.preventDefault();
-        }
-      });
-
       /*Seleccion de carpeta*/
       $("#folder-tree").fancytree({
         lazy: true,
@@ -199,26 +171,11 @@ jQuery(document).ready(function() {
         for(var i = 0; i < d.length; i++)
           $("#entities_from_ids").tokenInput("add",new EntityJson(d[i]));
       }
-      //si es edit y tiene recipient_text agregarlo
-      var receipt_text = $("#note_recipient_text").val();
-      if(receipt_text.length > 0){
-        var simulateEntity = {
-          id: temp_id_recipient,
-          person: {id: temp_id_recipient, firstname: receipt_text, lastname: ""}
-        };
-        $("#entities_to_ids").tokenInput("remove", {id: temp_id_recipient});
-        $("#entities_to_ids").tokenInput("add", simulateEntity);
-      }
-       //si es edit y tiene sender_text agregarlo
-      var sender_text = $("#note_sender_text").val();
-      if(sender_text.length > 0){
-        var simulateEntity = {
-          id: temp_id_sender,
-          person: {id: temp_id_sender, firstname: sender_text, lastname: ""}
-        };
-        $("#entities_from_ids").tokenInput("remove", {id: temp_id_sender});        
-        $("#entities_from_ids").tokenInput("add", simulateEntity);
-      }
+   
+      /*=> Preload sender_text and recipient_text*/
+      tempFrom.preload("#entities_from_ids");
+      tempTo.preload("#entities_to_ids");
+      /*<= Preload sender_text and recipient_text*/
     }
 
     /*#######################################################

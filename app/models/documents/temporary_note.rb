@@ -8,7 +8,7 @@ class TemporaryNote < Document
   #initialize object
   after_initialize :defaults
   before_save :initial_values, if: Proc.new { |tmp| tmp.code.blank? }
-  before_save :update_system_status, unless: Proc.new { |tmp| tmp.final_document_id.blank? }
+  before_save :update_system_status, unless: Proc.new { |tmp| tmp.document.blank? }
   
   #Temporary note always is INPUT
   def defaults
