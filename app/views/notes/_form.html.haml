@@ -13,14 +13,25 @@
   = hidden_field :note, :folder_id, id: "folder_id"
   = hidden_field :note, :recipient_text
   = hidden_field :note, :sender_text
+  = hidden_field_tag "note[create_user_id]", @temporary.create_user.id if @temporary.present?
+  = hidden_field_tag "note[temporary_id]", @temporary.id if @temporary.present?
+
+  - if @note.senders.count > 0 || ! @temporary.present?
+    - data_senders = entities_data_pre(@note.senders)
+  - else
+    - data_senders = entities_data_pre(@temporary.senders)
+  - if @note.recipients.count > 0 || ! @temporary.present?
+    - data_recipients = entities_data_pre(@note.recipients)
+  - else
+    - data_recipients = entities_data_pre(@temporary.recipients)
   %fieldset
     .field
       %label{for: "entities_from_ids"}= t("labels.entities_from_ids")
-      %input#entities_from_ids{type: "text", name: "entities_from_ids", data: {url: "#{entities_path(format: :json)}"}, 'data-select'=> entities_data_pre(@note.senders), 'data-parsley-group' => 'block_document', required: ''}
+      %input#entities_from_ids{type: "text", name: "entities_from_ids", data: {url: "#{entities_path(format: :json)}"}, 'data-select'=> data_senders , 'data-parsley-group' => 'block_document', required: ''}
       %p.help-block= t('help.keyboard.sender_text')
     .field
       %label{for: "entities_to_ids"}= t("labels.entities_to_ids")
-      %input#entities_to_ids{type: "text", name: "entities_to_ids", data: {url: "#{entities_path(format: :json)}"}, 'data-select'=> entities_data_pre(@note.recipients) ,'data-parsley-group' => 'block_document', required: ''}
+      %input#entities_to_ids{type: "text", name: "entities_to_ids", data: {url: "#{entities_path(format: :json)}"}, 'data-select'=> data_recipients ,'data-parsley-group' => 'block_document', required: ''}
       %p.help-block= t('help.keyboard.receipt_text')
   %fieldset
     .field

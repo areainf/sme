@@ -4,11 +4,15 @@ class Ability
   def initialize(user)
     if user.is_admin?
       can :manage, :all
+      cannot :update, TemporaryNote
+      cannot :create, TemporaryNote
     elsif user.is_reception?
       can :read, :all
       can :create, :all
       can :update, :all
       can :move, Folder
+      cannot :update, TemporaryNote
+      cannot :create, TemporaryNote
       # can :destroy, Item do |item|
       #   item.try(:user) == user
       # end
@@ -16,14 +20,22 @@ class Ability
       can :read, Entity
       can :update, User
       can :create, TemporaryNote
-      can :read, TemporaryNote do |tmpnote|
-        tmpnote.try(:create_user) == user
+      can :show, Document do |tmpnote|
+         tmpnote.try(:create_user) == user
+      end
+      can :index, TemporaryNote do |tmpnote|
+         tmpnote.try(:create_user) == user
       end
       can :update, TemporaryNote do |tmpnote|
         tmpnote.try(:create_user) == user
       end
+      can :destroy, TemporaryNote do |tmpnote|
+        tmpnote.try(:create_user) == user &&
+        tmpnote.document.blank?
+      end
       # can :read, Item
     end
+    false
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

@@ -1,6 +1,6 @@
 #ctrllr-documents
   #documents-index
-    %table#documents-index-table{data: {source: documents_path(format: :json)}}
+    %table#documents-index-table.table.stripe.hover{data: {source: documents_path(format: :json)}}
       %thead
         %tr
           %th= select_tag :document_type,

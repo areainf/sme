@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   # :registerable,
+  delegate :can?, :cannot?, :to => :ability
   
   devise  :database_authenticatable, :recoverable, :rememberable, 
           :trackable, :validatable, :timeoutable, :timeout_in => 60.minutes
@@ -31,5 +32,8 @@ class User < ActiveRecord::Base
   def temporary_notes
     documents_created.where(type: TemporaryNote.name)
   end
-  
+  #add for check if a user != of current_user has ability for
+  def ability
+    @ability ||= Ability.new(self)
+  end
 end

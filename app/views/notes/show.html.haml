@@ -13,6 +13,9 @@
           %th= t('labels.system_status')
           %th= t('labels.emission_date')
           %th= t('labels.entry_at')
+          %th= t('labels.create_user')
+          %th= t('labels.entry_user')          
+          %th= t('labels.temporary_document')          
           %th= t('labels.folder')
       %tbody
         %tr
@@ -20,6 +23,9 @@
           %td= t("documents.system_status.#{@note.system_status}")
           %td= l @note.emission_date, format: :short
           %td= l  @note.entry_at, format: :short
+          %td= @note.create_user.try(:username)
+          %td= @note.entry_user.try(:username)
+          %td= link_to @note.temporary.code, @note.temporary if @note.temporary.present?
           %td= @note.folder.present? ? @note.folder.path : '/'
 
     %table.table.table-bordered
@@ -48,6 +54,7 @@
       - unless @note.attachments.blank?
         .col-md-3
           = render 'show_attachments'
-    %hr
-    %h2= t('documents.events.title')
-    =render 'events'
+    - if can?(:edit, @note)
+      %hr
+      %h2= t('documents.events.title')
+      =render 'events'

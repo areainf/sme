@@ -1,6 +1,6 @@
 module DocumentsHelper
   SYSTEM_STATUS = %w(archived circulation)
-  DOCUMENT_TYPES = %w{Note Expedient}
+  DOCUMENT_TYPES = %w{Note Expedient TemporaryNote}
 
   def optSel_SystemStatus
     SYSTEM_STATUS.map { |t| [I18n.t("documents.system_status.#{t}"), t]}

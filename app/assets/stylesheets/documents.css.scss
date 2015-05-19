@@ -1,9 +1,16 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-.label_type_note{
-  @extend .btn, .btn-success, .btn-xs;
+.label_type_note, .label_type_temporarynote{
+  @extend .btn, .btn-xs;
 }
+.label_type_note{
+  @extend .btn-success;
+}
+.label_type_temporarynote{
+  @extend .btn-warning;
+}
+
 .box_show_document{
   margin: 10px;
   padding: 25px;

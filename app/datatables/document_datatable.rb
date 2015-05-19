@@ -1,7 +1,7 @@
 class DocumentDatatable
   include ApplicationHelper
   include DocumentsHelper
-  delegate :raw, :simple_format, :params, :h, :link_to, :draw_direction, :draw_type_document, :number_to_currency, to: :@view
+  delegate :raw, :simple_format, :params, :l, :h, :link_to, :draw_direction, :draw_type_document, :number_to_currency, to: :@view
 
   # def initialize(view, current_user)
   def initialize(view)
@@ -26,11 +26,11 @@ private
       send = record.senders_names || []
       send << record.sender_text
       [
-        draw_type_document(record),
+        link_to(draw_type_document(record), record),
         draw_direction(record),
         recip.blank? ? '' : recip.join("; "),
         send.blank? ? '' : send.join("; "),
-        record.emission_date,
+        l(record.emission_date),
         record.description,
         build_link(record),
       ]
@@ -47,6 +47,8 @@ private
     else
       documents = Document.order("emission_date desc")
     end
+    #No incluye las notas temporales que ya han sido procesadas
+    documents = documents.not_process.page(page).per_page(per_page)
     stype = search_column("0")
     if !stype.blank?
       documents = documents.where({type: stype})

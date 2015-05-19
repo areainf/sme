@@ -19,7 +19,7 @@
         %td= @document.code
         %td= t("documents.system_status.#{@document.system_status}")
         %td= l @document.emission_date, format: :short
-        %td= l  @document.entry_at, format: :short
+        %td= l(@document.entry_at, format: :short) unless @document.entry_at.blank?
         %td= @document.folder.present? ? @document.folder.path : '/'
 
   %table.table.table-bordered

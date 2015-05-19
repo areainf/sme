@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
   before_filter :authenticate_user!
-  
+
   before_action :set_note, only: [:show, :edit, :update, :destroy]
 
   respond_to :html, :json
@@ -31,17 +31,22 @@ class NotesController < ApplicationController
   def create
     params[:note][:recipients_attributes] = get_nested_entity_ids(params[:entities_to_ids])
     params[:note][:senders_attributes] = get_nested_entity_ids(params[:entities_from_ids])
-    params[:note][:create_user_id] = current_user.id
+    params[:note][:create_user_id] = current_user.id if params[:note][:create_user_id].blank?
+    params[:note][:entry_user_id] = current_user.id
     @note = Note.new(note_params)
     if @note.save
-      # to handle multiple images upload on create
       if params[:attachments]
         params[:attachments].each{|file|
           @note.attachments.create({:filedoc => file})
         }
       end
+      unless @note.temporary.blank?
+        @note.temporary.attachments.each do |attach|
+          @note.attachments.create({:filedoc =>  File.open(attach.filedoc.path)})
+        end
+      end
       flash[:success] = t('flash.note', message: t('flash.created'))
-    else 
+    else
       flash[:alert] = @note.errors.flush_messages
     end
     respond_with(@note)
@@ -64,7 +69,7 @@ class NotesController < ApplicationController
         end
       end
       flash[:success] = t('flash.note', message: t('flash.updated'))
-    else 
+    else
       flash[:alert] = @note.errors.flush_messages
     end
     respond_with(@note)
@@ -75,14 +80,20 @@ class NotesController < ApplicationController
     respond_with(@note)
   end
 
+  def enter
+    @temporary = TemporaryNote.find(params[:temporary_id])
+    @note = Note.new(@temporary.attributes.except('id', 'created_at', 'updated_at', 'entry_at', 'type','recipients', 'senders'))
+    @note.direction = Document::DIR_IN
+    render "new"
+  end
   private
     def set_note
       @note = Note.find(params[:id])
     end
 
-    def note_params      
-      params.require(:note).permit(:direction, :description, :observation, :reference_people, 
-          :emission_date, :system_status, :folder_id, :recipient_text, :sender_text, :create_user_id,
+    def note_params
+      params.require(:note).permit(:direction, :description, :observation, :reference_people, :entry_user_id,
+          :emission_date, :system_status, :folder_id, :recipient_text, :sender_text, :create_user_id, :temporary_id,
           :recipients_attributes => [:entity_id, :id, :_destroy], :senders_attributes => [:entity_id, :id, :_destroy])
     end
 
