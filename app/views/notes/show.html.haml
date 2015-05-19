@@ -54,6 +54,7 @@
       - unless @note.attachments.blank?
         .col-md-3
           = render 'show_attachments'
-    %hr
-    %h2= t('documents.events.title')
-    =render 'events'
+    - if can?(:edit, @note)
+      %hr
+      %h2= t('documents.events.title')
+      =render 'events'

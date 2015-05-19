@@ -15,7 +15,7 @@
           %td= l @temporary_note.emission_date, format: :short
           %td
             = l @temporary_note.entry_at, format: :short unless @temporary_note.entry_at.blank?
-            = link_to raw('<span class="glyphicon glyphicon-list-alt"></span>'), @temporary_note.document
+            = link_to raw('<span class="glyphicon glyphicon-list-alt"></span>'), @temporary_note.document unless @temporary_note.document.blank?
 
     %table.table.table-bordered
       %thead

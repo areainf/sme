@@ -26,7 +26,7 @@ private
       send = record.senders_names || []
       send << record.sender_text
       [
-        draw_type_document(record),
+        link_to(draw_type_document(record), record),
         draw_direction(record),
         recip.blank? ? '' : recip.join("; "),
         send.blank? ? '' : send.join("; "),
@@ -47,6 +47,8 @@ private
     else
       documents = Document.order("emission_date desc")
     end
+    #No incluye las notas temporales que ya han sido procesadas
+    documents = documents.not_process.page(page).per_page(per_page)
     stype = search_column("0")
     if !stype.blank?
       documents = documents.where({type: stype})

@@ -1,7 +1,7 @@
 class TemporaryNoteDatatable
   include ApplicationHelper
   include DocumentsHelper
-  delegate :raw, :simple_format, :params, :h, :l, :link_to, :draw_direction, :number_to_currency, to: :@view
+  delegate :raw, :simple_format, :params, :h, :l, :link_to, :draw_direction, :draw_type_document, :number_to_currency, to: :@view
 
   # def initialize(view, current_user)
   def initialize(view, user)
@@ -22,12 +22,14 @@ private
 
   def data
     documents.map do |record|
+      record = record.document || record # if has document show document
       recip = record.recipients_names || []
       recip << record.recipient_text.gsub('&', '; ') 
       send = record.senders_names || []
       send << record.sender_text.gsub('&', '; ') 
       [
-        draw_direction(record),
+        draw_type_document(record),
+        #draw_direction(record),
         recip.blank? ? '' : recip.join("; "),
         send.blank? ? '' : send.join("; "),
         l(record.emission_date),
@@ -86,12 +88,14 @@ private
     separator = raw "&nbsp;&nbsp;&nbsp;"
     icon = "glyphicon glyphicon-info-sign"
     link = link_to(raw("<i class=\"#{icon}\"></i>"), document)
-    link += separator
-    css_icon = 'glyphicon glyphicon-remove'
-    confirm = I18n.t('documents.message_confirm_delete')
-    title = I18n.t('documents.link_title_delete')
-    link += link_to(raw("<i class=\"#{css_icon}\"></i>"),document,
-     {method: :delete, data: {confirm: confirm}, :title => title})
+    if @user.can? :destroy, document
+      link += separator
+      css_icon = 'glyphicon glyphicon-remove'
+      confirm = I18n.t('documents.message_confirm_delete')
+      title = I18n.t('documents.link_title_delete')
+      link += link_to(raw("<i class=\"#{css_icon}\"></i>"),document,
+       {method: :delete, data: {confirm: confirm}, :title => title})
+    end
     link
   end
 end

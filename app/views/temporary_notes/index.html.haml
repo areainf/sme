@@ -1,6 +1,6 @@
 #ctrllr-temporary_notes
   #temporary_note-index
-    %table#temporary_note-index-table{data: {source: temporary_notes_path(format: :json)}}
+    %table#temporary_note-index-table.table.stripe.hover{data: {source: temporary_notes_path(format: :json)}}
       %thead
         %tr
           %th{width: "10%"}= t('labels.status')

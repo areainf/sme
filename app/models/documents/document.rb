@@ -11,21 +11,25 @@ class Document < ActiveRecord::Base
   has_many :events
   has_many :attachments, :inverse_of => :document, :dependent => :destroy
   
-  accepts_nested_attributes_for :attachments, allow_destroy: true
-  # has_one :temporary_document, :class_name => "TemporaryNote", :foreign_key => "final_document_id"
   belongs_to :temporary, :class_name => "TemporaryNote", :foreign_key => "temporary_id", autosave: true 
 
   # serialize  :recipients_ids, Array
   # serialize  :senders_ids, Array
   accepts_nested_attributes_for :recipients,:allow_destroy => true
   accepts_nested_attributes_for :senders, :allow_destroy => true
+  accepts_nested_attributes_for :attachments, allow_destroy: true
 
   validates :description, presence: true
   validates :emission_date, presence: true
   validates :senders, presence: true , if: Proc.new { |a| a.sender_text.blank? } 
   validates :recipients, presence: true, if: Proc.new { |a| a.recipient_text.blank? } 
+
+  #= Scopes
+  scope :not_process, -> { where("id not in (?)", Document.where('temporary_id is not null').map{|x| x.temporary_id})}
    
   after_create :update_temporary_state
+
+
   def is_input?
     direction.presence && direction.to_i != DIR_OUT
   end
