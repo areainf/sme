@@ -16,5 +16,6 @@
 /tmp
 /public/uploads
 /doc
-Gemfile.lock
 config/deploy.rb
+/.rvmrc
+/Gemfile.lock
