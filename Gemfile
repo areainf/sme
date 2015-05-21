@@ -55,7 +55,7 @@ gem 'carrierwave'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'capistrano', '~> 2.15.5', group: :development
-# gem 'rvm-capistrano', group: :development
+gem 'rvm-capistrano'
 # gem 'capistrano-passenger', group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
