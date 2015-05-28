@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518224641) do
+ActiveRecord::Schema.define(version: 20150526171600) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -163,6 +163,17 @@ ActiveRecord::Schema.define(version: 20150518224641) do
   end
 
   add_index "people", ["create_user_id"], name: "index_people_on_create_user_id", using: :btree
+
+  create_table "permissions", force: true do |t|
+    t.integer  "user_id"
+    t.text     "dependencies"
+    t.text     "employments"
+    t.boolean  "personal_documents", default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "permissions", ["user_id"], name: "index_permissions_on_user_id", using: :btree
 
   create_table "references", force: true do |t|
     t.integer  "document_id"

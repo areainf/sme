@@ -22,47 +22,39 @@ class Ability
       can :read, Entity
       can :update, User
       can :create, TemporaryNote
-      can :show, Document do |tmpnote|
-         tmpnote.try(:create_user) == user
+      can :show, Document do |document|
+         has_persmission?(user, document)
       end
       can :index, TemporaryNote do |tmpnote|
-         tmpnote.try(:create_user) == user
+        has_persmission?(user, tmpnote)
       end
       can :update, TemporaryNote do |tmpnote|
-        tmpnote.try(:create_user) == user
+        has_persmission?(user, tmpnote)
       end
       can :destroy, TemporaryNote do |tmpnote|
-        tmpnote.try(:create_user) == user &&
+        has_persmission?(user, tmpnote) &&
         tmpnote.document.blank?
       end
       # can :read, Item
     end
     false
-    # Define abilities for the passed in user here. For example:
-    #
-    #   user ||= User.new # guest user (not logged in)
-    #   if user.admin?
-    #     can :manage, :all
-    #   else
-    #     can :read, :all
-    #   end
-    #
-    # The first argument to `can` is the action you are giving the user
-    # permission to do.
-    # If you pass :manage it will apply to every action. Other common actions
-    # here are :read, :create, :update and :destroy.
-    #
-    # The second argument is the resource the user can perform the action on.
-    # If you pass :all it will apply to every resource. Otherwise pass a Ruby
-    # class of the resource.
-    #
-    # The third argument is an optional hash of conditions to further filter the
-    # objects.
-    # For example, here the user can only update published articles.
-    #
-    #   can :update, Article, :published => true
-    #
-    # See the wiki for details:
-    # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+  end
+
+  def has_persmission?(user, document)
+    # dependency.ancestors.collect(&:id)
+    dep_ids = user.permission.dependencies_ids
+    emp_ids = user.permission.employments_ids
+    dep_is_all = dep_ids.include? 0
+    emp_is_all = emp_ids.include? 0
+    if dep_is_all && emp_is_all || document.try(:create_user) == user
+      return true
+    else
+      entities = Entity.all
+      entities = entities.where("dependency_id in (?)", dep_ids) unless dep_is_all
+      entities = entities.where("employment_id in (?)", emp_ids) unless emp_is_all
+      ids_entities_doc = document.senders.map{|s| s.entity.id} +
+                    document.recipients.map{|s| s.entity.id}
+      return  (ids_entities_doc & entities.map(&:id)).count > 0
+    end
   end
 end
