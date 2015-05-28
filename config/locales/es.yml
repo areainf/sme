@@ -1,6 +1,7 @@
 es:
   active_admin:
     details_user: Información sobre el Usuario
+    pemissions: Permisos
   activerecord:
     errors:
       models:
@@ -23,6 +24,10 @@ es:
             name:
               taken: El Nombre no puede repetirse
               blank: Debe Ingresar un Nombre
+        permission:
+          attributes:
+            user_id:
+              blank: Debe especificar un Usuario
         person:
           attributes:
             lastname:
@@ -42,8 +47,9 @@ es:
             password:
               blank: Debe ingresar una contraseña
               too_short: Contraseña demasiada corta. 6 caractéres como mínimo
-
     models:
+      permission: Permisos
+      user: Usuarios
       errors:
         message_empty_people_names: Debe igresar el Apellido o Nombre de la Persona
         message_non_empty_folder: La carpeta debe estar vacía
@@ -55,12 +61,23 @@ es:
         description: Descripción
       master_unit:
         name: Nombre
+      permission:
+        dependencies: Dependencias
+        dependency_names: Dependencias
+        employment_names: Cargos
+        employments: Cargos
+        personal_documents: Documentos personales
+        user: Usuario
+        user_id: Usuario
       person:
         lastname: Apellido
       user:
         username: Usuario
         remember_me: Recordarme
-  buttons:
+  boolean:
+    false_value: "No"
+    true_value: "Si"
+  buttons:  
     accept: Aceptar
     close: Cerrar
     delete: Eliminar
@@ -273,6 +290,9 @@ es:
         index: Listado
         new: Nueva
         show: Detalle
+  permissions:
+    dependencies_all: Todas las dependencias
+    employments_all: Todos los cargos
   temporary_notes:
     buttons:
       edit: Editar

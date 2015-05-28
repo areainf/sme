@@ -14,7 +14,7 @@ class TemporaryNoteDatatable
       sEcho: params[:sEcho].to_i,
       iTotalRecords: @user.temporary_notes.count,
         iTotalDisplayRecords: documents.count,
-      aaData: data
+      aaData: data.compact #remove nil #line 25
     }
   end
 
@@ -22,7 +22,7 @@ private
 
   def data
     documents.map do |record|
-      record = record.document || record # if has document show document
+      next if record.is_a?(TemporaryNote) &&  record.document.present?
       recip = record.recipients_names || []
       recip << record.recipient_text.gsub('&', '; ') 
       send = record.senders_names || []
@@ -44,13 +44,16 @@ private
   end
 
   def fetch_documents
-    if !sort_column.blank?
-      documents = @user.temporary_notes.order(sort_column)
-    else
-      documents = @user.temporary_notes.order("emission_date desc")
-    end
+    documents = Document.joins("LEFT JOIN `references`  on documents.id = `references`.document_id").where(
+      "`references`.entity_id in (?) or documents.create_user_id = ?", @user.permission.entities.map{|ent| ent.id}, @user.id)
+    #documents = documents.sort(sort_column.blank? ? "emission_date desc" : sort_column)
+    # if !sort_column.blank?
+    #   documents = @user.temporary_notes.order(sort_column)
+    # else
+    #   documents = @user.temporary_notes.order("emission_date desc")
+    # end
     if !params[:search][:value].blank?
-      documents = documents.joins("LEFT JOIN `references` on documents.id = `references`.document_id
+      documents = documents.joins("
                                    LEFT JOIN entities on `references`.entity_id = entities.id 
                                    LEFT JOIN people on `entities`.person_id = people.id
                                    LEFT JOIN employments on `entities`.employment_id = employments.id

@@ -20,7 +20,7 @@
   %fieldset
     .field
       %label{for: "entities_from_ids"}= t("labels.entities_from_ids")
-      %input#entities_from_ids{type: "text", name: "entities_from_ids", data: {url: "#{entities_path(format: :json)}"}, 'data-select'=> entities_data_pre(@temporary_note.senders), 'data-parsley-group' => 'block_document', required: ''}
+      %input#entities_from_ids{type: "text", name: "entities_from_ids", data: {url: "#{entities_path(format: :json, :senders => true)}"}, 'data-select'=> entities_data_pre(@temporary_note.senders), 'data-parsley-group' => 'block_document', required: ''}
       %p.help-block= t('help.keyboard.sender_text')
     .field
       %label{for: "entities_to_ids"}= t("labels.entities_to_ids")

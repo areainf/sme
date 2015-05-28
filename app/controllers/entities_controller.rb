@@ -7,7 +7,7 @@ class EntitiesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @entities = get_data(params[:q])
+    @entities = get_data
     respond_to do |format|
       format.json {render json:  @entities.to_json({:methods => [:name], :include => [:person, :dependency, :employment]}) }
     end
@@ -66,8 +66,18 @@ private
     @entity = Entity.find params[:id]
   end
 
-  def get_data(query)
-    Entity.joins("LEFT JOIN people as person ON entities.person_id = person.id
+  def get_data
+    query = params[:q]
+    if current_user.is_dependency?
+      if params[:senders].present?
+        entities = current_user.permission.entities
+      else
+        entities = Entity.all #por ahora, deberia ser solo las enitdades del decanato
+      end
+    else
+      entities = Entity.all
+    end
+    entities.joins("LEFT JOIN people as person ON entities.person_id = person.id
                   LEFT JOIN dependencies as dependency ON entities.dependency_id = dependency.id
                   LEFT JOIN employments as employment ON entities.employment_id = employment.id")
           .where("person.firstname LIKE :search or

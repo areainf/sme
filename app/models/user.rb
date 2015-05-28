@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   has_many :folders
   has_many :master_units
   has_many :people, :foreign_key => :create_user_id, :class_name => "Person"
-
+  has_one :permission
 
   def is_admin?
     self.role == ApplicationHelper::ROLE_ADMIN
@@ -36,4 +36,12 @@ class User < ActiveRecord::Base
   def ability
     @ability ||= Ability.new(self)
   end
+  
+  def self.dependency_without_persmission
+    ids = Permission.all.map{|p| p.user_id}    
+    users =  where(:role =>  ApplicationHelper::ROLE_DEPENDENCY)
+    users =  users.where("id not in (?)", ids) unless ids.blank?
+    users  
+  end
+
 end
