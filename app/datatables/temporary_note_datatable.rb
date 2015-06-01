@@ -45,7 +45,7 @@ private
 
   def fetch_documents
     documents = Document.joins("LEFT JOIN `references`  on documents.id = `references`.document_id").where(
-      "`references`.entity_id in (?) or documents.create_user_id = ?", @user.permission.entities.map{|ent| ent.id}, @user.id)
+      "`references`.entity_id in (?) or documents.create_user_id = ?", @user.permission.entities.map{|ent| ent.id}, @user.id).distinct
     #documents = documents.sort(sort_column.blank? ? "emission_date desc" : sort_column)
     # if !sort_column.blank?
     #   documents = @user.temporary_notes.order(sort_column)
