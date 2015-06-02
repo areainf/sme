@@ -15,10 +15,12 @@ class Folder < ActiveRecord::Base
     Folder.where({:parent_id => self.id})
   end
   def no_recursive
-    p = parents
-    if !id.nil? && p.include?(id)
+    p = parents    
+    if !id.nil? && !p.nil? && p.include?(id)
       errors.add(:base,"Carpeta Recursiva")
+      return false
     end
+    true
   end
   def parents
     if self.parent_id.blank?

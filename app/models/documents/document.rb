@@ -25,10 +25,18 @@ class Document < ActiveRecord::Base
   validates :recipients, presence: true, if: Proc.new { |a| a.recipient_text.blank? } 
 
   #= Scopes
-  scope :not_process, -> { where("id not in (?)", Document.where('temporary_id is not null').map{|x| x.temporary_id})}
+  #scope :not_process, -> { where("id not in (?)", Document.where('temporary_id is not null').map{|x| x.temporary_id})}
    
   after_create :update_temporary_state
 
+  def self.not_process
+    ids = Document.where('temporary_id is not null').map{|x| x.temporary_id}
+    if ids.empty?
+      all
+    else
+      where("id not in (?)", ids)
+    end
+  end
 
   def is_input?
     direction.presence && direction.to_i != DIR_OUT

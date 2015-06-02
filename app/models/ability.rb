@@ -12,6 +12,7 @@ class Ability
       can :create, :all
       can :update, :all
       can :move, Folder
+      can :destroy, Folder
       can :enter, Document
       cannot :update, TemporaryNote
       cannot :create, TemporaryNote
