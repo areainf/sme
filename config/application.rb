@@ -26,5 +26,8 @@ module Sme
     # Devise-i18n
     config.i18n.default_locale = :es
     I18n.default_locale = :es
+
+    config.assets.paths << Rails.root.join("app", "vendor", "assets", "images") 
+
   end
 end
