@@ -19,3 +19,4 @@
 config/deploy.rb
 /.rvmrc
 /Gemfile.lock
+/Gemfile.lock
