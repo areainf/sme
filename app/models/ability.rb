@@ -13,6 +13,8 @@ class Ability
       can :update, :all
       can :move, Folder
       can :enter, Document
+      can :enter, Document
+      can :in_folder, Document
       cannot :update, TemporaryNote
       cannot :create, TemporaryNote
       # can :destroy, Item do |item|
