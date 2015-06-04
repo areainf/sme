@@ -11,7 +11,7 @@ class Ability
       can :read, :all
       can :create, :all
       can :update, :all
-      can :move, Folder
+      can :manage, Folder
       can :enter, Document
       can :enter, Document
       can :in_folder, Document
