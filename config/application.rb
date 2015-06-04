@@ -27,9 +27,9 @@ module Sme
     config.i18n.default_locale = :es
     I18n.default_locale = :es
 
-    config.assets.paths << Rails.root.join("vendor", "assets",'stylesheets','fancytree').to_s 
-    config.assets.paths << Rails.root.join("vendor", "assets",'javascripts') .to_s
-    config.assets.paths << Rails.root.join("vendor", "assets") .to_s
+    # config.assets.paths << Rails.root.join("vendor", "assets",'stylesheets','fancytree').to_s 
+    # config.assets.paths << Rails.root.join("vendor", "assets",'javascripts') .to_s
+    # config.assets.paths << Rails.root.join("vendor", "assets") .to_s
 
   end
 end
