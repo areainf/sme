@@ -31,8 +31,12 @@ class DependenciesController < ApplicationController
 
   def create
     @dependency = current_user.dependencies.new(dependency_params)
-    @dependency.save
-    respond_with(@dependency)
+    if @dependency.save
+      flash[:success] = t('flash.dependency', message: t('flash.created'))
+      redirect_to :action => "new"
+    else
+      respond_with(@dependency)
+    end
   end
 
   def update
