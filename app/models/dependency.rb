@@ -18,6 +18,7 @@ class Dependency < ActiveRecord::Base
       end
       self.master_unit = par.master_unit unless par.blank?
     end
+  end
   def self.get_ancestors(who)
     @tree ||= []
     # @tree is instance variable of Document class object not document instance object
