@@ -18,7 +18,9 @@ class Folder < ActiveRecord::Base
     p = parents
     if !id.nil? && !p.blank? && p.include?(id)
       errors.add(:base,"Carpeta Recursiva")
+      return false
     end
+    true
   end
   def parents
     if self.parent_id.blank?

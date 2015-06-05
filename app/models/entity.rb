@@ -1,12 +1,15 @@
 class Entity < ActiveRecord::Base
+  
   belongs_to :person
   belongs_to :employment
   belongs_to :dependency
   belongs_to :user
   has_many :senders
   has_many :recipients
+  
   validate :valid_entity
   validate :unique_entity, :before => :create
+
   def valid_entity
     (self.person.present? || self.employment.present?) && dependency.present?
   end

@@ -18,6 +18,10 @@
 /doc
 config/deploy.rb
 /.rvmrc
+<<<<<<< HEAD
 /Gemfile.lock
 Gemfile.lock
 config/database.yml
+=======
+Gemfile.lock
+>>>>>>> Add model Permission and assingn to users
