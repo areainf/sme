@@ -132,3 +132,10 @@ body{
   @extend .text-center;
   margin-top: 20px;
 }
+
+h2.separator{
+    font-size: 14pt;
+    color: #eee;
+    background-color: #8C8C8C;
+    padding: 2px 0 2px 10px;
+}

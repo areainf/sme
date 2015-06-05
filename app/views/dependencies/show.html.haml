@@ -8,7 +8,13 @@
       %label.field_value= @dependency.description
     .field
       %label.field_key= t('labels.dependency')
-      %label.field_value= @dependency.parent.name if @dependency.parent.present?
+      %label.field_value= link_to(@dependency.parent.name, @dependency.parent) if @dependency.parent.present?
     .field
       %label.field_key= t('labels.master_unit')
       %label.field_value= @dependency.master_unit.name if @dependency.master_unit.present?
+
+    - unless @dependency.children.blank?
+      %h2.separator= t('.sub_dependency')
+      %ul
+        - @dependency.children.each do |child|
+          %li= link_to child.name, child

@@ -60,7 +60,7 @@ es:
       user:
         username: Usuario
         remember_me: Recordarme
-  buttons:  
+  buttons:
     accept: Aceptar
     close: Cerrar
     delete: Eliminar
@@ -92,9 +92,11 @@ es:
     buttons:
       edit: Editar
       new: Nueva
-      index: Volver al Listado  
+      index: Volver al Listado
     new:
-      title: Agregar Nueva Dependencia  
+      title: Agregar Nueva Dependencia
+    show:
+      sub_dependency: Sub Dependencias
     sub_header:
       title: Dependencias
       sub_title:
@@ -110,9 +112,9 @@ es:
       new: Nuevo
       index: Volver al Listado
     new:
-      title: Agregar Nuevo Cargo   
-    sub_header:    
-      title: Cargos      
+      title: Agregar Nuevo Cargo
+    sub_header:
+      title: Cargos
       sub_title:
         edit: Modificar
         index: Listado
@@ -135,6 +137,7 @@ es:
     created: Creado
     deleted: Eliminado
     updated: Actualizado
+    dependency:  "Se ha %{message} exitosamente la Dependencia"
     entity: "Se ha %{message} exitosamente la Entidad"
     note: "Se ha %{message} exitosamente la Nota"
     temporary_note: "Se ha %{message} exitosamente la Nota"
@@ -152,7 +155,7 @@ es:
     keyboard:
       receipt_text: Presione la tecla Insert para ingresar el Destinatario como texto
       sender_text: Presione la tecla Insert para ingresar el Remitente como texto
-  labels:    
+  labels:
     active: Activo
     attachments: Adjuntos
     code: Código
@@ -202,7 +205,7 @@ es:
       documents: Documentos
       entities: Cargo / Persona
       exit: Salir
-      folders: Carpetas      
+      folders: Carpetas
       organization: Organización
       password: Contraseña
       people: Personas
@@ -216,9 +219,9 @@ es:
   master_units:
     buttons:
       edit: Editar
-      index: Volver al Listado  
+      index: Volver al Listado
     new:
-      title: Nueva Unidad Organizacional  
+      title: Nueva Unidad Organizacional
     sub_header:
       title: Unidad Organizacional
       sub_title:
@@ -263,12 +266,12 @@ es:
       entity_empty: No tiene asociado ninguna Entidad
       entity_title: Entidades en la  que aparece
       personal_date: Datos personales
-    sub_header:    
+    sub_header:
       title: Personas
       sub_title:
         edit: Modificar
         index: Listado
-        new: Nueva  
+        new: Nueva
         show: Detalle
   temporary_notes:
     buttons:
