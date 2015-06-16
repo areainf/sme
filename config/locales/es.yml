@@ -74,6 +74,12 @@ es:
       user:
         username: Usuario
         remember_me: Recordarme
+  authorities:
+    sub_header:
+      title: Autoridades
+      sub_title:
+        edit: Editar
+        index: Listado de Autoridades
   boolean:
     false_value: "No"
     true_value: "Si"
@@ -180,7 +186,9 @@ es:
     date: Fecha
     dependency: Dependencia
     description: Descripción
+    direction: Dirección
     directory: Directorio
+    emission: Emisión
     emission_date: Fecha de Emisión
     employment: Cargo
     entities_from_ids: Remitentes
@@ -204,6 +212,8 @@ es:
     shorcuts_entities: Creación Rápida de Elementos
     system_status: Estado en el Sistema
     temporary_document: Documento Temporal
+    TemporaryNote_input: Documento Temporal de Entrada
+    TemporaryNote_output: Documento Temporal de Salida
     type: Tipo
   layouts:
     header:
@@ -218,9 +228,10 @@ es:
       master_units:
         new: Nueva Organización
         list: Listado de Organizaciones
+      authorities: Autoridades
       employments: Cargos
       documents: Documentos
-      entities: Cargo / Persona
+      # entities: Cargo / Persona
       exit: Salir
       folders: Carpetas
       organization: Organización
@@ -269,6 +280,7 @@ es:
         show: Detalle de la Nota
   people:
     buttons:
+      edit: Editar
       new: Nueva
       index: Volver al Listado
     edit:

@@ -59,7 +59,7 @@ class EntitiesController < ApplicationController
   end
 private
   def entity_params
-      params.require(:entity).permit(:person_id, :dependency_id, :employment_id)
+      params.require(:entity).permit(:person_id, :dependency_id, :employment_id, :active)
   end
 
   def set_entity

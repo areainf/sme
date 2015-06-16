@@ -158,12 +158,19 @@ jQuery(document).ready(function() {
           tr += fields;
           tr += '<td>' + entity.dependency.name + '</td>';
           tr += '<td>' + entity.employment.name + '</td>';
+          var chk = "";
+          if(entity.active)
+            chk =  ' checked="checked"';
+          tr += '<td><input type="checkbox" id="chkbox_entity_"'+entity.id+'" class="ref_change_entity_active"  value="'+entity.id+'"'+chk+' ></td>';
           var del = '<a href="#" onClick="return Entity.delete('+entity.id+');"><span class="glyphicon glyphicon-remove"></span></a>';
           tr += '<td>' + del + '</td>';
           tr += '</tr>';
 
           $(this.root_list + " > tbody:last").append(tr); 
           this.clear();
+          //reload event listener
+          $(this.root_list+' .ref_change_entity_active').unbind( "click" );
+          this.catchChangeActive();
         },
         delete: function(id){
           var el = this;

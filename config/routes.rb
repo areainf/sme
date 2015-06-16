@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  resources :authorities do
+    collection do
+      get 'documents'
+    end
+  end
 
   resources :temporary_notes
 

@@ -31,7 +31,7 @@
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
 }
 
-.is_entity , .not_is_entity{  
+.is_entity , .not_is_entity{
   border: 1px #000 solid;
   padding: 1px;
   margin: 0 2px 0 0;
@@ -45,6 +45,43 @@
 .is_entity{
   background-color: #EDEDED;
 }
-.not_is_entity{  
+.not_is_entity{
   background-color: #F58080;
+}
+/*.collapse_entity{
+  display: block;
+  max-height: 25px;
+  overflow: hidden;
+}
+.collapse_entity::after {
+  content: ">";
+  font-size: 14pt;
+  font-weight: bold;
+}
+.collapse_entity:hover{
+  overflow: visible;
+}*/
+.item_entity {
+  min-width: 95px;
+  border-right: double 3px #660000;
+  float:left;
+  height:20px;
+  z-index:0;
+  overflow:hidden;
+  position:absolute;
+}
+.item_entity:hover{
+  overflow:visible;
+  z-index:100;
+  width: 300px;
+  border: none;
+  background-color: #fff;
+  min-height: 50px;
+}
+.item_entity:hover .item_entity_inner{z-index: 100;}
+.item_entity_inner{
+  position: absolute;
+  width: 100%;
+  /*float:left;*/
+  display: block;
 }
