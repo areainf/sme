@@ -8,6 +8,7 @@
   - opt_dependency = options[:dependency] || {}
   - opt_employment = options[:employment] || {}
   = form_for @entity do |f|
+    = f.hidden_field :active, value: @entity.active, id: "active"
     - if !opt_person[:hidden]
       .field
         = f.label :person, t("labels.people")

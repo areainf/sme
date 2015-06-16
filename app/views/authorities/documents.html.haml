@@ -1,0 +1,23 @@
+%table#authorities-documents.table.stripe.hover{data: {source: documents_authorities_path(:dependency_id => params[:dependency_id], :employment_id => params[:employment_id], format: :json)}}
+  %thead
+    %tr
+      %th{colspan: '2'}= select_tag :document_type,
+                            options_for_select(optSel_Types),
+                            {class: 'pretty-input-datatable', :prompt => "#{t('labels.type')}"}
+      %th{colspan: '2'}= select_tag :document_direction,
+                            options_for_select(optSel_Directions),
+                            {class: 'pretty-input-datatable', :prompt => "#{t('labels.direction')}"}
+      %th{colspan: '2'}
+        %input#emission_date{type: "text", name: "emission_date", class: 'pretty-input-datatable'}
+        = #Porque no toma el cambio de emission_at
+        %input#range_date{type: "hidden", name: "range_date", class: 'pretty-input-datatable'}
+      %th
+    %tr
+      %th{}= t('labels.type')
+      %th{}= t('labels.direction')
+      %th{}= t('labels.recipients')
+      %th{}= t('labels.senders')
+      %th{}= t('labels.emission')
+      %th{}= t('labels.description')
+      %th{ nowrap: "nowrap"} 
+  %tbody

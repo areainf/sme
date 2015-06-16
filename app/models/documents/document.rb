@@ -35,7 +35,7 @@ class Document < ActiveRecord::Base
     if process_tempnotes.blank?
       self.all
     else
-      self.where("id not in (?)",process_tempnotes )
+      self.where("documents.id not in (?)",process_tempnotes )
     end
   end
 

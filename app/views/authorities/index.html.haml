@@ -1,0 +1,18 @@
+#ctrllr-authorities
+  #authorities-index
+    .row
+      .col-md-4
+        %table.table#authorities-index-table.stripe.hover{data: {source: authorities_path(format: :json)}}
+          %thead
+            %tr
+              %th= t('labels.dependency_id')
+              %th= t('labels.employment_id')
+              %th= t('labels.dependency')
+              %th= t('labels.employment')
+          %tbody
+            / - @authorities.each do |auth|
+            /   %tr
+            /     %td= auth.dependency.name
+            /     %td= auth.employment.name
+      .col-md-8
+        #remote_documents
