@@ -2,21 +2,21 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    if user.is_admin?
+    if user.is_admin? || user.is_reception?
       can :manage, :all
       can :enter, Document
       cannot :update, TemporaryNote
       cannot :create, TemporaryNote
-    elsif user.is_reception?
-      can :read, :all
-      can :create, :all
-      can :update, :all
-      can :manage, Folder
-      can :enter, Document
-      can :enter, Document
-      can :in_folder, Document
-      cannot :update, TemporaryNote
-      cannot :create, TemporaryNote
+    # elsif user.is_reception?
+    #   can :read, :all
+    #   can :create, :all
+    #   can :update, :all
+    #   can :manage, Folder
+    #   can :enter, Document
+    #   can :enter, Document
+    #   can :in_folder, Document
+    #   cannot :update, TemporaryNote
+    #   cannot :create, TemporaryNote
       # can :destroy, Item do |item|
       #   item.try(:user) == user
       # end
