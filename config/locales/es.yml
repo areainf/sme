@@ -188,6 +188,7 @@ es:
     description: Descripción
     direction: Dirección
     directory: Directorio
+    document: Documento
     emission: Emisión
     emission_date: Fecha de Emisión
     employment: Cargo
@@ -240,7 +241,7 @@ es:
     header_dependency:
       confirm: Está seguro que desea Salir del Sistema?
       documents:
-        list: Documentos Cargados
+        list: Documentos
         new_temporary_note: Nueva Nota
       exit: Salir
       password: Contraseña

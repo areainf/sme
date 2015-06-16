@@ -46,6 +46,12 @@ private
   def fetch_documents
     documents = Document.joins("LEFT JOIN `references`  on documents.id = `references`.document_id").where(
       "`references`.entity_id in (?) or documents.create_user_id = ?", @user.permission.entities.map{|ent| ent.id}, @user.id).distinct
+    documents = documents.not_process
+    if sort_column.blank?
+      documents = documents.order("emission_date desc")
+    else
+      documents = documents.order(sort_column)
+    end
     #documents = documents.sort(sort_column.blank? ? "emission_date desc" : sort_column)
     # if !sort_column.blank?
     #   documents = @user.temporary_notes.order(sort_column)
@@ -68,7 +74,7 @@ private
                                  documents.emission_date like :s_search",
                                  s_search: "%#{params[:search][:value]}%").distinct
     end
-    documents
+    documents.page(page).per_page(per_page)
   end
 
   def page
@@ -80,7 +86,7 @@ private
   end
 
   def sort_column    
-    columns = %w[direction recipients senders emission_date description]
+    columns = %w[type recipients senders emission_date description]
     col = params['order']['0']['column'] || 0
     dir = params['order']['0']['dir'] || 'asc'
     "#{columns[col.to_i]} #{dir}" 
