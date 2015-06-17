@@ -1,0 +1,70 @@
+%h1 SME - SISTEMA MESA DE ENTRADA
+%p
+  Es un sistema de administración de Mesa de Entrada, utilizado para registrar
+  Documentos de Entrada y de Salida.
+%p
+  Con su usuario usted puede Cargar Notas enviadas desde su Dependencia, para luego ser 
+  procesada por la Mesa de Entrada de la Facultad.
+  %br
+  O ver las notas enviadas desde la Facultad hacia su Dependencia.
+#help_documents
+  %h2 Documentos.
+  %p Actualmente sólo esta definido Notas.
+  %h3 Notas
+  %p Por cada Nota se registra la siguiente información
+  %ol
+    %li
+      %a{href: "#document_remitentes"} Remitentes
+    %li
+      %a{href: "#document_destinatarios"} Destinatarios
+    %li
+      %a{href: "#document_description"} Descripción
+    %li Observación
+    %li
+      %a{href: "#document_people_reference"} Personas Mencionadas
+    %li
+      %a{href: "#document_emission_date"} Fecha de Emisión
+    %li
+      %a{href: "#document_attachments"} Adjuntos
+  
+  %h4 Remitentes
+  %a{name: "document_remitentes"}
+  %p
+    Puede tener uno o más remitentes, cuando se empieza a tipear el nombre del remitente
+    el sistema empieza a buscar el listado de Entidades que concuerdan con la información 
+    ingresada.
+    %br
+    Si no encuentra la Persona, puede agregarla presionando la tecla <insert>
+    una vez ingresado el nombre completo de la misma
+  
+  %h4 Destinatarios
+  %a{name: "document_destinatarios"}
+  %p
+    Puede ser uno o varios y se aplica el mismo concepto que en Remitentes
+  
+  %h4 Descripción
+  %a{name: "document_description"}
+  %p
+    Está información en requerida por el sistema, es una breve descripción de la Nota.
+  %h5 Observación
+  %p Se le puede añadir información extra a la Nota.
+
+  %h4 Personas mencionadas
+  %a{name: "document_people_reference"}
+  %p
+    El sistema permite cargar personas mencionadas dentro de la nota, para luego poder ser incluida en 
+    el sistema de busqueda
+  
+  %h4 Fecha de Emisión
+  %a{name: "document_emission_date"}
+  %p
+    Fecha en que fue emitida la nota.
+  %p
+    La fecha de ingreso de la Nota es cargada automaticamente por el sistema
+  
+  %h4 Adjuntos
+  %a{name: "document_attachments"}
+  %p
+    Se puede cargar uno o mas archivos adjuntos, para cargar más de uno se usa el mismo concepto
+    de selección utilizado en el Explorador de Archivos, con la tecla <shift> se selecciona los 
+    archivos consecutivos, y con la tecla <ctrl> se selecciona archivos no consecutivos.

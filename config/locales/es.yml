@@ -245,6 +245,7 @@ es:
         list: Documentos
         new_temporary_note: Nueva Nota
       exit: Salir
+      help: Ayuda
       password: Contraseña
   master_units:
     buttons:
