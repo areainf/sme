@@ -77,12 +77,14 @@ private
     else
       entities = Entity.all
     end
-    entities.joins("LEFT JOIN people as person ON entities.person_id = person.id
+    entities = entities.where("active = ?", params[:active].to_bool) if params[:active].present?
+    entities = entities.joins("LEFT JOIN people as person ON entities.person_id = person.id
                   LEFT JOIN dependencies as dependency ON entities.dependency_id = dependency.id
                   LEFT JOIN employments as employment ON entities.employment_id = employment.id")
           .where("person.firstname LIKE :search or
                   person.lastname LIKE :search or
                   dependency.name LIKE :search or 
-                  employment.name LIKE :search",search: "%#{query}%")
+                  employment.name LIKE :search",search: "%#{query.sql_escape}%") unless query == '***'
+    entities
   end
 end
