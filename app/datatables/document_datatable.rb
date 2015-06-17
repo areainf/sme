@@ -62,9 +62,6 @@ private
   end
 
   def fetch_documents
-    print"\n\n\n\n"
-    print ap(params)
-    print"\n\n\n\n"
     if !sort_column.blank?
       documents = Document.order(sort_column)
     else
