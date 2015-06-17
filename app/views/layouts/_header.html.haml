@@ -49,9 +49,12 @@
         %i.icon-shopping-cart.icon-3x
         = t('.people')
     %li
-      %a{href: "#{authorities_path}", class: current_tag('entities')}
+      %a{href: "#{authorities_path}", class: current_tag('authorities')}
         %i.icon-folder-open-alt.icon-3x
         = t('.authorities')
+    %li
+      %a{href: "#{helps_path}", class: current_tag('helps')}
+        = t('.helps')
     %li
       %a{href: "#{edit_users_path}", class: current_tag('users')}
         %i.icon-folder-open-alt.icon-3x

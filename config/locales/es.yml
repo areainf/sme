@@ -235,6 +235,7 @@ es:
       # entities: Cargo / Persona
       exit: Salir
       folders: Carpetas
+      helps: Ayuda
       organization: Organización
       password: Contraseña
       people: Personas

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'helps' => 'helps#index'
+
   resources :authorities do
     collection do
       get 'documents'

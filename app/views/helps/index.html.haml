@@ -1,0 +1,171 @@
+#ctrllr-helps
+  %h1 SME - SISTEMA MESA DE ENTRADA
+  %p
+    Es un sistema de administración de Mesa de Entrada, utilizado para registrar
+    Documentos de Entrada y de Salida.
+  %p
+    Para realizar el manejo de documentación, se define las siguientes Entidades del Sistema
+  %ul
+    %li
+      %a{href: "#help_people"} Personas
+    %li
+      %a{href: "#help_dependencies"} Dependencias
+    %li
+      %a{href: "#help_master_units"} Organización
+    %li
+      %a{href: "#help_employments"} Cargo
+    %li
+      %a{href: "#help_entities"} Entidad
+    %li
+      %a{href: "#help_folders"} Carpetas
+    %li
+      %a{href: "#help_documents"} Documento
+    %li
+      %a{href: "#help_users"} Usuarios
+  
+
+  #help_people
+    %h2 Personas
+    %p El sistema permite registrar a las personas que envian o son receptoras de documentación.
+    %p
+      El registro permite luego filtrar información para visualizar documentación o cargos
+      asociada a personas, o a futuro permitir a las personas cargar su propia documentacíon
+      permitiendo agilizar la recepción de Documentación en la Mesa de Entrada de la Facultad
+    %p Por ahora la información que se registra es básica, (Nombre y Apellido)
+  #help_dependencies
+    %h2 Dependencias
+    %p
+      Se entiende por dependencia a Dependencias a Departamentos, Facultades, 
+      Dependencias de la Universidad, o Dependencias de <u>Organismos</u> externo o interno.
+    %p
+      Una Dependencia a su vez puede ser una SubDependencia de otra Dependencia, de esta manera se
+      puede representar un Organigrama.
+    %p
+      A su vez una dependencia puede pertenecer a un 
+      %a{href: "#help_master_units"}Organismo
+    %p
+      La organización y definición de Dependencias es vitál en el sistema ya que los usuarios
+      están asociados a las dependencias y define que documentos puede ver los usuarios, por ejemplo,
+      la Secretaria del Departamento de Computación debe poder ver toda la documentación enviada al
+      Departamento de Computación, como también poder cargar documentos enviados desde el Departamento.
+
+  #help_master_units
+    %h2 Organismos
+    %p
+      Está pensado para representar a organismos externos a la Universidad, no tiene funcionalidad en el sistema,
+      solo se utiliza a modo de representación y claridad. Uso de ejemplo, Municipalidad ...., Colegio de ...., etc.
+  #help_employments
+    %h2 Cargos
+    %p
+      Define un cargo la posición de una persona Dentro de una Dependencia (
+      %a{href: "#help_entities"}Entidades
+      ), por ejemplo, Decano, Director, Secretario, etc.
+  #help_entities
+    %h2 Entidades
+    %p
+      La definición de Entidad es compleja, una entidad puede ser uno o todas de lo siguiente:
+    %ul
+      %li Persona
+      %li Dependencia
+      %li Persona y Dependencia
+      %li Cargo y Dependencia
+      %li Persona, Cargo y Dependencia
+    %p
+      Las entidades son los que pueden Enviar o Recibir Documentación, de está manera luego el sistema
+      permite realizar busquedas avanzadas de documentación, por ejemplo, todas las notas enviadas
+      al Decano de la Facultad, independientemente de quien haya sido el dacano.
+  #help_folders
+    %h2 Carpetas
+    %p
+      Las carpetas cumplen la misma funcionalidad que una carpeta en una computadora, permite organizar
+      mejor la documentación.
+  #help_documents
+    %h2 Documentos.
+    %p Actualmente sólo esta definido Notas.
+    %h3 Notas
+    %p Por cada Nota se registra la siguiente información
+    %ol
+      %li
+        %a{href: "#document_remitentes"} Remitentes
+      %li
+        %a{href: "#document_destinatarios"} Destinatarios
+      %li
+        %a{href: "#document_description"} Descripción
+      %li Observación
+      %li
+        %a{href: "#document_people_reference"} Personas Mencionadas
+      %li
+        %a{href: "#document_emission_date"} Fecha de Emisión
+      %li
+        %a{href: "#document_system_status"} Estado en el Sistema
+      %li
+        %a{href: "#document_attachments"} Adjuntos
+      %li
+        %a{href: "#document_folder"} Carpeta
+    
+    %h4 Remitentes
+    %a{name: "document_remitentes"}
+    %p
+      Puede tener uno o más remitentes, cuando se empieza a tipear el nombre del remitente
+      el sistema empieza a buscar el listado de Entidades que concuerdan con la información 
+      ingresada.
+      %br
+      También pueden enviar notas personas que no pertenezcan al sistema y que tampoco existe la
+      necesidad de ser cargadas como entidad, para poder cargarlos se debe presionar la tecla <insert>
+      una vez ingresado el nombre de la misma
+    
+    %h4 Destinatarios
+    %a{name: "document_destinatarios"}
+    %p
+      Puede ser uno o varios y se aplica el mismo concepto que en Remitentes
+    
+    %h4 Descripción
+    %a{name: "document_description"}
+    %p
+      Está información en requerida por el sistema, es una breve descripción de la Nota, es equivalente
+      a lo que actualmente se carga en los cuadernos.
+    %h5 Observación
+    %p Se le puede añadir información extra a la Nota.
+
+    %h4 Personas mencionadas
+    %a{name: "document_people_reference"}
+    %p
+      El sistema permite cargar personas mencionadas dentro de la nota, para luego poder ser incluida en 
+      el sistema de busqueda
+    
+    %h4 Fecha de Emisión
+    %a{name: "document_emission_date"}
+    %p
+      Fecha en que fue emitida la nota.
+    %p
+      La fecha de ingreso de la Nota es cargada automaticamente por el sistema
+    
+    %h4 Estado en el sistema
+    %a{name: "document_system_status"}
+    %p
+      Aún no definido completamente. El personal de Mesa de Entrada luego definira los posibles valores
+
+    %h4 Adjuntos
+    %a{name: "document_attachments"}
+    %p
+      Se puede cargar uno o mas archivos adjuntos, para cargar más de uno se usa el mismo concepto
+      de selección utilizado en el Explorador de Archivos, con la tecla <shift> se selecciona los 
+      archivos consecutivos, y con la tecla <ctrl> se selecciona archivos no consecutivos.
+    %h4 Carpetas
+    %a{name: "document_folder"}
+    %p Al igual que en un sistema de archivos, permite organizar notas en diferentes carpetas.
+
+  #help_users
+    %h2 Usuarios
+    %p Existen dos tipos de usuarios
+    %dl
+      %dt Mesa de Entrada
+      %dd 
+        Usuarios Administrativos de la Facultad, pueden Agregar, Modificar, Eliminar, y Administrar todo
+        tipo de Documentación, Personas, Cargos, Dependencias, Carpetas y demás.
+      %dt Secretarios
+      %dd
+        Son los secretarios de Departamentos, y sólo pueden cargar y visualizar Documentos de la dependencia
+        a la cuál pertenecen.
+
+
