@@ -235,6 +235,7 @@ es:
       # entities: Cargo / Persona
       exit: Salir
       folders: Carpetas
+      helps: Ayuda
       organization: Organización
       password: Contraseña
       people: Personas
@@ -244,6 +245,7 @@ es:
         list: Documentos
         new_temporary_note: Nueva Nota
       exit: Salir
+      help: Ayuda
       password: Contraseña
   master_units:
     buttons:

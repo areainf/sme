@@ -37,6 +37,7 @@ class Ability
         has_persmission?(user, tmpnote) &&
         tmpnote.document.blank?
       end
+      can :index, :help
       # can :read, Item
     end
     false

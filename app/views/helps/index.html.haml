@@ -1,0 +1,6 @@
+#ctrllr-helps
+  - if current_user.is_dependency?
+    = render 'dependency'
+  - else
+    = render 'reception'
+
