@@ -81,10 +81,8 @@ private
     stype = search_column("2")
     documents = documents.where({type: stype}) unless stype.blank?
 
-    print(ap(documents.map(&:attributes)))
     sdirection = search_column("3")
     documents = documents.where({direction: sdirection})unless sdirection.blank?
-    print "\nQUE CONSULTO #{sdirection}\n"
     sdate = search_column("4")
     if !sdate.blank?
       arr_dates = sdate.split(" - ")
@@ -107,9 +105,6 @@ private
                                  documents.emission_date like :s_search",
                                  s_search: "%#{params[:search][:value]}%").distinct
     end
-    print "\n\nACA\n\n"
-    print params['columns']
-    print "\n\nFIN\n\n"
     documents.page(page).per_page(per_page)
   end
 
