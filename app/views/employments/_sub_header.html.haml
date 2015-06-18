@@ -7,11 +7,11 @@
         %h2= t(".sub_title.#{action_name}")
   .col-buttons
     - if edit_or_new_page?(@employment) 
-      = link_to t('employments.buttons.index'), employments_path, :class=>"btn btn-info"
+      = link_to t('employments.buttons.index'), edit_employment_path, :class=>"btn btn-info"
     - elsif index_page?
       = link_to t('employments.buttons.new'), new_employment_path, :class=>"btn btn-info"
     - elsif show_page?(@employment)
-      = link_to t('employments.buttons.edit'), employment_path(@employment), :class=>"btn btn-info"
+      = link_to t('employments.buttons.edit'), edit_employment_path(@employment), :class=>"btn btn-info"
       = link_to t('employments.buttons.index'), employments_path, :class=>"btn btn-info"
     
   
