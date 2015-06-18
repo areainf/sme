@@ -24,15 +24,22 @@ class Person < ActiveRecord::Base
   def documents
     #ap a.entities.map{|x| x.recipients.map{|y| y.document} + x.senders.map{|z| z.document}}
     docs = []
-    self.entities.each do |entity|
-      entity.recipients.each do |recipient|
-        docs << recipient.document
-      end
-      entity.senders.each do |sender|
-        docs << sender.document
-      end
+    ids_entities = self.entities.map(&:id)
+    ref = Reference.where("entity_id in (?)", ids_entities)
+    ref.each do |r|
+      docs << r.document if r.document.present?
     end
     docs
+
+    # .each do |entity|
+    #   entity.recipients.each do |recipient|
+    #     docs << recipient.document
+    #   end unless entity.recipients.blank?
+    #   entity.senders.each do |sender|
+    #     docs << sender.document
+    #   end unless entity.senders.blank?
+    # end unless self.entities.blank?
+    # docs
   end
 private
   def create_empty_entity
